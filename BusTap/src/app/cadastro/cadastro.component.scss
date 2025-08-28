@@ -1,0 +1,20 @@
+ion-app{
+  background-image: url('../../assets/planodefundologin.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  
+}
+
+.card{
+    --background: rgba(255, 255, 255, 0.5);
+    color: black;
+    border-radius: 20px;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
