@@ -14,19 +14,13 @@ const routes: Routes = [
     path: 'cadastro',
     loadChildren: () => import('./cadastro/cadastro-module').then(m => m.CadastroModule)
   },
-  {
-    path: 'cadastro',
-    loadChildren: () => import('./cadastro/cadastro-module').then( m => m.CadastroModule)
-  },
+  
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  {
-    path: '**',
-    redirectTo: 'login'  // <- rota coringa para qualquer rota desconhecida
-  }
+
 ];
 
 @NgModule({
