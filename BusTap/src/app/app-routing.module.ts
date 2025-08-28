@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: () => import('./cadastro/cadastro-module').then(m => m.CadastroModule)
   },
   {
+    path: 'cadastro',
+    loadChildren: () => import('./cadastro/cadastro-module').then( m => m.CadastroModule)
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
