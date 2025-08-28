@@ -1,13 +1,39 @@
+ion-app{
+  background-image: url('../../assets/planodefundologin.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  
+}
 
+ion-card-title{
+  color: white;
+  font-size: 20px;
+}
 
-  .card{
-      --background: rgba(255, 255, 255, 0.5);
-      color: black;
-      border-radius: 20px;
-      text-align: center;
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-  }
+ion-card-subtitle{
+  color: white;
+  font-size: 13px;
+}
+
+.card{
+    --background: rgb(51, 114, 111);
+    color: black;
+    border-radius: 20px;
+    text-align:start;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-70%);
+    color: white;
+}
+
+ion-item{
+  --background: rgba(51, 114, 111);
+}
+input{
+  padding: 15px -1px;
+  --box-shadow: none;
+}

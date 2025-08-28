@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cadastro',
-  standalone: true, // ✅ importante
+  standalone: true,
   imports: [
     CommonModule,
     IonicModule,
@@ -15,10 +15,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./cadastro.component.scss'],
 })
 export class CadastroComponent implements OnInit {
-  registrationForm: FormGroup;
+  cadastroForm: FormGroup; // ✅ Mudança: renomeado de registrationForm para cadastroForm
 
   constructor(private fb: FormBuilder, private alertController: AlertController) {
-    this.registrationForm = this.fb.group({
+    this.cadastroForm = this.fb.group({
       nome: ['', Validators.required],
       sobrenome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -62,11 +62,11 @@ export class CadastroComponent implements OnInit {
     } else if (value.length > 3) {
       value = value.replace(/(\d{3})(\d{0,3})/, '$1.$2');
     }
-    this.registrationForm.get('cpf')?.setValue(value, { emitEvent: false });
+    this.cadastroForm.get('cpf')?.setValue(value, { emitEvent: false }); // ✅ Mudança: usando cadastroForm
   }
 
   async onSubmit() {
-    if (this.registrationForm.valid) {
+    if (this.cadastroForm.valid) { // ✅ Mudança: usando cadastroForm
       const alert = await this.alertController.create({
         header: 'Sucesso',
         message: 'Cadastro realizado com sucesso!',

@@ -14,10 +14,7 @@ const routes: Routes = [
     path: 'cadastro',
     loadChildren: () => import('./cadastro/cadastro-module').then(m => m.CadastroModule)
   },
-  {
-    path: 'cadastro',
-    loadChildren: () => import('./cadastro/cadastro-module').then( m => m.CadastroModule)
-  },
+  // ✅ Removida a rota duplicada 'cadastro'
   {
     path: '',
     redirectTo: 'login',
