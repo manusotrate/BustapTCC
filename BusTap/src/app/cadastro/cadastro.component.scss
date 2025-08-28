@@ -1,0 +1,38 @@
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+  }
+  
+  ion-card {
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  ion-card-title {
+    text-align: center;
+    font-size: 1.2em;
+  }
+  
+  ion-card-subtitle {
+    text-align: center;
+    color: #666;
+  }
+  
+  .text-center {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }

@@ -1,17 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-
-import { CadastroComponent } from './cadastro.component'; // <- use CadastroComponent
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { CadastroComponent } from '../cadastro/cadastro.component';  // ✅ Importa o CadastroComponent diretamente
 
 @NgModule({
-  declarations: [CadastroComponent],
   imports: [
     CommonModule,
+    IonicModule,
+    FormsModule,
     ReactiveFormsModule,
-    IonicModule
+    RouterModule.forChild([
+      {
+        path: '',
+        component: CadastroComponent // Usa diretamente o CadastroComponent
+      }
+    ])
   ],
-  exports: [CadastroComponent] // opcional, mas útil se for usar fora do módulo
+  exports: [] // Não precisa exportar, já que o componente é standalone
 })
-export class CadastroModule { }
+export class CadastroModule {}

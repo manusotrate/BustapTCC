@@ -1,39 +1,36 @@
-<ion-content>
-  <div class="form-container">
-    <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
-      <h2>Bem vindo a sua carteirinha digital!</h2>
-      <p>Faça login ou cadastre-se para podermos continuar!</p>
-
-      <ion-item>
-        <ion-label position="floating">Nome</ion-label>
-        <ion-input formControlName="nome"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Sobrenome</ion-label>
-        <ion-input formControlName="sobrenome"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input formControlName="email"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">CPF</ion-label>
-        <ion-input formControlName="cpf"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Senha</ion-label>
-        <ion-input type="password" formControlName="senha"></ion-input>
-      </ion-item>
-
-      <ion-button expand="block" type="submit" [disabled]="!cadastroForm.valid">
-        Cadastrar
-      </ion-button>
-
-      <p class="login-text">Já possui cadastro? <a routerLink="/login">Clique aqui.</a></p>
-    </form>
+<ion-content [ngStyle]="{'background': 'linear-gradient(to bottom, #4a90e2, #50e3c2)'}">
+  <div class="card-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Bem vindo à sua carteirinha digital!</ion-card-title>
+        <ion-card-subtitle>Faça login ou cadastre-se para podermos continuar!</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+          <ion-item>
+            <ion-label position="floating">Nome</ion-label>
+            <ion-input formControlName="nome"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Sobrenome</ion-label>
+            <ion-input formControlName="sobrenome"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">CPF</ion-label>
+            <ion-input formControlName="cpf" (ionInput)="formatCPF($event)"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Senha</ion-label>
+            <ion-input type="password" formControlName="senha"></ion-input>
+          </ion-item>
+          <ion-button expand="block" type="submit" [disabled]="registrationForm.invalid">Criar</ion-button>
+          <p class="text-center">Já possui cadastro? <a routerLink="/login">Clique aqui</a></p>
+        </form>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
