@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router'; // ✅ IMPORTANTE
 
 @Component({
   selector: 'app-cadastro',
-  standalone: true, // ✅ importante
+  standalone: true,
   imports: [
     CommonModule,
     IonicModule,
@@ -17,7 +18,11 @@ import { CommonModule } from '@angular/common';
 export class CadastroComponent implements OnInit {
   registrationForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private alertController: AlertController) {
+  constructor(
+    private fb: FormBuilder,
+    private alertController: AlertController,
+    private router: Router // ✅ INJETAR O ROUTER
+  ) {
     this.registrationForm = this.fb.group({
       nome: ['', Validators.required],
       sobrenome: ['', Validators.required],
@@ -73,6 +78,11 @@ export class CadastroComponent implements OnInit {
         buttons: ['OK']
       });
       await alert.present();
+
+      // ✅ após o alerta, navega para a tela de login
+      alert.onDidDismiss().then(() => {
+        this.router.navigate(['/login']);
+      });
     }
   }
 }
