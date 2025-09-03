@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router'; // ✅
+import { Router } from '@angular/router';
+import axios from 'axios'; // ✅ Adicionado
 
 @Component({
   selector: 'app-cadastro',
@@ -17,7 +18,7 @@ export class CadastroComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private alertController: AlertController,
-    private router: Router // ✅
+    private router: Router
   ) {
     this.registrationForm = this.fb.group({
       nome: ['', Validators.required],
@@ -50,36 +51,50 @@ export class CadastroComponent implements OnInit {
   }
 
   formatCPF(event: any) {
-    // Compatível com Ionic (event.detail.value) e fallback (event.target.value)
     let value: string = (event?.detail?.value ?? event?.target?.value ?? '').replace(/\D/g, '');
     if (value.length > 11) value = value.substring(0, 11);
-    if (value.length > 9) {
-      value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-    } else if (value.length > 6) {
-      value = value.replace(/(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3');
-    } else if (value.length > 3) {
-      value = value.replace(/(\d{3})(\d{0,3})/, '$1.$2');
-    }
+    if (value.length > 9) value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    else if (value.length > 6) value = value.replace(/(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3');
+    else if (value.length > 3) value = value.replace(/(\d{3})(\d{0,3})/, '$1.$2');
     this.registrationForm.get('cpf')?.setValue(value, { emitEvent: false });
   }
 
+  // ===========================
+  // Função de envio para backend
+  // ===========================
   async onSubmit() {
     if (this.registrationForm.valid) {
-      const alert = await this.alertController.create({
-        header: 'Sucesso',
-        message: 'Cadastro realizado com sucesso!',
-        buttons: ['OK']
-      });
-      await alert.present();
+      const { nome, sobrenome, email, cpf, senha } = this.registrationForm.value;
 
-      // ✅ Após confirmar o alerta, vai para /login
-      alert.onDidDismiss().then(() => {
-        this.router.navigate(['/login']);
-      });
+      try {
+        const res = await axios.post("http://localhost:4000/cadastro", {
+          nome, sobrenome, email, cpf, senha
+        });
+
+        // Sucesso
+        const alert = await this.alertController.create({
+          header: 'Sucesso',
+          message: res.data.mensagem || 'Cadastro realizado com sucesso!',
+          buttons: ['OK']
+        });
+        await alert.present();
+        alert.onDidDismiss().then(() => {
+          this.router.navigate(['/login']);
+        });
+
+      } catch (err: any) {
+        console.error(err);
+        const alert = await this.alertController.create({
+          header: 'Erro',
+          message: err.response?.data?.erro || 'Erro no cadastro, tente novamente.',
+          buttons: ['OK']
+        });
+        await alert.present();
+      }
     }
   }
 
-  // ✅ Handler para navegar pra Home sem submeter o form
+  // Navegar para Home sem submeter formulário
   goHome() {
     this.router.navigate(['/home']);
   }
