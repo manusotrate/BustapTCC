@@ -2,16 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router'; // ✅ IMPORTANTE
+import { Router } from '@angular/router'; // ✅
 
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [
-    CommonModule,
-    IonicModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, IonicModule, ReactiveFormsModule],
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.scss'],
 })
@@ -21,7 +17,7 @@ export class CadastroComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private alertController: AlertController,
-    private router: Router // ✅ INJETAR O ROUTER
+    private router: Router // ✅
   ) {
     this.registrationForm = this.fb.group({
       nome: ['', Validators.required],
@@ -35,30 +31,27 @@ export class CadastroComponent implements OnInit {
   ngOnInit() {}
 
   validateCPF(control: AbstractControl) {
-    const cpf = control.value ? control.value.replace(/\D/g, '') : '';
+    const cpf = control.value ? String(control.value).replace(/\D/g, '') : '';
     if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return { invalidCPF: true };
 
     let sum = 0;
-    for (let i = 1; i <= 9; i++) {
-      sum += parseInt(cpf.substring(i - 1, i)) * (11 - i);
-    }
+    for (let i = 1; i <= 9; i++) sum += parseInt(cpf.substring(i - 1, i), 10) * (11 - i);
     let remainder = (sum * 10) % 11;
     if (remainder === 10 || remainder === 11) remainder = 0;
-    if (remainder !== parseInt(cpf.substring(9, 10))) return { invalidCPF: true };
+    if (remainder !== parseInt(cpf.substring(9, 10), 10)) return { invalidCPF: true };
 
     sum = 0;
-    for (let i = 1; i <= 10; i++) {
-      sum += parseInt(cpf.substring(i - 1, i)) * (12 - i);
-    }
+    for (let i = 1; i <= 10; i++) sum += parseInt(cpf.substring(i - 1, i), 10) * (12 - i);
     remainder = (sum * 10) % 11;
     if (remainder === 10 || remainder === 11) remainder = 0;
-    if (remainder !== parseInt(cpf.substring(10, 11))) return { invalidCPF: true };
+    if (remainder !== parseInt(cpf.substring(10, 11), 10)) return { invalidCPF: true };
 
     return null;
   }
 
   formatCPF(event: any) {
-    let value = event.target.value.replace(/\D/g, '');
+    // Compatível com Ionic (event.detail.value) e fallback (event.target.value)
+    let value: string = (event?.detail?.value ?? event?.target?.value ?? '').replace(/\D/g, '');
     if (value.length > 11) value = value.substring(0, 11);
     if (value.length > 9) {
       value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
@@ -79,10 +72,15 @@ export class CadastroComponent implements OnInit {
       });
       await alert.present();
 
-      // ✅ após o alerta, navega para a tela de login
+      // ✅ Após confirmar o alerta, vai para /login
       alert.onDidDismiss().then(() => {
         this.router.navigate(['/login']);
       });
     }
+  }
+
+  // ✅ Handler para navegar pra Home sem submeter o form
+  goHome() {
+    this.router.navigate(['/home']);
   }
 }

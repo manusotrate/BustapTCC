@@ -15,7 +15,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Email</ion-label> <!-- 🔧 CORRIGIDO -->
+        <ion-label position="floating">Email</ion-label>
         <ion-input formControlName="email"></ion-input>
       </ion-item>
 
@@ -34,8 +34,13 @@
         Cadastrar
       </ion-button>
 
-      <!-- Alterado para levar para home -->
-      <p class="login-text">Já possui cadastro? <a routerLink="/home">Clique aqui.</a></p>
+      <!-- Botão para ir à Home -->
+      <p class="login-text">
+        Já possui cadastro?
+        <ion-button fill="clear" size="small" type="button" (click)="goHome()">
+          Clique aqui
+        </ion-button>
+      </p>
     </form>
   </div>
 </ion-content>
