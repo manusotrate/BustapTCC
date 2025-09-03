@@ -1,20 +1,64 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="header-container">
+    <!-- Header com gradiente -->
+    <div class="header-gradient">
+      <!-- Avatar e logo -->
+      <div class="top-section">
+        <div class="avatar">
+          <ion-icon name="person"></ion-icon>
+        </div>
+        <div class="logo">
+          <ion-icon name="bus-outline"></ion-icon>
+          <span>BusTap</span>
+        </div>
+      </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <!-- Saudação e saldo -->
+      <div class="welcome-section">
+        <h2>Bem vindo,</h2>
+        <h3>{{ userName }}!</h3>
+        
+        <div class="balance-section">
+          <p>Seu saldo:</p>
+          <h1>{{ balance }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu Cards -->
+  <div class="menu-container">
+    <ion-card class="menu-card" button (click)="onSchedulesClick()">
+      <ion-card-content>
+        <div class="card-icon">
+          <ion-icon name="time-outline"></ion-icon>
+        </div>
+        <div class="card-text">
+          <h3>Horários</h3>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="menu-card" button (click)="onHelpClick()">
+      <ion-card-content>
+        <div class="card-icon">
+          <ion-icon name="help-circle-outline"></ion-icon>
+        </div>
+        <div class="card-text">
+          <h3>Ajuda</h3>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="menu-card" button (click)="onRechargeClick()">
+      <ion-card-content>
+        <div class="card-icon">
+          <ion-icon name="card-outline"></ion-icon>
+        </div>
+        <div class="card-text">
+          <h3>Recarga</h3>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
