@@ -11,16 +11,4 @@ export class HomePage {
   balance = 'R$00,00';
 
   constructor() {}
-
-  onSchedulesClick() {
-    console.log('Horários clicked');
-  }
-
-  onHelpClick() {
-    console.log('Ajuda clicked');
-  }
-
-  onRechargeClick() {
-    console.log('Recarga clicked');
-  }
 }
