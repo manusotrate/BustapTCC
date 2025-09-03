@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,11 @@ import { IonicModule } from '@ionic/angular';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
-
   ngOnInit() {}
 
+  constructor(private router: Router) {}
+
+  irParaHome() {
+    this.router.navigate(['/home']);
+  }
 }

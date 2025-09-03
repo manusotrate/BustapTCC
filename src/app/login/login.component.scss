@@ -17,8 +17,8 @@ ion-card-subtitle{
   font-size: 13px;
 }
 
-.card{
-    --background: rgb(51, 114, 111);
+ion-card{
+    --background: #3A8CB4;
     color: black;
     border-radius: 20px;
     text-align:start;
@@ -31,9 +31,23 @@ ion-card-subtitle{
 }
 
 ion-item{
-  --background: rgba(51, 114, 111);
+  --background: #3A8CB4;
+  --border-style: none;
+  padding: 13px 0;
+  font-size: 15px;
 }
-input{
-  padding: 15px -1px;
-  --box-shadow: none;
+
+ion-button {
+  text-align: center;
+  justify-content: center;
+  display: grid;
+  --background: white;
+  padding: 10px;
+  margin-bottom: 40px;
+}
+
+ion-text{
+  opacity: 0.5;
+  padding: 10px 10px;
+  text-decoration:underline;
 }
