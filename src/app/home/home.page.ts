@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  standalone: false,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomePage {
+  userName = 'Maicon';
+  balance = 'R$00,00';
 
   constructor() {}
-
 }
