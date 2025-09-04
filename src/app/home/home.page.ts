@@ -12,3 +12,4 @@ export class HomePage {
 
   constructor() {}
 }
+//Esta classe vai virar a váriavel que se adaptará para o nome do usuário e o saldo.
