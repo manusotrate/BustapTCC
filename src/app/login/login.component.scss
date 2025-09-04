@@ -10,11 +10,13 @@ ion-app{
 ion-card-title{
   color: white;
   font-size: 20px;
+  font-weight: bold;
 }
 
 ion-card-subtitle{
   color: white;
   font-size: 13px;
+  font-weight: bold;
 }
 
 ion-card{
@@ -32,9 +34,10 @@ ion-card{
 
 ion-item{
   --background: #3A8CB4;
-  --border-style: none;
-  padding: 13px 0;
-  font-size: 15px;
+  --border-color:white;
+  margin: 13px 0;
+  padding-right: 5px;
+  font-size: 12px;
 }
 
 ion-button {
@@ -43,11 +46,16 @@ ion-button {
   display: grid;
   --background: white;
   padding: 10px;
-  margin-bottom: 40px;
+  padding-bottom: 20px;
+  --border-radius: 20px;
 }
 
+
 ion-text{
+  font-size: 12px;
   opacity: 0.5;
-  padding: 10px 10px;
+  padding: 0px 20px;
   text-decoration:underline;
+  margin-bottom: 10px;  
+  display: flex;
 }
