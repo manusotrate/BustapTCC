@@ -29,11 +29,18 @@
         <ion-input type="password" formControlName="senha"></ion-input>
       </ion-item>
 
+      <!-- Botão de cadastro -->
       <ion-button expand="block" type="submit" [disabled]="!registrationForm.valid">
         Cadastrar
       </ion-button>
 
-      <p class="login-text">Já possui cadastro? <a routerLink="/login">Clique aqui.</a></p>
+      <!-- Botão para ir à Home -->
+      <p class="login-text">
+        Já possui cadastro?
+        <ion-button fill="clear" size="small" type="button" (click)="gologin()">
+          Clique aqui
+        </ion-button>
+      </p>
     </form>
   </div>
 </ion-content>

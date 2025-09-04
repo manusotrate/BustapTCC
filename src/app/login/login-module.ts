@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { LoginComponent } from '../login/login.component';  // ✅ Importa o LoginComponent diretamente
+import { LoginComponent } from './login.component';
 
 @NgModule({
   imports: [
@@ -11,13 +11,13 @@ import { LoginComponent } from '../login/login.component';  // ✅ Importa o Log
     IonicModule,
     FormsModule,
     ReactiveFormsModule,
+    LoginComponent,
     RouterModule.forChild([
       {
         path: '',
-        component: LoginComponent // Usa diretamente o LoginComponent
+        component: LoginComponent
       }
     ])
-  ],
-  exports: [] // Não precisa exportar, já que o componente é standalone
+  ]
 })
 export class LoginModule {}
