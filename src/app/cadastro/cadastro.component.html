@@ -5,31 +5,61 @@
       <ion-card-subtitle>Faça login ou cadastre-se para podermos continuar!</ion-card-subtitle>
     </ion-card-header>
 
-    <div class="nsei">
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <div class="nsei">
+        <ion-item>
+          <ion-input 
+            class="nome" 
+            placeholder="Nome"
+            formControlName="nome"
+            type="text">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input 
+            placeholder="Sobrenome"
+            formControlName="sobrenome"
+            type="text">
+          </ion-input>
+        </ion-item>
+      </div>
+
       <ion-item>
-        <ion-input class="nome" placeholder="Nome"></ion-input>
+        <ion-input 
+          placeholder="Email"
+          formControlName="email"
+          type="email">
+        </ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input placeholder="Sobrenome"></ion-input>
+        <ion-input 
+          placeholder="CPF"
+          formControlName="cpf"
+          type="text"
+          maxlength="14"
+          (ionInput)="formatCPF($event)">
+        </ion-input>
       </ion-item>
-    </div>
 
+      <ion-item>
+        <ion-input 
+          placeholder="Senha"
+          formControlName="senha"
+          type="password">
+        </ion-input>
+      </ion-item>
 
-
-    <ion-item>
-      <ion-input placeholder="Email"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input placeholder="CPF"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input placeholder="Senha"></ion-input>
-    </ion-item>
-
-    <ion-button (click)="onSubmit()">Cadastrar</ion-button>
+      <ion-button 
+        type="submit" 
+        [disabled]="!registrationForm.valid || isLoading">
+        <span *ngIf="!isLoading">Cadastrar</span>
+        <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+      </ion-button>
+    </form>
 
     <ion-text>Já possui cadastro?</ion-text>
-    <ion-text class="cadastro">Clique aqui</ion-text>
+    <ion-text class="cadastro" (click)="gologin()">Clique aqui</ion-text>
   </ion-card>
 </ion-app>
