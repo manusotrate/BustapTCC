@@ -1,43 +1,3 @@
-
-.card-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    padding: 20px;
-  }
-  
-  ion-card {
-    border-radius: 20px;
-    width: 100%;
-    max-width: 400px;
-    background: rgba(255, 255, 255, 0.9);
-  }
-  
-  ion-card-title {
-    text-align: center;
-    font-size: 1.2em;
-  }
-  
-  ion-card-subtitle {
-    text-align: center;
-    color: #666;
-  }
-  
-  .text-center {
-    text-align: center;
-    margin-top: 10px;
-  }
-  
-  a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-
 ion-app{
   background-image: url('../../assets/planodefundologin.png');
   background-size: cover;
@@ -47,15 +7,70 @@ ion-app{
   
 }
 
-.card{
-    --background: rgba(255, 255, 255, 0.5);
+ion-card-title{
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+ion-card-subtitle{
+  color: white;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+ion-card{
+    --background: #3A8CB4;
     color: black;
     border-radius: 20px;
-    text-align: center;
+    text-align:start;
     position: absolute;
     left: 0;
     right: 0;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-55%);
+    color: white;
 }
 
+ion-item{
+  --background: #3A8CB4;
+  --border-color:white;
+  margin: 13px 0;
+  padding-right: 5px;
+  font-size: 12px;
+}
+
+ion-button {
+  text-align: center;
+  justify-content: center;
+  display: grid;
+  --background: white;
+  padding: 10px;
+  padding-bottom: 20px;
+  --border-radius: 20px;
+}
+
+
+ion-text{
+  font-size: 12px;
+  opacity: 0.5;
+  padding: 0px 20px;
+  margin-bottom: 10px;  
+  display: flex;
+  justify-content: center;
+}
+
+.cadastro{  font-size: 12px;
+  opacity: 0.5;
+  padding: 0px 20px;
+  margin-bottom: 10px;  
+  display: flex;
+  align-items: center;
+  text-decoration:underline;
+}
+
+.nsei{
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}

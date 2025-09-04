@@ -29,6 +29,8 @@ export class CadastroComponent implements OnInit {
 
   ngOnInit() {}
 
+ 
+
   validateCPF(control: AbstractControl) {
     const cpf = control.value ? control.value.replace(/\D/g, '') : '';
     if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return { invalidCPF: true };
