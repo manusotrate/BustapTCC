@@ -95,7 +95,7 @@ export class CadastroComponent implements OnInit {
   }
 
   // Navegar para Home sem submeter formulário
-  goHome() {
-    this.router.navigate(['/home']);
+  gologin() {
+    this.router.navigate(['/login']);
   }
 }
