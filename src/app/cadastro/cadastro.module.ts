@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { CadastroComponent } from '../cadastro/cadastro.component';  // ✅ Importa o CadastroComponent diretamente
+import { CadastroComponent} from'./cadastro.component';
+
 
 @NgModule({
   imports: [
@@ -14,10 +15,9 @@ import { CadastroComponent } from '../cadastro/cadastro.component';  // ✅ Impo
     RouterModule.forChild([
       {
         path: '',
-        component: CadastroComponent // Usa diretamente o CadastroComponent
+        component: CadastroComponent
       }
     ])
-  ],
-  exports: [] // Não precisa exportar, já que o componente é standalone
+  ]
 })
 export class CadastroModule {}
