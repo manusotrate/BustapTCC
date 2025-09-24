@@ -16,7 +16,7 @@ export class LoginComponent {
   cpf: string = '';
   senha: string = '';
   loading: boolean = false;
-  apiUrl: string = 'http://localhost:4000/login'; // ajuste conforme seu backend
+  apiUrl: string = 'http://localhost:4000/login';
 
   constructor(
     private router: Router,
@@ -60,11 +60,23 @@ export class LoginComponent {
     const loader = await this.loadingCtrl.create({ message: 'Entrando...' });
     await loader.present();
 
-    this.http.post<{ mensagem?: string }>(this.apiUrl, { cpf: cpfLimpo, senha: this.senha })
+    this.http.post<{ mensagem?: string, usuario?: any }>(this.apiUrl, { cpf: cpfLimpo, senha: this.senha })
       .subscribe({
         next: async (res) => {
           await loader.dismiss();
           this.loading = false;
+          
+          console.log('Resposta do backend:', res); // DEBUG
+          
+          // Salvar dados do usuário no localStorage
+          if (res.usuario) {
+            console.log('Salvando usuário:', res.usuario); // DEBUG
+            localStorage.setItem('usuario', JSON.stringify(res.usuario));
+            console.log('Usuario salvo no localStorage!'); // DEBUG
+          } else {
+            console.log('Nenhum dado de usuário recebido do backend!'); // DEBUG
+          }
+          
           await this.showToast(res.mensagem || 'Login realizado com sucesso!', 'success');
           this.router.navigate(['/home']);
         },
