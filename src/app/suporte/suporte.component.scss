@@ -1,3 +1,4 @@
+// suporte.component.scss
 .suporte-container {
   display: flex;
   flex-direction: column;
@@ -27,6 +28,7 @@
 
 .email-container {
   margin: 30px 0;
+  font-weight: bold;
 }
 
 .email {
@@ -55,6 +57,7 @@
   text-transform: none;
   font-size: 16px;
   margin: 0;
+  color:#f5f5f5
 }
 
 .fab-suporte {
