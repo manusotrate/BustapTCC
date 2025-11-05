@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule, LoadingController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, IonicModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, IonicModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -16,11 +16,10 @@ export class LoginComponent {
   cpf: string = '';
   senha: string = '';
   loading: boolean = false;
-  apiUrl: string = 'http://localhost:4000/login'; // ajuste conforme seu backend
 
   constructor(
     private router: Router,
-    private http: HttpClient,
+    private authService: AuthService,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController
   ) {}
@@ -51,6 +50,7 @@ export class LoginComponent {
       this.showToast('Preencha CPF e Senha!', 'warning');
       return;
     }
+    
     if (!this.validarCPF(this.cpf)) {
       this.showToast('CPF inválido.', 'danger');
       return;
@@ -60,22 +60,21 @@ export class LoginComponent {
     const loader = await this.loadingCtrl.create({ message: 'Entrando...' });
     await loader.present();
 
-    this.http.post<{ mensagem?: string }>(this.apiUrl, { cpf: cpfLimpo, senha: this.senha })
-      .subscribe({
-        next: async (res) => {
-          await loader.dismiss();
-          this.loading = false;
-          await this.showToast(res.mensagem || 'Login realizado com sucesso!', 'success');
-          this.router.navigate(['/home']);
-        },
-        error: async (err) => {
-          await loader.dismiss();
-          this.loading = false;
-          const msg = err?.error?.erro || err?.error?.message || 'Erro ao efetuar login.';
-          this.showToast(msg, 'danger');
-          console.error('Erro de login:', err);
-        }
-      });
+    this.authService.login(cpfLimpo, this.senha).subscribe({
+      next: async (response) => {
+        await loader.dismiss();
+        this.loading = false;
+        await this.showToast(response.mensagem || 'Login realizado com sucesso!', 'success');
+        this.router.navigate(['/home']);
+      },
+      error: async (err) => {
+        await loader.dismiss();
+        this.loading = false;
+        const msg = err?.error?.erro || err?.error?.message || 'Erro ao efetuar login.';
+        this.showToast(msg, 'danger');
+        console.error('Erro de login:', err);
+      }
+    });
   }
 
   private async showToast(message: string, color: 'success' | 'danger' | 'warning' | 'medium' = 'medium') {
@@ -86,5 +85,8 @@ export class LoginComponent {
       position: 'top'
     });
     await toast.present();
+  }
+  gocadastro() {
+    this.router.navigate(['/cadastro']);
   }
 }

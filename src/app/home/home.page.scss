@@ -1,4 +1,3 @@
-
 ion-content {
   --background: #ffffff;
 }
@@ -14,7 +13,7 @@ ion-content {
 }
 
 .header-gradient {
-  background-image:url('../../assets/fundohome.png');
+  background:linear-gradient(#4FA4A7, #1E4041);
   transform: translateY(-15%);
   background-size: cover;
   background-position: center;
