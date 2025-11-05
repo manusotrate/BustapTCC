@@ -43,17 +43,6 @@
     <ion-card class="menu-card">
       <ion-card-content>
         <div class="card-icon">
-          <ion-icon name="help-circle-outline"></ion-icon>
-        </div>
-        <div class="card-text">
-          <h3>Ajuda</h3>
-        </div>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="menu-card">
-      <ion-card-content>
-        <div class="card-icon">
           <ion-icon name="card-outline"></ion-icon>
         </div>
         <div class="card-text">
@@ -61,5 +50,17 @@
         </div>
       </ion-card-content>
     </ion-card>
+    
+    <ion-card class="menu-card" (click)="gosuporte()">
+      <ion-card-content>
+        <div class="card-icon">
+          <ion-icon name="help-circle-outline"></ion-icon>
+        </div>
+        <div class="card-text">
+          <h3>Ajuda</h3>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    
   </div>
 </ion-content>

@@ -9,42 +9,59 @@
       <div class="nsei">
         <ion-item>
           <ion-input 
-            class="nome" 
+            class="nome animated-input" 
             placeholder="Nome"
             formControlName="nome"
-            type="text">
+            type="text"
+            (input)="onInput($event)">
           </ion-input>
         </ion-item>
 
         <ion-item>
           <ion-input 
+            class="animated-input"
             placeholder="Sobrenome"
             formControlName="sobrenome"
-            type="text">
+            type="text"
+            (input)="onInput($event)">
           </ion-input>
         </ion-item>
       </div>
 
       <ion-item>
-        <ion-input class="animated-input nome" placeholder="Nome" (input)="onInput($event)"></ion-input>
+        <ion-input 
+          class="animated-input" 
+          placeholder="Email"
+          formControlName="email"
+          type="email"
+          (input)="onInput($event)">
+        </ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input class="animated-input" placeholder="Sobrenome" (input)="onInput($event)"></ion-input>
+        <ion-input 
+          class="animated-input" 
+          placeholder="CPF"
+          formControlName="cpf"
+          type="text"
+          inputmode="numeric"
+          maxlength="14"
+          (input)="formatCPF($event); onInput($event)">
+        </ion-input>
       </ion-item>
-    </div>
 
-    <ion-item>
-      <ion-input class="animated-input" placeholder="Email" (input)="onInput($event)"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input class="animated-input" placeholder="CPF" (input)="onInput($event)"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input class="animated-input" placeholder="Senha" (input)="onInput($event)"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-input 
+          class="animated-input" 
+          placeholder="Senha"
+          formControlName="senha"
+          type="password"
+          (input)="onInput($event)">
+        </ion-input>
+      </ion-item>
 
-    <ion-button (click)="onSubmit()">Cadastrar</ion-button>
+      <ion-button type="submit">Cadastrar</ion-button>
+    </form>
 
     <ion-text>Já possui cadastro?</ion-text>
     <ion-text class="cadastro" (click)="gologin()">Clique aqui</ion-text>
