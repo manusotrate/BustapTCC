@@ -2,11 +2,15 @@
   <div class="header-container">
     <!-- Header com gradiente -->
     <div class="header-gradient">
-      <!-- Avatar e logo -->
+      <!-- Avatar e botão logout -->
       <div class="top-section">
         <div class="avatar">
           <ion-icon name="person"></ion-icon>
         </div>
+        <!-- Botão de logout -->
+        <ion-button fill="clear" color="light" (click)="logout()">
+          <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+        </ion-button>
       </div>
 
       <!-- Saudação e saldo -->
