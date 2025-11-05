@@ -8,8 +8,12 @@ ion-content {
   overflow: hidden;
 }
 
+ion-content {
+  --overflow: hidden !important;
+}
+
 .header-gradient {
-  background-image:url('../../assets/fundohome.png');
+  background:linear-gradient(#4FA4A7, #1E4041);
   transform: translateY(-15%);
   background-size: cover;
   background-position: center;
@@ -67,14 +71,13 @@ ion-content {
   h2 {
     font-size: 24px;
     padding-top: 5px;
-    font-weight: 400;
+    font-weight: 600;
     margin: 0;
     opacity: 0.9;
   }
   
   h3 {
     font-size: 20px;
-    font-weight: 600;
     margin: 0;
     margin-bottom: 20px;
   }
@@ -97,7 +100,7 @@ ion-content {
 }
 
 .menu-container {
-  width: 280px;
+  width: 100%;
   height: 400px;
   padding: 20px;
   background-color: white;
@@ -112,12 +115,29 @@ ion-content {
 .menu-card {
   margin-bottom: 16px;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  // ✅ Sombras mais visíveis e marcantes
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  
+  // ✅ Efeito hover mais suave
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 12px 35px rgba(0, 0, 0, 0.2),
+      0 6px 15px rgba(0, 0, 0, 0.12),
+      0 3px 8px rgba(0, 0, 0, 0.1);
+  }
   
   &:active {
-    transform: scale(0.98);
+    transform: scale(0.98) translateY(-1px);
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.15),
+      0 3px 8px rgba(0, 0, 0, 0.1);
   }
   
   ion-card-content {
@@ -136,6 +156,8 @@ ion-content {
   display: flex;
   align-items: center;
   justify-content: center;
+  // ✅ Sombra sutil no ícone também
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   
   ion-icon {
     font-size: 28px;
@@ -151,6 +173,8 @@ ion-content {
     font-weight: 600;
     color: black;
     margin: 0;
+    // ✅ Sombra sutil no texto para destacar
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -172,5 +196,20 @@ ion-content {
   
   .balance-section h1 {
     font-size: 32px;
+  }
+  
+  // ✅ Ajustar sombras em telas menores
+  .menu-card {
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.12),
+      0 3px 8px rgba(0, 0, 0, 0.08),
+      0 1px 3px rgba(0, 0, 0, 0.06);
+      
+    &:hover {
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.18),
+        0 5px 12px rgba(0, 0, 0, 0.1),
+        0 2px 6px rgba(0, 0, 0, 0.08);
+    }
   }
 }

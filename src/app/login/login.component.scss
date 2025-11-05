@@ -4,40 +4,54 @@ ion-app{
   background-position: center;
   background-repeat: no-repeat;
   height: 100%;
-  
 }
 
 ion-card-title{
   color: white;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
 }
 
 ion-card-subtitle{
   color: white;
-  font-size: 13px;
-  font-weight: bold;
+  font-size: 15px;
 }
 
 ion-card{
-    --background: #3A8CB4;
-    color: black;
-    border-radius: 20px;
-    text-align:start;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-55%);
-    color: white;
+  --background: #3A8CB4;
+  color: black;
+  border-radius: 20px;
+  text-align: start;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-55%);
+  color: white;
 }
 
 ion-item{
   --background: #3A8CB4;
-  --border-color:white;
+  --border-color: white;
   margin: 13px 0;
   padding-right: 5px;
   font-size: 12px;
+  
+  // Garantir que o input tenha o mesmo fundo
+  ion-input {
+    --background: #3A8CB4;
+    --color: white;
+    --placeholder-color: rgba(255, 255, 255, 0.7);
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+}
+
+// Alternativa: aplicar diretamente no ion-input se necessário
+ion-input {
+  --background: #3A8CB4 !important;
+  --color: white !important;
+  --placeholder-color: rgba(255, 255, 255, 0.7) !important;
 }
 
 ion-button {
@@ -48,14 +62,14 @@ ion-button {
   padding: 10px;
   padding-bottom: 20px;
   --border-radius: 20px;
+  color: black;
 }
-
 
 ion-text{
   font-size: 12px;
   opacity: 0.5;
   padding: 0px 20px;
-  text-decoration:underline;
+  text-decoration: underline;
   margin-bottom: 10px;  
   display: flex;
 }
