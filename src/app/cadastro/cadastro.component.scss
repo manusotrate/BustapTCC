@@ -30,6 +30,7 @@ ion-card{
     top: 50%;
     transform: translateY(-55%);
     color: white;
+    animation: fadeIn 0.8s ease-in-out;
 }
 
 ion-item{
@@ -75,4 +76,33 @@ ion-text{
   display: flex;
   gap: 15px;
   align-items: center;
+}
+
+.animated-input {
+  transition: all 0.3s ease-in-out;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+.animated-input:focus {
+  border: 1px solid #3880ff; /* Cor da borda ao focar */
+  box-shadow: 0 0 8px rgba(56, 128, 255, 0.5); /* Sombra ao focar */
+  outline: none;
+}
+
+.animated-input.typing {
+  border: 1px solid #4caf50; /* Cor da borda ao digitar */
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.5); /* Sombra ao digitar */
+  transform: scale(1.02); /* Leve aumento no tamanho */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

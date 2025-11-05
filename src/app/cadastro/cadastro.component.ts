@@ -34,7 +34,16 @@ export class CadastroComponent implements OnInit {
 
   ngOnInit() {}
 
-  // Validação de CPF
+  onInput(event: any): void {
+    const inputElement = event.target;
+    inputElement.classList.add('typing');
+
+    // Remove a classe após 500ms para reiniciar a animação
+    setTimeout(() => {
+      inputElement.classList.remove('typing');
+    }, 500);
+  }
+
   validateCPF(control: AbstractControl) {
     const cpf = control.value ? String(control.value).replace(/\D/g, '') : '';
     

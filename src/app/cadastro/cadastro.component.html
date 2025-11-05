@@ -26,38 +26,25 @@
       </div>
 
       <ion-item>
-        <ion-input 
-          placeholder="Email"
-          formControlName="email"
-          type="email">
-        </ion-input>
+        <ion-input class="animated-input nome" placeholder="Nome" (input)="onInput($event)"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input 
-          placeholder="CPF"
-          formControlName="cpf"
-          type="text"
-          maxlength="14"
-          (ionInput)="formatCPF($event)">
-        </ion-input>
+        <ion-input class="animated-input" placeholder="Sobrenome" (input)="onInput($event)"></ion-input>
       </ion-item>
+    </div>
 
-      <ion-item>
-        <ion-input 
-          placeholder="Senha"
-          formControlName="senha"
-          type="password">
-        </ion-input>
-      </ion-item>
+    <ion-item>
+      <ion-input class="animated-input" placeholder="Email" (input)="onInput($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input class="animated-input" placeholder="CPF" (input)="onInput($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input class="animated-input" placeholder="Senha" (input)="onInput($event)"></ion-input>
+    </ion-item>
 
-      <ion-button 
-        type="submit" 
-        [disabled]="!registrationForm.valid || isLoading">
-        <span *ngIf="!isLoading">Cadastrar</span>
-        <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
-      </ion-button>
-    </form>
+    <ion-button (click)="onSubmit()">Cadastrar</ion-button>
 
     <ion-text>Já possui cadastro?</ion-text>
     <ion-text class="cadastro" (click)="gologin()">Clique aqui</ion-text>
