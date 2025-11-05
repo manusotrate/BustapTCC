@@ -86,8 +86,4 @@ export class LoginComponent {
     });
     await toast.present();
   }
-  gocadastro(){
-    this.router.navigate(['/cadastro'])
-  }
 }
-

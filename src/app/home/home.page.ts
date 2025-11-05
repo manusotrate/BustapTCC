@@ -1,6 +1,4 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,46 +7,35 @@ import { Router } from '@angular/router';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomePage implements OnInit {
-  userName = '';
+  userName = 'Usuário';
   balance = 'R$ 0,00';
-  usuario: any = null;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor() {}
 
   ngOnInit() {
     this.carregarDadosUsuario();
   }
 
   carregarDadosUsuario() {
-    // Primeiro, tenta carregar do localStorage
-    const usuarioLocal = this.authService.getUsuarioLocal();
-    
-    if (usuarioLocal) {
-      this.userName = usuarioLocal.nome;
-      this.usuario = usuarioLocal;
-    }
-
-    // Depois, busca dados atualizados do backend
-    this.authService.obterUsuario().subscribe({
-      next: (response) => {
-        this.usuario = response.usuario;
-        this.userName = response.usuario.nome;
-        // Aqui você pode adicionar lógica para carregar o saldo do usuário
-      },
-      error: (err) => {
-        console.error('Erro ao carregar dados do usuário:', err);
-        // Se der erro de autenticação, faz logout
-        if (err.status === 401) {
-          this.authService.logout();
-        }
+    try {
+      // Pegar dados do usuário do localStorage
+      const usuarioSalvo = localStorage.getItem('usuario');
+      
+      if (usuarioSalvo) {
+        const usuario = JSON.parse(usuarioSalvo);
+        this.userName = usuario.nome || 'Usuário';
+        
+        // Aqui você pode adicionar lógica para buscar o saldo real
+        // Por enquanto vamos deixar como R$ 0,00
+        this.balance = 'R$ 0,00';
+        
+        console.log('Dados do usuário carregados:', usuario);
+      } else {
+        console.log('Nenhum usuário encontrado no localStorage');
       }
-    });
-  }
-
-  logout() {
-    this.authService.logout();
+    } catch (error) {
+      console.error('Erro ao carregar dados do usuário:', error);
+      this.userName = 'Usuário';
+    }
   }
 }
