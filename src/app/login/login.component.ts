@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule, LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, IonicModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  standalone: false
 })
 export class LoginComponent {
   cpf: string = '';

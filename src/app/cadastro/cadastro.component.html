@@ -1,52 +1,35 @@
-<ion-app>
+<ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Bem vindo a sua <br> carteirinha digital!</ion-card-title>
-      <ion-card-subtitle>Faça login ou cadastre-se para podermos continuar!</ion-card-subtitle>
+      <ion-card-title>Bem vindo à sua carteirinha digital!</ion-card-title>
+      <ion-card-subtitle>Faça login ou cadastre-se para continuar.</ion-card-subtitle>
     </ion-card-header>
 
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-      <div class="nsei">
-        <ion-item>
-          <ion-input 
-            class="nome" 
-            placeholder="Nome"
-            formControlName="nome"
-            type="text">
-          </ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-input 
-            placeholder="Sobrenome"
-            formControlName="sobrenome"
-            type="text">
-          </ion-input>
-        </ion-item>
-      </div>
-
       <ion-item>
-        <ion-input class="animated-input nome" placeholder="Nome" (input)="onInput($event)"></ion-input>
+        <ion-input placeholder="Nome" formControlName="nome" type="text"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input class="animated-input" placeholder="Sobrenome" (input)="onInput($event)"></ion-input>
+        <ion-input placeholder="Sobrenome" formControlName="sobrenome" type="text"></ion-input>
       </ion-item>
-    </div>
 
-    <ion-item>
-      <ion-input class="animated-input" placeholder="Email" (input)="onInput($event)"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input class="animated-input" placeholder="CPF" (input)="onInput($event)"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input class="animated-input" placeholder="Senha" (input)="onInput($event)"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-input placeholder="Email" formControlName="email" type="email"></ion-input>
+      </ion-item>
 
-    <ion-button (click)="onSubmit()">Cadastrar</ion-button>
+      <ion-item>
+        <ion-input placeholder="CPF" formControlName="cpf" (ionInput)="formatCPF($event)" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input placeholder="Senha" formControlName="senha" type="password"></ion-input>
+      </ion-item>
+
+      <ion-button expand="full" type="submit">Cadastrar</ion-button>
+    </form>
 
     <ion-text>Já possui cadastro?</ion-text>
     <ion-text class="cadastro" (click)="gologin()">Clique aqui</ion-text>
   </ion-card>
-</ion-app>
+</ion-content>

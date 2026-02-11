@@ -11,7 +11,6 @@ import { SuporteComponent } from './suporte.component';
     CommonModule,
     FormsModule,
     IonicModule,
-    SuporteComponent,
     RouterModule.forChild([
       {
         path: '',
@@ -19,5 +18,7 @@ import { SuporteComponent } from './suporte.component';
       }
     ])
   ]
+  ,
+  declarations: [SuporteComponent]
 })
 export class SuporteModule {}

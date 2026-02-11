@@ -11,7 +11,6 @@ import { LoginComponent } from './login.component';
     IonicModule,
     FormsModule,
     ReactiveFormsModule,
-    LoginComponent,
     RouterModule.forChild([
       {
         path: '',
@@ -19,5 +18,7 @@ import { LoginComponent } from './login.component';
       }
     ])
   ]
+  ,
+  declarations: [LoginComponent]
 })
 export class LoginModule {}
