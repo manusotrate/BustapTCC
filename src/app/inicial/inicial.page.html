@@ -1,0 +1,40 @@
+<ion-content [fullscreen]="true" class="initial-content">
+  <div class="container">
+    <!-- Logo e Título -->
+    <div class="header-section">
+      <div class="logo-container">
+        <ion-icon name="bus-outline" class="bus-icon"></ion-icon>
+        <h1 class="app-name">BusTap</h1>
+      </div>
+      
+      <div class="title-section">
+        <h2 class="main-title">
+          Viajar nunca foi<br>
+          tão fácil.
+        </h2>
+        <p class="subtitle">Apenas um clique.</p>
+      </div>
+    </div>
+
+    <!-- Botões de Ação -->
+    <div class="action-section">
+      <ion-button 
+        expand="block" 
+        shape="round" 
+        class="signup-button"
+        (click)="navigateToSignup()">
+        Inscreva-se
+      </ion-button>
+      
+      <div class="login-link">
+        <span>Já possui cadastro? </span>
+        <a (click)="navigateToLogin()">Faça login</a>
+      </div>
+    </div>
+
+    <!-- Ilustração do Ônibus -->
+    <div class="illustration-section">
+      <img src="assets/onibusInicial.png" alt="BusTap Illustration" class="bus-illustration">
+    </div>
+  </div>
+</ion-content>
