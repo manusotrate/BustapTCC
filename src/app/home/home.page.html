@@ -2,23 +2,31 @@
   <div class="header-container">
     <!-- Header com gradiente -->
     <div class="header-gradient">
-      <!-- Avatar e botão logout -->
+      <!-- Avatar e botões superiores -->
       <div class="top-section">
         <div class="avatar">
-          <ion-icon name="person"></ion-icon>
-          
+          <ion-icon name="time-outline"></ion-icon>
         </div>
-        <!-- Botão de logout -->
-        <ion-button fill="clear" color="light" (click)="logout()">
-          <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
-        </ion-button>
+
+        <!-- Ícones do canto superior direito -->
+        <div class="top-actions">
+          <ion-button fill="clear" color="light">
+            <ion-icon slot="icon-only" name="ticket-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="light">
+            <ion-icon slot="icon-only" name="hourglass-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="light" (click)="logout()">
+            <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+          </ion-button>
+        </div>
       </div>
 
       <!-- Saudação e saldo -->
       <div class="welcome-section">
         <h2>Bem vindo,</h2>
         <h3>{{ userName }}!</h3>
-        
+
         <div class="balance-section">
           <p>Seu saldo:</p>
           <h1>{{ balance }}</h1>
@@ -50,7 +58,7 @@
         </div>
       </ion-card-content>
     </ion-card>
-    
+
     <ion-card class="menu-card" (click)="gosuporte()">
       <ion-card-content>
         <div class="card-icon">
@@ -61,6 +69,5 @@
         </div>
       </ion-card-content>
     </ion-card>
-    
   </div>
 </ion-content>
