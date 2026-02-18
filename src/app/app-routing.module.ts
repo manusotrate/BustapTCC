@@ -29,9 +29,15 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'inicial',
+    loadChildren: () => import('./inicial/inicial.module').then( m => m.InicialPageModule)
+  },
+  {
     path: 'historico',
     loadChildren: () => import('./historico/historico-module').then( m => m.HistoricoModule)
   },
+
+];
 
 ];
 
