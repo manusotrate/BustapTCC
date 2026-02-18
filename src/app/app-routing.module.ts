@@ -28,6 +28,11 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
+  {
+    path: 'historico',
+    loadChildren: () => import('./historico/historico-module').then( m => m.HistoricoModule)
+  },
+
 ];
 
 @NgModule({
