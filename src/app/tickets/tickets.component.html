@@ -1,63 +1,37 @@
 <ion-header>
   <ion-toolbar>
-    <ion-avatar slot="start">
-      <img src="assets/avatar-placeholder.png" alt="User" />
-    </ion-avatar>
+    <div class="avatar" slot="start">
+      <ion-icon name="person"></ion-icon>
+    </div>
     <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon name="ticket-outline"></ion-icon>
+      <ion-button fill="clear" color="light" routerLink="/tickets">
+        <ion-icon slot="icon-only" name="ticket-outline"></ion-icon>
       </ion-button>
-      <ion-button>
-        <ion-icon name="time-outline"></ion-icon>
+      <ion-button fill="clear" color="light" routerLink="/historico">
+        <ion-icon slot="icon-only" name="time-outline"></ion-icon>
       </ion-button>
-      <ion-button>
-        <ion-icon name="log-out-outline"></ion-icon>
+      <ion-button fill="clear" color="light" (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="tickets-content">
+
   <div class="page-title">
     <h1>Esses são seus<br />tickets :D</h1>
   </div>
 
   <div class="tickets-list">
 
-    <!-- Ticket 30 Min -->
-    <div class="ticket-card">
+    <div class="ticket-card" *ngFor="let ticket of tickets">
       <div class="ticket-info">
-        <div class="ticket-remaining">2 Restante</div>
-        <div class="ticket-icon">
-          <ion-icon name="ticket-outline"></ion-icon>
-        </div>
-        <div class="ticket-duration">30 Min</div>
+        <span class="ticket-remaining">{{ ticket.quantidade }} Restante</span>
+        <ion-icon name="ticket-outline" class="ticket-icon"></ion-icon>
+        <span class="ticket-duration">{{ ticket.duracao }}</span>
       </div>
-      <button class="usar-btn">Usar!</button>
-    </div>
-
-    <!-- Ticket 1 Hora -->
-    <div class="ticket-card">
-      <div class="ticket-info">
-        <div class="ticket-remaining">6 Restante</div>
-        <div class="ticket-icon">
-          <ion-icon name="ticket-outline"></ion-icon>
-        </div>
-        <div class="ticket-duration">1 Hora</div>
-      </div>
-      <button class="usar-btn">Usar!</button>
-    </div>
-
-    <!-- Ticket 2 Horas -->
-    <div class="ticket-card">
-      <div class="ticket-info">
-        <div class="ticket-remaining">1 Restante</div>
-        <div class="ticket-icon">
-          <ion-icon name="ticket-outline"></ion-icon>
-        </div>
-        <div class="ticket-duration">2 Horas</div>
-      </div>
-      <button class="usar-btn">Usar!</button>
+      <button class="usar-btn" (click)="usarTicket(ticket)">Usar!</button>
     </div>
 
   </div>
@@ -65,4 +39,5 @@
   <div class="buy-button-wrapper">
     <button class="buy-btn">Compre mais tickets aqui!!!</button>
   </div>
+
 </ion-content>
