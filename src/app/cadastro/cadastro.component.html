@@ -6,27 +6,61 @@
     </ion-card-header>
 
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <div class="nsei">
+        <ion-item>
+          <ion-input 
+            class="nome animated-input" 
+            placeholder="Nome"
+            formControlName="nome"
+            type="text"
+            (input)="onInput($event)">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input 
+            class="animated-input"
+            placeholder="Sobrenome"
+            formControlName="sobrenome"
+            type="text"
+            (input)="onInput($event)">
+          </ion-input>
+        </ion-item>
+      </div>
+
       <ion-item>
-        <ion-input placeholder="Nome" formControlName="nome" type="text"></ion-input>
+        <ion-input 
+          class="animated-input" 
+          placeholder="Email"
+          formControlName="email"
+          type="email"
+          (input)="onInput($event)">
+        </ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input placeholder="Sobrenome" formControlName="sobrenome" type="text"></ion-input>
+        <ion-input 
+          class="animated-input" 
+          placeholder="CPF"
+          formControlName="cpf"
+          type="text"
+          inputmode="numeric"
+          maxlength="14"
+          (input)="formatCPF($event); onInput($event)">
+        </ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input placeholder="Email" formControlName="email" type="email"></ion-input>
+        <ion-input 
+          class="animated-input" 
+          placeholder="Senha"
+          formControlName="senha"
+          type="password"
+          (input)="onInput($event)">
+        </ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-input placeholder="CPF" formControlName="cpf" (ionInput)="formatCPF($event)" type="text"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input placeholder="Senha" formControlName="senha" type="password"></ion-input>
-      </ion-item>
-
-      <ion-button expand="full" type="submit">Cadastrar</ion-button>
+      <ion-button type="submit">Cadastrar</ion-button>
     </form>
 
     <ion-text>Já possui cadastro?</ion-text>

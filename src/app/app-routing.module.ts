@@ -27,10 +27,17 @@ const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
-  },  {
+  },
+  {
     path: 'inicial',
     loadChildren: () => import('./inicial/inicial.module').then( m => m.InicialPageModule)
   },
+  {
+    path: 'historico',
+    loadChildren: () => import('./historico/historico-module').then( m => m.HistoricoModule)
+  },
+
+];
 
 ];
 

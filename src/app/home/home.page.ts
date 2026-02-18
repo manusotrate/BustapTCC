@@ -51,4 +51,7 @@ export class HomePage implements OnInit {
   logout() {
     this.authService.logout();
   }
+  gosuporte() {
+    this.router.navigate(['/suporte']);
+  }
 }
