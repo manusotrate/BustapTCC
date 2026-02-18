@@ -29,19 +29,18 @@ ion-content {
 .top-section {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-top: 20px;
 }
 
 .avatar {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  
   ion-icon {
     font-size: 15px;
     color: white;
@@ -115,7 +114,6 @@ ion-content {
 .menu-card {
   margin-bottom: 16px;
   border-radius: 16px;
-  // ✅ Sombras mais visíveis e marcantes
   box-shadow: 
     0 8px 25px rgba(0, 0, 0, 0.15),
     0 4px 10px rgba(0, 0, 0, 0.1),
@@ -124,7 +122,6 @@ ion-content {
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.05);
   
-  // ✅ Efeito hover mais suave
   &:hover {
     transform: translateY(-2px);
     box-shadow: 
@@ -156,7 +153,6 @@ ion-content {
   display: flex;
   align-items: center;
   justify-content: center;
-  // ✅ Sombra sutil no ícone também
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   
   ion-icon {
@@ -173,12 +169,10 @@ ion-content {
     font-weight: 600;
     color: black;
     margin: 0;
-    // ✅ Sombra sutil no texto para destacar
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 }
 
-// Responsividade
 @media (max-width: 576px) {
   .header-container {
     height: 55vh;
@@ -198,7 +192,6 @@ ion-content {
     font-size: 32px;
   }
   
-  // ✅ Ajustar sombras em telas menores
   .menu-card {
     box-shadow: 
       0 6px 20px rgba(0, 0, 0, 0.12),
@@ -212,4 +205,18 @@ ion-content {
         0 2px 6px rgba(0, 0, 0, 0.08);
     }
   }
+  .top-actions {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+
+  ion-button {
+    --padding-start: 6px;
+    --padding-end: 6px;
+
+    ion-icon {
+      font-size: 22px;
+    }
+  }
+}
 }

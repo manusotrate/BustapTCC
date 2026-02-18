@@ -1,8 +1,8 @@
-<ion-app>
+<ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Bem vindo a sua <br> carteirinha digital!</ion-card-title>
-      <ion-card-subtitle>Faça login ou cadastre-se para podermos continuar!</ion-card-subtitle>
+      <ion-card-title>Bem vindo ao Bustap!</ion-card-title>
+      <ion-card-subtitle>Faça login ou cadastre-se para continuar.</ion-card-subtitle>
     </ion-card-header>
 
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
@@ -66,4 +66,4 @@
     <ion-text>Já possui cadastro?</ion-text>
     <ion-text class="cadastro" (click)="gologin()">Clique aqui</ion-text>
   </ion-card>
-</ion-app>
+</ion-content>

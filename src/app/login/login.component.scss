@@ -28,6 +28,7 @@ ion-card{
   top: 50%;
   transform: translateY(-55%);
   color: white;
+  animation: fadeInCard 0.8s ease-in-out;
 }
 
 ion-item{
@@ -37,7 +38,6 @@ ion-item{
   padding-right: 5px;
   font-size: 12px;
   
-  // Garantir que o input tenha o mesmo fundo
   ion-input {
     --background: #3A8CB4;
     --color: white;
@@ -47,7 +47,6 @@ ion-item{
   }
 }
 
-// Alternativa: aplicar diretamente no ion-input se necessário
 ion-input {
   --background: #3A8CB4 !important;
   --color: white !important;

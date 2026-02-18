@@ -19,5 +19,7 @@ import { CadastroComponent} from'./cadastro.component';
       }
     ])
   ]
+  ,
+  declarations: [CadastroComponent]
 })
 export class CadastroModule {}

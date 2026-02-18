@@ -6,9 +6,9 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-suporte',
   templateUrl: './suporte.component.html',
-  styleUrls: ['./suporte.component.scss'],
-  standalone: true,
-  imports: [IonicModule, CommonModule]
+  styleUrls: ['./suporte.component.scss']
+  ,
+  standalone: false
 })
 export class SuporteComponent {
   
