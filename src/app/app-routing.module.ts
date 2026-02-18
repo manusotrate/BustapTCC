@@ -25,7 +25,7 @@ const routes: Routes = [
   {
     
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'inicial',
     pathMatch: 'full'
   },
   {
@@ -36,8 +36,6 @@ const routes: Routes = [
     path: 'historico',
     loadChildren: () => import('./historico/historico-module').then( m => m.HistoricoModule)
   },
-
-];
 
 ];
 
