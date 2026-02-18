@@ -54,4 +54,10 @@ export class HomePage implements OnInit {
   gosuporte() {
     this.router.navigate(['/suporte']);
   }
+  gorecarga() {
+    this.router.navigate(['/recarga']);
+  }
+  gohistorico() {
+    this.router.navigate(['/historico']);
+  }
 }

@@ -23,6 +23,16 @@ const routes: Routes = [
   },
   
   {
+    path: 'recarga',
+    loadChildren: () => import('./recarga/recarga.module').then(m => m.RecargaModule)
+  },
+
+  {
+    path: 'historico',
+    loadChildren: () => import('./historico/historico.module').then(m => m.HistoricoModule)
+  },
+  
+  {
     
     path: '',
     redirectTo: 'inicial',
@@ -34,7 +44,7 @@ const routes: Routes = [
   },
   {
     path: 'historico',
-    loadChildren: () => import('./historico/historico-module').then( m => m.HistoricoModule)
+    loadChildren: () => import('./historico/historico.module').then( m => m.HistoricoModule)
   },
 
 ];
