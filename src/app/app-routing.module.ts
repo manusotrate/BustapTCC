@@ -32,6 +32,10 @@ const routes: Routes = [
     path: 'historico',
     loadChildren: () => import('./historico/historico-module').then( m => m.HistoricoModule)
   },
+  {
+    path: 'tickets',
+    loadChildren: () => import('./tickets/tickets-module').then( m => m.TicketsModule)
+  },
 
 ];
 
