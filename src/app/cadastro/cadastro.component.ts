@@ -7,10 +7,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-cadastro',
-  standalone: true,
-  imports: [CommonModule, IonicModule, ReactiveFormsModule, HttpClientModule],
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.scss'],
+  standalone: false
 })
 export class CadastroComponent implements OnInit {
   registrationForm: FormGroup;
