@@ -23,28 +23,18 @@ const routes: Routes = [
   },
   
   {
-    path: 'recarga',
-    loadChildren: () => import('./recarga/recarga.module').then(m => m.RecargaModule)
-  },
-
-  {
-    path: 'historico',
-    loadChildren: () => import('./historico/historico.module').then(m => m.HistoricoModule)
-  },
-  
-  {
     
     path: '',
-    redirectTo: 'inicial',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: 'inicial',
-    loadChildren: () => import('./inicial/inicial.module').then( m => m.InicialPageModule)
+    path: 'historico',
+    loadChildren: () => import('./historico/historico-module').then( m => m.HistoricoModule)
   },
   {
-    path: 'historico',
-    loadChildren: () => import('./historico/historico.module').then( m => m.HistoricoModule)
+    path: 'tickets',
+    loadChildren: () => import('./tickets/tickets-module').then( m => m.TicketsModule)
   },
 
 ];
