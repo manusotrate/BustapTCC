@@ -1,0 +1,34 @@
+<ion-content [fullscreen]="true" class="timer-content">
+  <div class="back-btn" (click)="goBack()">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+  </div>
+
+  <div class="timer-container">
+    <div class="top-text">
+      <p class="timer-label">Você está usando um ticket<br>de {{ ticketMinutes }} Min, resta:</p>
+    </div>
+
+    <div class="middle">
+      <div class="timer-display">{{ timeDisplay }}</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="sky"></div>
+    <div class="ground-layer">
+      <div class="trees left-trees">
+        <div class="tree"><div class="trunk"></div><div class="leaves"></div></div>
+        <div class="tree small"><div class="trunk"></div><div class="leaves"></div></div>
+      </div>
+    <div class="road"></div>
+    <!-- scene bus image placed at bottom (centered, full width) -->
+    <img src="assets/onibusticket.png" alt="Ônibus Ticket" class="scene-bus" />
+      <div class="trees right-trees">
+        <div class="tree"><div class="trunk"></div><div class="leaves"></div></div>
+        <div class="tree small"><div class="trunk"></div><div class="leaves"></div></div>
+      </div>
+    </div>
+
+    <!-- sign removed -->
+  </div>
+</ion-content>
