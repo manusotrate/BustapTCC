@@ -1,66 +1,76 @@
-// ---- Variáveis ----
-$teal: #4db6ac;
-$teal-dark: #3a9e94;
-$teal-toolbar: #4db6ac;
-$green-btn: #4db6ac;
+$gradient-start: #4FA4A7;
+$gradient-end: #1E4041;
+
+$btn-gradient-start: #98FFDB;
+$btn-gradient-end: #3DD5DA;
+$btn-gradient: linear-gradient(135deg, #{$btn-gradient-start}, #{$btn-gradient-end});
+
 $card-bg: #ffffff;
 $text-dark: #333333;
 $text-light: #888888;
 $border-radius-card: 14px;
 $border-radius-btn: 12px;
 
-// ---- Toolbar ----
-ion-toolbar {
-  --background: #{$teal-toolbar};
-  --border-width: 0;
-  padding: 8px 12px;
+.tickets-content {
+  --background: linear-gradient(180deg, #{$gradient-start} 0%, #{$gradient-end} 28%, #f5f5f5 28%);
 
-  ion-avatar {
-    width: 40px;
-    height: 40px;
-    margin-left: 8px;
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: calc(var(--ion-safe-area-top) + 12px) 12px 8px;
 
-    img {
-      object-fit: cover;
+    .avatar {
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background-color: #c9c9c9;
-    }
-  }
-
-  ion-buttons {
-    ion-button {
-      --color: #ffffff;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       ion-icon {
-        font-size: 22px;
+        font-size: 20px;
+        color: #4FA4A7;
+      }
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+
+      ion-button {
+        --color: #ffffff;
+        --padding-start: 6px;
+        --padding-end: 6px;
+
+        ion-icon {
+          font-size: 22px;
+        }
       }
     }
   }
-}
-
-// ---- Content ----
-.tickets-content {
-  --background: #f5f5f5;
 
   .page-title {
     text-align: center;
-    padding: 28px 16px 16px;
+    padding: 16px 16px 24px;
 
     h1 {
       font-size: 26px;
       font-weight: 700;
-      color: $text-dark;
+      color: #ffffff;
       line-height: 1.3;
       margin: 0;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
     }
   }
 
-  // ---- Lista de Tickets ----
   .tickets-list {
     display: flex;
     flex-direction: column;
     gap: 14px;
     padding: 8px 20px;
+    margin-top: 30px;
   }
 
   .ticket-card {
@@ -70,7 +80,7 @@ ion-toolbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 
     .ticket-info {
       display: flex;
@@ -87,7 +97,7 @@ ion-toolbar {
       .ticket-icon {
         ion-icon {
           font-size: 32px;
-          color: $teal;
+          color: $gradient-start;
           transform: rotate(-30deg);
         }
       }
@@ -101,31 +111,31 @@ ion-toolbar {
     }
 
     .usar-btn {
-      background: $green-btn;
-      color: #100909;
+      background: $btn-gradient;
+      color: #1E4041;
       border: none;
       border-radius: $border-radius-btn;
       padding: 14px 20px;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: opacity 0.2s ease;
       min-width: 72px;
+      box-shadow: 0 3px 10px rgba(61, 213, 218, 0.4);
 
       &:active {
-        background: $teal-dark;
+        opacity: 0.8;
       }
     }
   }
 
-  // ---- Botão Comprar ----
   .buy-button-wrapper {
     padding: 28px 20px 32px;
 
     .buy-btn {
       width: 100%;
-      background: $teal;
-      color: #000000;
+      background: $btn-gradient;
+      color: #1E4041;
       border: none;
       border-radius: 30px;
       padding: 16px;
@@ -133,12 +143,16 @@ ion-toolbar {
       font-weight: 700;
       cursor: pointer;
       letter-spacing: 0.3px;
-      transition: background 0.2s ease;
-      box-shadow: 0 4px 12px rgba(77, 182, 172, 0.4);
+      transition: opacity 0.2s ease;
+      box-shadow: 0 4px 16px rgba(61, 213, 218, 0.45);
 
       &:active {
-        background: $teal-dark;
+        opacity: 0.8;
       }
     }
+  }
+  .saida{
+    font-size: 100px;
+
   }
 }

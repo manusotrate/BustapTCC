@@ -1,112 +1,117 @@
-ion-content {
-  --background: url('../../assets/planodefundologin.png') !important;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
+$gradient-start: #4FA4A7;
+$gradient-end: #1E4041;
 
-ion-app{
-  height: 100%;
-}
+$btn-gradient-start: #98FFDB;
+$btn-gradient-end: #3DD5DA;
+$btn-gradient: linear-gradient(135deg, #{$btn-gradient-start}, #{$btn-gradient-end});
 
-ion-card-title{
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-}
+$card-bg: #ffffff;
+$text-dark: #333333;
+$text-light: #888888;
+$border-radius-card: 14px;
+$border-radius-btn: 12px;
 
-ion-card-subtitle{
-  color: white;
-  font-size: 13px;
-  font-weight: normal;
-}
+.tickets-content {
+  --background: linear-gradient(180deg, #{$gradient-start} 0%, #{$gradient-end} 28%, #f5f5f5 28%);
 
-ion-card{
-    --background: #3A8CB4;
-    color: black;
-    border-radius: 20px;
-    text-align:start;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-55%);
-    color: white;
-    animation: fadeInCard 0.8s ease-in-out;
-}
+  .page-title {
+    text-align: center;
+    padding: 60px 16px 24px;
 
-ion-item{
-  --background: #3A8CB4;
-  --border-color:white;
-  margin: 13px 0;
-  padding-right: 5px;
-  font-size: 12px;
-  color: white;
-}
-
-ion-button {
-  text-align: center;
-  justify-content: center;
-  display: grid;
-  --background: white;
-  padding: 10px;
-  padding-bottom: 20px;
-  --border-radius: 20px;
-  color: black;
-}
-
-ion-text{
-  font-size: 12px;
-  opacity: 0.5;
-  padding: 0px 20px;
-  margin-bottom: 10px;  
-  display: flex;
-  justify-content: center;
-}
-
-.cadastro{  
-  font-size: 12px;
-  opacity: 0.5;
-  padding: 0px 20px;
-  margin-bottom: 10px;  
-  display: flex;
-  align-items: center;
-  text-decoration:underline;
-  cursor: pointer;
-}
-
-.nsei{
-  display: flex;
-  gap: 15px;
-  align-items: center;
-}
-
-.animated-input {
-  transition: all 0.3s ease-in-out;
-  border: 1px solid transparent;
-  border-radius: 5px;
-}
-
-.animated-input:focus {
-  border: 1px solid #3880ff;
-  box-shadow: 0 0 8px rgba(56, 128, 255, 0.5);
-  outline: none;
-}
-
-.animated-input.typing {
-  border: 1px solid #4caf50;
-  box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
-  transform: scale(1.02);
-}
-
-@keyframes fadeInCard {
-  from {
-    opacity: 0;
-    transform: translateY(-55%) scale(0.95);
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+      margin: 0;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    }
   }
-  to {
-    opacity: 1;
-    transform: translateY(-55%) scale(1);
+
+  .tickets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 8px 20px;
   }
+
+  .ticket-card {
+    background: $card-bg;
+    border-radius: $border-radius-card;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+
+    .ticket-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+
+      .ticket-remaining {
+        font-size: 12px;
+        color: $text-light;
+        margin-bottom: 4px;
+      }
+
+      .ticket-icon {
+        ion-icon {
+          font-size: 32px;
+          color: $gradient-start;
+          transform: rotate(-30deg);
+        }
+      }
+
+      .ticket-duration {
+        font-size: 14px;
+        font-weight: 600;
+        color: $text-dark;
+        margin-top: 4px;
+      }
+    }
+
+    .usar-btn {
+      background: $btn-gradient;
+      color: #1E4041;
+      border: none;
+      border-radius: $border-radius-btn;
+      padding: 14px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+      min-width: 72px;
+      box-shadow: 0 3px 10px rgba(61, 213, 218, 0.4);
+
+      &:active {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .buy-button-wrapper {
+    padding: 28px 20px 32px;
+
+    .buy-btn {
+      width: 100%;
+      background: $btn-gradient;
+      color: #1E4041;
+      border: none;
+      border-radius: 30px;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: opacity 0.2s ease;
+      box-shadow: 0 4px 16px rgba(61, 213, 218, 0.45);
+
+      &:active {
+        opacity: 0.8;
+      }
+    }
+  }
+  
 }
