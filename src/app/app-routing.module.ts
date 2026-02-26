@@ -10,6 +10,11 @@ const routes: Routes = [
     canActivate: [AuthGuard] // ← Protege a rota home
   },
   {
+    path: 'recarga',
+    loadChildren: () => import('./recarga/recarga.module').then(m => m.RecargaModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'login',
     loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
   },
@@ -31,11 +36,17 @@ const routes: Routes = [
   {
     path: 'historico',
     loadChildren: () => import('./historico/historico.module').then( m => m.HistoricoModule)
+    loadChildren: () => import('./historico/historico.module').then( m => m.HistoricoModule)
   },
   {
     path: 'tickets',
     loadChildren: () => import('./tickets/tickets-module').then( m => m.TicketsModule)
   },
+  {
+    path: 'timer',
+    loadChildren: () => import('./timer/timer.module').then( m => m.TimerPageModule)
+  },
+
 
 ];
 
