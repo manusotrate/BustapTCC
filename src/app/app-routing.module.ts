@@ -36,7 +36,7 @@ const routes: Routes = [
   {
     path: 'historico',
     loadChildren: () => import('./historico/historico.module').then( m => m.HistoricoModule)
-    loadChildren: () => import('./historico/historico.module').then( m => m.HistoricoModule)
+  
   },
   {
     path: 'tickets',
