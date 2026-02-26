@@ -1,13 +1,8 @@
-
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding">
+  <ion-buttons>
+    <ion-back-button defaultHref="/home" text="" icon="arrow-back-outline" style="color: #000;"></ion-back-button>
+  </ion-buttons>
+
   <div class="suporte-container">
     <div class="content-wrapper">
       <h1 class="titulo">Não consegue recarregar?</h1>
@@ -15,9 +10,12 @@
         Contate-nos para podermos ajudá-lo(a) o mais rápido possível :)
       </p>
       
-      <div class="email-container">
+      <div class="email-container" (click)="copiarEmail()">
         <p class="email">suportebustap@gmail.com</p>
+        <ion-icon [name]="copiado ? 'checkmark-outline' : 'copy-outline'" class="copy-icon" [class.copiado]="copiado"></ion-icon>
       </div>
+
+      <p class="copy-hint" *ngIf="copiado">Email copiado!</p>
     </div>
     
     <div class="footer-section">

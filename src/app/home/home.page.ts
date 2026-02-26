@@ -60,4 +60,7 @@ export class HomePage implements OnInit {
   gohistorico() {
     this.router.navigate(['/historico']);
   }
+  gotickets() {
+    this.router.navigate(['/tickets']);
+  }
 }
