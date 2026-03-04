@@ -1,0 +1,137 @@
+ion-header {
+    ion-toolbar {
+      --background: #ffffff;
+      --border-width: 0;
+      --box-shadow: none;
+    }
+    ion-back-button {
+      --color: #000;
+      --icon-font-size: 22px;
+    }
+  }
+  
+  ion-content {
+    --background: #ffffff;
+  }
+  
+  .recarga-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 56px);
+    padding: 0 24px 32px;
+  }
+  
+  /* ── Seção do valor ── */
+  .valor-section {
+    flex: 0 0 auto;
+    padding-top: 32px;
+    margin-bottom: 32px;
+  }
+  
+  .label {
+    font-size: 26px;
+    font-weight: 700;
+    color: #000;
+    line-height: 1.25;
+    margin: 0 0 28px;
+  }
+  
+  .valor-display {
+    padding-bottom: 10px;
+  }
+  
+  .valor-texto {
+    font-size: 28px;
+    font-weight: 400;
+    color: #000;
+    transition: color 0.2s;
+  
+    &.zerado {
+      color: #aaa;
+    }
+  }
+  
+  .linha {
+    height: 1.5px;
+    background-color: #000;
+    width: 100%;
+  }
+  
+  /* ── Teclado ── */
+  .teclado {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .teclado-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    width: 100%;
+  }
+  
+  .tecla {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    font-weight: 400;
+    color: #000;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.12s;
+  
+    &:active {
+      background: #f0f0f0;
+    }
+  
+    &.tecla-vazia {
+      pointer-events: none;
+    }
+  
+    &.tecla-apagar {
+      ion-icon {
+        font-size: 24px;
+        color: #000;
+      }
+    }
+  }
+  
+  /* ── Footer ── */
+  .footer-section {
+    flex: 0 0 auto;
+  }
+  
+  .btn-continuar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 18px 24px;
+    border-radius: 50px;
+    border: none;
+    background: #000;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  
+    ion-icon {
+      font-size: 20px;
+    }
+  
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  
+    &:not(:disabled):active {
+      opacity: 0.8;
+    }
+  }

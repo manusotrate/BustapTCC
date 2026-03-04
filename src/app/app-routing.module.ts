@@ -10,6 +10,11 @@ const routes: Routes = [
     canActivate: [AuthGuard] // ← Protege a rota home
   },
   {
+    path: 'recarga',
+    loadChildren: () => import('./recarga/recarga.module').then(m => m.RecargaModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'login',
     loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
   },
@@ -25,20 +30,25 @@ const routes: Routes = [
   {
     
     path: '',
-    redirectTo: 'inicial',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: 'inicial',
-    loadChildren: () => import('./inicial/inicial.module').then( m => m.InicialPageModule)
+    path: 'historico',
+    loadChildren: () => import('./historico/historico.module').then( m => m.HistoricoModule)
   },
   {
-    path: 'historico',
-    loadChildren: () => import('./historico/historico-module').then( m => m.HistoricoModule)
-  },  {
+    path: 'tickets',
+    loadChildren: () => import('./tickets/tickets-module').then( m => m.TicketsModule)
+  },
+  {
+    path: 'timer',
+    loadChildren: () => import('./timer/timer.module').then( m => m.TimerPageModule)
+  },
+  {
     path: 'horarios',
     loadChildren: () => import('./horarios/horarios.module').then( m => m.HorariosPageModule)
-  },
+  }
 
 
 ];
