@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
   standalone: false
 })
 export class RecargaComponent {
+
+  @ViewChild('valorInput') valorInput!: ElementRef<HTMLInputElement>;
 
   private digitos: string = '0';
 
@@ -39,6 +41,20 @@ export class RecargaComponent {
     } else {
       this.digitos = this.digitos.slice(0, -1);
     }
+  }
+
+  adicionarValor(reais: number) {
+    const atual = parseInt(this.digitos, 10);
+    const novo = atual + reais * 100;
+    if (novo > 999999999) return;
+    this.digitos = novo.toString();
+  }
+
+  onInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const digits = input.value.replace(/\D/g, '').slice(0, 9);
+    this.digitos = digits || '0';
+    input.value = this.valorFormatado;
   }
 
   continuar() {

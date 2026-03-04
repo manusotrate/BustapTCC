@@ -13,32 +13,23 @@
     <div class="valor-section">
       <p class="label">Quanto você deseja recarregar?</p>
       <div class="valor-display">
-        <span class="valor-texto" [class.zerado]="valorNumerico === 0">{{ valorFormatado }}</span>
+        <input
+          #valorInput
+          type="tel"
+          class="valor-texto"
+          [class.zerado]="valorNumerico === 0"
+          [value]="valorFormatado"
+          (input)="onInput($event)"
+        />
       </div>
       <div class="linha"></div>
     </div>
 
-    <!-- Teclado numérico -->
-    <div class="teclado">
-      <div class="teclado-grid">
-        <button class="tecla" (click)="digitarNumero('1')">1</button>
-        <button class="tecla" (click)="digitarNumero('2')">2</button>
-        <button class="tecla" (click)="digitarNumero('3')">3</button>
-
-        <button class="tecla" (click)="digitarNumero('4')">4</button>
-        <button class="tecla" (click)="digitarNumero('5')">5</button>
-        <button class="tecla" (click)="digitarNumero('6')">6</button>
-
-        <button class="tecla" (click)="digitarNumero('7')">7</button>
-        <button class="tecla" (click)="digitarNumero('8')">8</button>
-        <button class="tecla" (click)="digitarNumero('9')">9</button>
-
-        <button class="tecla tecla-vazia"></button>
-        <button class="tecla" (click)="digitarNumero('0')">0</button>
-        <button class="tecla tecla-apagar" (click)="apagar()">
-          <ion-icon name="backspace-outline"></ion-icon>
-        </button>
-      </div>
+    <!-- Botões de atalho -->
+    <div class="atalhos">
+      <button class="atalho-btn" (click)="adicionarValor(1)">+1</button>
+      <button class="atalho-btn" (click)="adicionarValor(10)">+10</button>
+      <button class="atalho-btn" (click)="adicionarValor(100)">+100</button>
     </div>
 
     <!-- Botão continuar -->
