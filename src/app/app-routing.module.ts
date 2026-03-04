@@ -30,7 +30,7 @@ const routes: Routes = [
   {
     
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'inicial',
     pathMatch: 'full'
   },
   {
@@ -46,6 +46,14 @@ const routes: Routes = [
     path: 'timer',
     loadChildren: () => import('./timer/timer.module').then( m => m.TimerPageModule)
   },
+  {
+    path: 'inicial',
+    loadChildren: () => import('./inicial/inicial.module').then( m => m.InicialPageModule)
+  },  {
+    path: 'comprar-tickets',
+    loadChildren: () => import('./comprar-tickets/comprar-tickets.module').then( m => m.ComprarTicketsPageModule)
+  }
+
 
 
 ];

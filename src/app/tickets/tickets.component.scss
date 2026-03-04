@@ -1,168 +1,170 @@
+$btn-gradient: linear-gradient(135deg, #98FFDB, #3DD5DA);
 $gradient-start: #4FA4A7;
-$gradient-end: #1E4041;
-
-$btn-gradient-start: #98FFDB;
-$btn-gradient-end: #3DD5DA;
-$btn-gradient: linear-gradient(135deg, #{$btn-gradient-start}, #{$btn-gradient-end});
-
-$card-bg: #ffffff;
 $text-dark: #333333;
 $text-light: #888888;
-$border-radius-card: 14px;
-$border-radius-btn: 12px;
 
-.white-container {
-  background: #f5f5f5;
-  border-radius: 20px 20px 0 0;
-  margin-top: -20px;
-  padding: 8px 0;
-  position: relative;
-  z-index: 1;
+ion-content.tickets-content {
+  --background: #ffffff;
+  --overflow: hidden;
 }
 
-.tickets-content {
-  --background: linear-gradient(180deg, #{$gradient-start} 0%, #{$gradient-end} 28%, #f5f5f5 28%);
-  --overflow: auto; // ← habilita scroll
+// Header pequeno — só o top bar
+.header-container {
+  position: relative;
+  height: 120px;
+  overflow: hidden;
+}
 
-  .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: calc(var(--ion-safe-area-top) + 12px) 12px 8px;
+.header-gradient {
+  background: linear-gradient(#4FA4A7, #1E4041);
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: white;
+}
 
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
 
-      ion-icon {
-        font-size: 20px;
-        color: #4FA4A7;
-      }
-    }
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    .top-actions {
-      display: flex;
-      align-items: center;
+  ion-icon {
+    font-size: 15px;
+    color: white;
+  }
+}
 
-      ion-button {
-        --color: #ffffff;
-        --padding-start: 6px;
-        --padding-end: 6px;
+.top-actions {
+  display: flex;
+  align-items: center;
 
-        ion-icon {
-          font-size: 22px;
-        }
-      }
+  ion-button {
+    --color: #ffffff !important;
+    --padding-start: 6px;
+    --padding-end: 6px;
+
+    ion-icon {
+      font-size: 24px;
+      color: #ffffff !important;
     }
   }
+}
 
-  .page-title {
-    text-align: center;
-    padding: 16px 16px 24px;
+// Container branco sobreposto com bordinha
+.menu-container {
+  width: 100%;
+  padding: 24px 20px;
+  background-color: white;
+  border-radius: 20px 20px 0 0;
+  position: relative;
+  z-index: 1;
+  margin-top: -20px; // sobe sobre o header para mostrar a borda
+}
 
-    h1 {
-      font-size: 26px;
-      font-weight: 700;
-      color: #ffffff;
-      line-height: 1.3;
-      margin: 0;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-    }
-  }
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  margin: 0 0 24px 0;
+}
 
-  .tickets-list {
+// Cards de ticket
+.tickets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ticket-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  .ticket-info {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: 8px 20px;
-    margin-top: 30px;
-  }
+    align-items: flex-start;
+    gap: 2px;
 
-  .ticket-card {
-    background: $card-bg;
-    border-radius: $border-radius-card;
-    padding: 14px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-
-    .ticket-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 2px;
-
-      .ticket-remaining {
-        font-size: 12px;
-        color: $text-light;
-        margin-bottom: 4px;
-      }
-
-      .ticket-icon {
-        ion-icon {
-          font-size: 32px;
-          color: $gradient-start;
-          transform: rotate(-30deg);
-        }
-      }
-
-      .ticket-duration {
-        font-size: 14px;
-        font-weight: 600;
-        color: $text-dark;
-        margin-top: 4px;
-      }
+    .ticket-remaining {
+      font-size: 12px;
+      color: $text-light;
+      margin-bottom: 4px;
     }
 
-    .usar-btn {
-      background: $btn-gradient;
-      color: #1E4041;
-      border: none;
-      border-radius: $border-radius-btn;
-      padding: 14px 20px;
-      font-size: 15px;
+    .ticket-icon ion-icon {
+      font-size: 32px;
+      color: $gradient-start;
+      transform: rotate(-30deg);
+    }
+
+    .ticket-duration {
+      font-size: 14px;
       font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s ease;
-      min-width: 72px;
-      box-shadow: 0 3px 10px rgba(61, 213, 218, 0.4);
-
-      &:active {
-        opacity: 0.8;
-      }
+      color: $text-dark;
+      margin-top: 4px;
     }
   }
 
-  .buy-button-wrapper {
-    padding: 28px 20px 32px;
+  .usar-btn {
+    background: $btn-gradient;
+    color: #1E4041;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 72px;
+    box-shadow: 0 3px 10px rgba(61, 213, 218, 0.4);
 
-    .buy-btn {
-      width: 100%;
-      background: $btn-gradient;
-      color: #1E4041;
-      border: none;
-      border-radius: 30px;
-      padding: 16px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.3px;
-      transition: opacity 0.2s ease;
-      box-shadow: 0 4px 16px rgba(61, 213, 218, 0.45);
-
-      &:active {
-        opacity: 0.8;
-      }
-    }
+    &:active { opacity: 0.8; }
   }
-  .saida{
-    font-size: 100px;
+}
 
+.buy-button-wrapper {
+  padding: 24px 0 0;
+
+  .buy-btn {
+    width: 100%;
+    background: $btn-gradient;
+    color: #1E4041;
+    border: none;
+    border-radius: 30px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(61, 213, 218, 0.45);
+
+    &:active { opacity: 0.8; }
+  }
+}
+
+@media (max-width: 576px) {
+  .top-actions ion-button ion-icon {
+    font-size: 22px;
   }
 }
