@@ -14,7 +14,6 @@ ion-content.initial-content::part(background) {
   position: relative;
 }
 
-// Header Section
 .header-section {
   flex: 0 0 auto;
   z-index: 10;
@@ -70,7 +69,6 @@ ion-content.initial-content::part(background) {
   }
 }
 
-// Action Section
 .action-section {
   flex: 0 0 auto;
   z-index: 10;
@@ -112,7 +110,6 @@ ion-content.initial-content::part(background) {
   }
 }
 
-// Illustration Section
 .illustration-section {
   flex: 1;
   display: flex;
@@ -129,6 +126,11 @@ ion-content.initial-content::part(background) {
     object-fit: contain;
     display: block;
   }
+}
+
+@keyframes illustrationFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
 @media (min-width: 768px) {
