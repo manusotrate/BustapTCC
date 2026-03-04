@@ -11,8 +11,18 @@ $text-light: #888888;
 $border-radius-card: 14px;
 $border-radius-btn: 12px;
 
+.white-container {
+  background: #f5f5f5;
+  border-radius: 20px 20px 0 0;
+  margin-top: -20px;
+  padding: 8px 0;
+  position: relative;
+  z-index: 1;
+}
+
 .tickets-content {
   --background: linear-gradient(180deg, #{$gradient-start} 0%, #{$gradient-end} 28%, #f5f5f5 28%);
+  --overflow: auto; // ← habilita scroll
 
   .top-bar {
     display: flex;
