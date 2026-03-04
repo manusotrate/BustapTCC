@@ -35,7 +35,11 @@ const routes: Routes = [
   {
     path: 'historico',
     loadChildren: () => import('./historico/historico-module').then( m => m.HistoricoModule)
+  },  {
+    path: 'horarios',
+    loadChildren: () => import('./horarios/horarios.module').then( m => m.HorariosPageModule)
   },
+
 
 ];
 

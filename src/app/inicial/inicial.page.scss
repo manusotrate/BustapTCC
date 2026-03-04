@@ -10,7 +10,6 @@ ion-content.initial-content {
   position: relative;
 }
 
-// Header Section
 .header-section {
   flex: 0 0 auto;
   z-index: 10;
@@ -66,7 +65,6 @@ ion-content.initial-content {
   }
 }
 
-// Action Section
 .action-section {
   flex: 0 0 auto;
   z-index: 10;
@@ -116,7 +114,6 @@ ion-content.initial-content {
   }
 }
 
-// Illustration Section
 .illustration-section {
   flex: 1;
   display: flex;
@@ -140,7 +137,6 @@ ion-content.initial-content {
   50% { transform: translateY(-10px); }
 }
 
-// Responsive adjustments
 @media (min-width: 768px) {
   .container {
     max-width: 480px;
