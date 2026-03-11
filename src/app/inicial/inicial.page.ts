@@ -12,13 +12,16 @@ export class InicialPage implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    // Inicialização da página
   }
 
   navigateToSignup() {
+    // Navegar para a página de cadastro
     this.router.navigate(['/cadastro']);
   }
 
   navigateToLogin() {
+    // Navegar para a página de login
     this.router.navigate(['/login']);
   }
 

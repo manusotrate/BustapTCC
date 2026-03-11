@@ -63,6 +63,9 @@ export class TicketsComponent implements OnInit {
   home() {
     this.router.navigate(['/home']);
   }
+  comprar() {
+  this.router.navigate(['/comprar-tickets']);
+}
 
   comprar() {
     this.router.navigate(['/comprar-tickets']);
