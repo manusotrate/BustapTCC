@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+interface Ticket {
+  minutos: number;
+  quantidade: number;
+}
+
 @Component({
   selector: 'app-tickets',
   templateUrl: './tickets.component.html',
@@ -11,6 +16,12 @@ import { Router } from '@angular/router';
 export class TicketsComponent implements OnInit {
 
   usuario: any;
+
+  // Dados mockados – substituir por chamada ao backend quando disponível
+  tickets: Ticket[] = [
+    { minutos: 30, quantidade: 2 },
+    { minutos: 45, quantidade: 5 },
+  ];
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -25,8 +36,19 @@ export class TicketsComponent implements OnInit {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    }).subscribe((res: any) => {
-      this.usuario = res.usuario;
+    }).subscribe({
+      next: (res: any) => {
+        this.usuario = res.usuario;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar usuário:', err);
+      }
+    });
+  }
+
+  usarTicket(ticket: Ticket) {
+    this.router.navigate(['/timer'], {
+      queryParams: { minutos: ticket.minutos }
     });
   }
 
@@ -46,5 +68,7 @@ export class TicketsComponent implements OnInit {
   this.router.navigate(['/comprar-tickets']);
 }
 
-
-} 
+  comprar() {
+    this.router.navigate(['/comprar-tickets']);
+  }
+}
