@@ -17,7 +17,6 @@ export class TicketsComponent implements OnInit {
 
   usuario: any;
 
-  // Dados mockados – substituir por chamada ao backend quando disponível
   tickets: Ticket[] = [
     { minutos: 30, quantidade: 2 },
     { minutos: 45, quantidade: 5 },
