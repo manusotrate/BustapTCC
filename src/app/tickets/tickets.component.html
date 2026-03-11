@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="menu-container">
+  <div class="menu-container" [class.blurred]="ticketSelecionado">
 
     <div class="chevron-wrapper">
       <ion-icon name="chevron-down-outline" class="chevron-icon"></ion-icon>
@@ -30,7 +30,6 @@
     <h2 class="page-title">Esses são seus<br>tickets :D</h2>
 
     <div class="tickets-list">
-
       <div class="ticket-card" *ngFor="let ticket of tickets">
         <div class="ticket-top">
           <ion-icon name="ticket-outline" class="ticket-icon"></ion-icon>
@@ -39,15 +38,25 @@
             <span class="ticket-remaining">{{ ticket.quantidade }} Restante</span>
           </div>
         </div>
-        <button class="usar-btn" (click)="usarTicket(ticket)">Usar</button>
+        <button class="usar-btn" (click)="confirmarUso(ticket)">Usar</button>
       </div>
-
     </div>
 
     <div class="buy-button-wrapper">
       <button class="buy-btn" (click)="comprar()">Compre mais tickets aqui!!!</button>
     </div>
 
+  </div>
+
+  <!-- Overlay + Modal -->
+  <div class="modal-overlay" *ngIf="ticketSelecionado" (click)="cancelar()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+      <p class="modal-texto">Quer ativar esse ticket?</p>
+      <div class="modal-actions">
+        <button class="btn-nao" (click)="cancelar()">Não</button>
+        <button class="btn-sim" (click)="usarTicket()">Sim</button>
+      </div>
+    </div>
   </div>
 
 </ion-content>
