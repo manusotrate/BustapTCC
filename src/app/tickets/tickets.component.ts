@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 interface Ticket {
   minutos: number;
@@ -22,14 +23,18 @@ export class TicketsComponent implements OnInit {
     { minutos: 45, quantidade: 5 },
   ];
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.carregarUsuario();
   }
 
   carregarUsuario() {
-    const token = localStorage.getItem('token');
+    const token = this.authService.getToken();
 
     this.http.get('http://localhost:4000/usuarios', {
       headers: {
@@ -52,8 +57,7 @@ export class TicketsComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
 
   historico() {
