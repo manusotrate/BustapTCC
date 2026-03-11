@@ -1,103 +1,59 @@
 ion-content {
-  --background: url('/assets/planodefundologin.png') !important;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  --background: url('../../assets/planodefundologin.png') center/cover no-repeat;
 }
 
-ion-app{
-  height: 100%;
-}
-
-ion-card-title{
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-ion-card-subtitle{
-  color: white;
-  font-size: 13px;
-  font-weight: normal;
-}
-
-ion-card{
-    --background: #3A8CB4;
-    color: black;
-    border-radius: 20px;
-    text-align:start;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-55%);
-    color: white;
-    animation: fadeInCard 0.8s ease-in-out;
-}
-
-ion-item{
+ion-card {
   --background: #3A8CB4;
-  --border-color:white;
-  margin: 13px 0;
-  padding-right: 5px;
-  font-size: 12px;
+  border-radius: 20px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-55%);
+  color: white;
+  animation: fadeInCard 0.8s ease-in-out;
+}
+
+ion-card-title { color: white; font-size: 20px; font-weight: bold; }
+ion-card-subtitle { color: white; font-size: 13px; }
+
+ion-item {
+  --background: #3A8CB4;
+  --border-color: white;
+  margin: 10px 0;
   color: white;
 }
 
 ion-button {
-  text-align: center;
-  justify-content: center;
   display: grid;
   --background: white;
+  --border-radius: 20px;
+  --color: black;
   padding: 10px;
   padding-bottom: 20px;
-  --border-radius: 20px;
-  color: black;
 }
 
-ion-text{
+ion-text {
   font-size: 12px;
   opacity: 0.5;
-  padding: 0px 20px;
-  margin-bottom: 10px;  
+  padding: 0 20px;
   display: flex;
   justify-content: center;
 }
 
-.cadastro{  
+.cadastro {
   font-size: 12px;
   opacity: 0.5;
-  padding: 0px 20px;
-  margin-bottom: 10px;  
-  display: flex;
-  align-items: center;
-  text-decoration:underline;
+  padding: 0 20px;
+  text-decoration: underline;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
 }
 
-.nsei{
+.nsei {
   display: flex;
   gap: 15px;
-  align-items: center;
-}
-
-.animated-input {
-  transition: all 0.3s ease-in-out;
-  border: 1px solid transparent;
-  border-radius: 5px;
-}
-
-.animated-input:focus {
-  border: 1px solid #3880ff;
-  box-shadow: 0 0 8px rgba(56, 128, 255, 0.5);
-  outline: none;
-}
-
-.animated-input.typing {
-  border: 1px solid #4caf50;
-  box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
-  transform: scale(1.02);
 }
 
 @keyframes fadeInCard {

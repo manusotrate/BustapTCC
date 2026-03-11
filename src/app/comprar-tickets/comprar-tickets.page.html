@@ -1,0 +1,40 @@
+<ion-content [fullscreen]="true" class="comprar-content">
+
+  <!-- Header -->
+  <div class="comprar-header">
+    <ion-button fill="clear" class="back-btn" (click)="goBack()">
+      <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+    </ion-button>
+
+    <div class="saldo-section">
+      <p class="saldo-label">Seu saldo:</p>
+      <h1 class="saldo-valor">{{ saldoFormatado }}</h1>
+    </div>
+  </div>
+
+  <!-- Grid de tickets -->
+  <div class="tickets-grid">
+    <div
+      class="ticket-item"
+      *ngFor="let ticket of tickets"
+      (click)="selecionarTicket(ticket)">
+      <ion-icon name="ticket-outline"></ion-icon>
+      <span class="ticket-min">{{ ticket.minutos }} Min</span>
+      <span class="ticket-preco">{{ ticket.precoFormatado }}</span>
+    </div>
+  </div>
+
+  <!-- Modal de confirmação -->
+  <div class="modal-overlay" *ngIf="ticketSelecionado" (click)="cancelar()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+      <p class="modal-texto">
+        Tem certeza que quer<br>comprar um ticket de {{ ticketSelecionado.minutos }} Min?
+      </p>
+      <div class="modal-actions">
+        <button class="btn-nao" (click)="cancelar()">Não</button>
+        <button class="btn-sim" (click)="confirmar()">Sim</button>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
