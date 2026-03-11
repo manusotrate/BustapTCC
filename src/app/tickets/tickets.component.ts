@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { NavController } from '@ionic/angular';
 
 interface Ticket {
   minutos: number;
@@ -17,6 +18,7 @@ interface Ticket {
 export class TicketsComponent implements OnInit {
 
   usuario: any;
+  ticketSelecionado: Ticket | null = null;
 
   tickets: Ticket[] = [
     { minutos: 30, quantidade: 2 },
@@ -26,7 +28,8 @@ export class TicketsComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {
@@ -35,25 +38,32 @@ export class TicketsComponent implements OnInit {
 
   carregarUsuario() {
     const token = this.authService.getToken();
-
     this.http.get('http://localhost:4000/usuarios', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      headers: { Authorization: `Bearer ${token}` }
     }).subscribe({
-      next: (res: any) => {
-        this.usuario = res.usuario;
-      },
-      error: (err) => {
-        console.error('Erro ao carregar usuário:', err);
-      }
+      next: (res: any) => { this.usuario = res.usuario; },
+      error: (err) => { console.error('Erro ao carregar usuário:', err); }
     });
   }
 
-  usarTicket(ticket: Ticket) {
+  // Abre o modal de confirmação
+  confirmarUso(ticket: Ticket) {
+    this.ticketSelecionado = ticket;
+  }
+
+  // Confirma e navega para o timer
+  usarTicket() {
+    if (!this.ticketSelecionado) return;
+    const ticket = this.ticketSelecionado;
+    this.ticketSelecionado = null;
     this.router.navigate(['/timer'], {
       queryParams: { minutos: ticket.minutos }
     });
+  }
+
+  // Fecha o modal sem fazer nada
+  cancelar() {
+    this.ticketSelecionado = null;
   }
 
   logout() {
@@ -65,7 +75,7 @@ export class TicketsComponent implements OnInit {
   }
 
   home() {
-    this.router.navigate(['/home']);
+    this.navCtrl.navigateBack('/home');
   }
 
   comprar() {

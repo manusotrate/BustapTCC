@@ -73,6 +73,13 @@ ion-content.tickets-content {
   z-index: 1;
   margin-top: -20px;
   box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+  transition: filter 0.2s ease;
+
+  &.blurred {
+    filter: blur(4px);
+    pointer-events: none;
+    user-select: none;
+  }
 }
 
 // ── Chevron ──
@@ -186,6 +193,64 @@ ion-content.tickets-content {
 
     &:active {
       opacity: 0.80;
+    }
+  }
+}
+
+// ── Modal Overlay ──
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px 24px 20px;
+  margin: 0 32px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 320px;
+
+  .modal-texto {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+    margin: 0 0 24px;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+
+    button {
+      flex: 1;
+      padding: 12px 0;
+      border: none;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+
+      &:active { opacity: 0.8; }
+    }
+
+    .btn-nao {
+      background: $btn-gradient;
+      color: #1E4041;
+    }
+
+    .btn-sim {
+      background: $btn-gradient;
+      color: #1E4041;
     }
   }
 }
