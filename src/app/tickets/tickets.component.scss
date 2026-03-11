@@ -1,144 +1,197 @@
-// ---- Variáveis ----
-$teal: #4db6ac;
-$teal-dark: #3a9e94;
-$teal-toolbar: #4db6ac;
-$green-btn: #4db6ac;
-$card-bg: #ffffff;
-$text-dark: #333333;
-$text-light: #888888;
-$border-radius-card: 14px;
-$border-radius-btn: 12px;
+$btn-gradient: linear-gradient(135deg, #98FFDB, #3DD5DA);
+$gradient-start: #4FA4A7;
+$text-dark: #222222;
+$text-light: #999999;
 
-// ---- Toolbar ----
-ion-toolbar {
-  --background: #{$teal-toolbar};
-  --border-width: 0;
-  padding: 8px 12px;
+ion-content.tickets-content {
+  --background: #f2f2f2;
+  --overflow: auto;
+}
 
-  ion-avatar {
-    width: 40px;
-    height: 40px;
-    margin-left: 8px;
+// ── Header ──
+.header-container {
+  position: relative;
+  height: 110px;
+  overflow: hidden;
+}
 
-    img {
-      object-fit: cover;
-      border-radius: 50%;
-      background-color: #c9c9c9;
-    }
+.header-gradient {
+  background: linear-gradient(180deg, #4FA4A7 0%, #1E4041 100%);
+  height: 100%;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 18px;
+    color: white;
   }
+}
 
-  ion-buttons {
-    ion-button {
-      --color: #ffffff;
+.top-actions {
+  display: flex;
+  align-items: center;
 
-      ion-icon {
-        font-size: 22px;
-      }
+  ion-button {
+    --color: #ffffff !important;
+    --padding-start: 6px;
+    --padding-end: 6px;
+
+    ion-icon {
+      font-size: 24px;
+      color: #ffffff !important;
     }
   }
 }
 
-// ---- Content ----
-.tickets-content {
-  --background: #f5f5f5;
+// ── Cartão branco sobreposto ──
+.menu-container {
+  width: 100%;
+  min-height: calc(100vh - 90px);
+  padding: 12px 20px 32px;
+  background-color: #ffffff;
+  border-radius: 20px 20px 0 0;
+  position: relative;
+  z-index: 1;
+  margin-top: -20px;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+}
 
-  .page-title {
-    text-align: center;
-    padding: 28px 16px 16px;
+// ── Chevron ──
+.chevron-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
 
-    h1 {
-      font-size: 26px;
-      font-weight: 700;
-      color: $text-dark;
-      line-height: 1.3;
-      margin: 0;
-    }
+  .chevron-icon {
+    font-size: 22px;
+    color: #bbbbbb;
   }
+}
 
-  // ---- Lista de Tickets ----
-  .tickets-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    padding: 8px 20px;
-  }
+// ── Título ──
+.page-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #111;
+  text-align: center;
+  margin: 0 0 28px 0;
+  line-height: 1.25;
+}
 
-  .ticket-card {
-    background: $card-bg;
-    border-radius: $border-radius-card;
-    padding: 14px 16px;
+// ── Lista de tickets ──
+.tickets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+// ── Card individual ──
+.ticket-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.10),
+    0 1px 4px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+
+  .ticket-top {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    gap: 14px;
+  }
 
-    .ticket-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 2px;
+  .ticket-icon {
+    font-size: 38px;
+    color: #222;
+    transform: rotate(-30deg);
+    flex-shrink: 0;
+  }
 
-      .ticket-remaining {
-        font-size: 12px;
-        color: $text-light;
-        margin-bottom: 4px;
-      }
+  .ticket-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 
-      .ticket-icon {
-        ion-icon {
-          font-size: 32px;
-          color: $teal;
-          transform: rotate(-30deg);
-        }
-      }
-
-      .ticket-duration {
-        font-size: 14px;
-        font-weight: 600;
-        color: $text-dark;
-        margin-top: 4px;
-      }
+    .ticket-duration {
+      font-size: 18px;
+      font-weight: 700;
+      color: $text-dark;
     }
 
-    .usar-btn {
-      background: $green-btn;
-      color: #100909;
-      border: none;
-      border-radius: $border-radius-btn;
-      padding: 14px 20px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s ease;
-      min-width: 72px;
-
-      &:active {
-        background: $teal-dark;
-      }
+    .ticket-remaining {
+      font-size: 13px;
+      color: $text-light;
     }
   }
 
-  // ---- Botão Comprar ----
-  .buy-button-wrapper {
-    padding: 28px 20px 32px;
+  .usar-btn {
+    width: 100%;
+    background: #111111;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 0;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.18s;
+    letter-spacing: 0.3px;
 
-    .buy-btn {
-      width: 100%;
-      background: $teal;
-      color: #000000;
-      border: none;
-      border-radius: 30px;
-      padding: 16px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.3px;
-      transition: background 0.2s ease;
-      box-shadow: 0 4px 12px rgba(77, 182, 172, 0.4);
-
-      &:active {
-        background: $teal-dark;
-      }
+    &:active {
+      opacity: 0.75;
     }
+  }
+}
+
+// ── Botão comprar ──
+.buy-button-wrapper {
+  margin-top: 8px;
+
+  .buy-btn {
+    width: 100%;
+    background: $btn-gradient;
+    color: #1E4041;
+    border: none;
+    border-radius: 30px;
+    padding: 18px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(61, 213, 218, 0.40);
+    transition: opacity 0.18s;
+
+    &:active {
+      opacity: 0.80;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .top-actions ion-button ion-icon {
+    font-size: 22px;
   }
 }
