@@ -17,7 +17,6 @@ export class TicketsComponent implements OnInit {
 
   usuario: any;
 
-  // Dados mockados – substituir por chamada ao backend quando disponível
   tickets: Ticket[] = [
     { minutos: 30, quantidade: 2 },
     { minutos: 45, quantidade: 5 },
@@ -64,9 +63,6 @@ export class TicketsComponent implements OnInit {
   home() {
     this.router.navigate(['/home']);
   }
-  comprar() {
-  this.router.navigate(['/comprar-tickets']);
-}
 
   comprar() {
     this.router.navigate(['/comprar-tickets']);

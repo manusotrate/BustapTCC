@@ -46,10 +46,6 @@ const routes: Routes = [
     path: 'inicial',
     loadChildren: () => import('./inicial/inicial.module').then(m => m.InicialPageModule)
   },
-  {
-    path: 'comprar-tickets',
-    loadChildren: () => import('./comprar-tickets/comprar-tickets.module').then(m => m.ComprarTicketsPageModule)
-  }
 ];
 
 @NgModule({
