@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 
@@ -10,11 +10,12 @@ interface Ticket {
 
 @Component({
   selector: 'app-comprar-tickets',
-  templateUrl: './comprar-tickets.component.html',
-  styleUrls: ['./comprar-tickets.component.scss'],
-  standalone: false
+  templateUrl: './comprar-tickets.page.html',
+  styleUrls: ['./comprar-tickets.page.scss'],
+  standalone: false,
+  encapsulation: ViewEncapsulation.None
 })
-export class ComprarTicketsComponent implements OnInit {
+export class ComprarTicketsPage implements OnInit {
 
   saldo: number = 0;
   ticketSelecionado: Ticket | null = null;
@@ -27,7 +28,7 @@ export class ComprarTicketsComponent implements OnInit {
     { minutos: 75,  preco: 41.99, precoFormatado: 'R$41,99' },
     { minutos: 90,  preco: 50.99, precoFormatado: 'R$50,99' },
     { minutos: 105, preco: 58.99, precoFormatado: 'R$58,99' },
-    { minutos: 180, preco: 67.99, precoFormatado: 'R$67,99' },
+    { minutos: 120, preco: 67.99, precoFormatado: 'R$67,99' },
   ];
 
   get saldoFormatado(): string {
