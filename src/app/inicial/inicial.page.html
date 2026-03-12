@@ -1,12 +1,11 @@
 <ion-content [fullscreen]="true" class="initial-content">
   <div class="container">
-    <!-- Logo e Título -->
+
     <div class="header-section">
       <div class="logo-container">
         <ion-icon name="bus-outline" class="bus-icon"></ion-icon>
         <h1 class="app-name">BusTap</h1>
       </div>
-      
       <div class="title-section">
         <h2 class="main-title">
           Viajar nunca foi<br>
@@ -16,25 +15,186 @@
       </div>
     </div>
 
-    <!-- Botões de Ação -->
     <div class="action-section">
-      <ion-button 
-        expand="block" 
-        shape="round" 
+      <ion-button
+        expand="block"
+        shape="round"
         class="signup-button"
         (click)="navigateToSignup()">
         Inscreva-se
       </ion-button>
-      
       <div class="login-link">
         <span>Já possui cadastro? </span>
         <a (click)="navigateToLogin()">Faça login</a>
       </div>
     </div>
 
-    <!-- Ilustração do Ônibus -->
     <div class="illustration-section">
-      <img src="assets/onibusInicial.png" alt="BusTap Illustration" class="bus-illustration">
+      <svg class="bus-svg" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- CÉU (mesma cor do fundo) -->
+        <rect x="0" y="0" width="400" height="158" fill="#26C6DA"/>
+
+        <!-- ÁRVORES AO FUNDO (menores, mais claras — perspectiva) -->
+
+        <!-- árvore fundo esq 1 -->
+        <rect x="14" y="108" width="6" height="44" rx="2" fill="#5D4037" opacity="0.7"/>
+        <ellipse cx="17" cy="101" rx="16" ry="18" fill="#2E7D32" opacity="0.7"/>
+        <ellipse cx="9"  cy="110" rx="11" ry="13" fill="#388E3C" opacity="0.7"/>
+        <ellipse cx="25" cy="110" rx="11" ry="13" fill="#388E3C" opacity="0.7"/>
+
+        <!-- árvore fundo esq 2 -->
+        <rect x="42" y="116" width="5" height="36" rx="2" fill="#5D4037" opacity="0.6"/>
+        <ellipse cx="44" cy="110" rx="13" ry="15" fill="#2E7D32" opacity="0.6"/>
+        <ellipse cx="37" cy="118" rx="9"  cy="118" ry="11" fill="#388E3C" opacity="0.6"/>
+        <ellipse cx="52" cy="118" rx="9"  ry="11" fill="#388E3C" opacity="0.6"/>
+
+        <!-- árvore fundo dir 1 -->
+        <rect x="352" y="108" width="6" height="44" rx="2" fill="#5D4037" opacity="0.7"/>
+        <ellipse cx="355" cy="101" rx="16" ry="18" fill="#2E7D32" opacity="0.7"/>
+        <ellipse cx="347" cy="110" rx="11" ry="13" fill="#388E3C" opacity="0.7"/>
+        <ellipse cx="363" cy="110" rx="11" ry="13" fill="#388E3C" opacity="0.7"/>
+
+        <!-- árvore fundo dir 2 -->
+        <rect x="378" y="116" width="5" height="36" rx="2" fill="#5D4037" opacity="0.6"/>
+        <ellipse cx="380" cy="110" rx="13" ry="15" fill="#2E7D32" opacity="0.6"/>
+        <ellipse cx="373" cy="118" rx="9"  ry="11" fill="#388E3C" opacity="0.6"/>
+        <ellipse cx="388" cy="118" rx="9"  ry="11" fill="#388E3C" opacity="0.6"/>
+
+        <!-- GRAMA -->
+        <rect x="0" y="148" width="400" height="14" fill="#4CAF50"/>
+        <rect x="0" y="158" width="400" height="4"  fill="#388E3C"/>
+
+        <!-- ESTRADA -->
+        <rect x="0" y="155" width="400" height="65" fill="#546E5A"/>
+        <rect x="0" y="155" width="400" height="5"  fill="#455A4A"/>
+
+        <!-- FAIXAS DA ESTRADA (animadas) -->
+        <g class="road-lines">
+          <rect x="0"   y="183" width="50" height="7" rx="3.5" fill="#F5C518"/>
+          <rect x="80"  y="183" width="50" height="7" rx="3.5" fill="#F5C518"/>
+          <rect x="160" y="183" width="50" height="7" rx="3.5" fill="#F5C518"/>
+          <rect x="240" y="183" width="50" height="7" rx="3.5" fill="#F5C518"/>
+          <rect x="320" y="183" width="50" height="7" rx="3.5" fill="#F5C518"/>
+          <rect x="400" y="183" width="50" height="7" rx="3.5" fill="#F5C518"/>
+        </g>
+
+        <!-- CALÇADA -->
+        <rect x="0" y="212" width="400" height="8" fill="#78909C"/>
+
+        <!-- ÁRVORES DA FRENTE (maiores, mais vivas — perto do ônibus) -->
+
+        <!-- árvore frente esq -->
+        <rect x="0"  y="88" width="10" height="64" rx="3" fill="#6D4C41"/>
+        <ellipse cx="5"   cy="76"  rx="24" ry="26" fill="#1B5E20"/>
+        <ellipse cx="-6"  cy="90"  rx="17" ry="19" fill="#2E7D32"/>
+        <ellipse cx="18"  cy="90"  rx="17" ry="19" fill="#2E7D32"/>
+        <ellipse cx="5"   cy="60"  rx="14" ry="16" fill="#388E3C"/>
+
+        <!-- árvore frente dir -->
+        <rect x="390" y="88" width="10" height="64" rx="3" fill="#6D4C41"/>
+        <ellipse cx="395" cy="76"  rx="24" ry="26" fill="#1B5E20"/>
+        <ellipse cx="383" cy="90"  rx="17" ry="19" fill="#2E7D32"/>
+        <ellipse cx="407" cy="90"  rx="17" ry="19" fill="#2E7D32"/>
+        <ellipse cx="395" cy="60"  rx="14" ry="16" fill="#388E3C"/>
+
+        <!-- ÔNIBUS -->
+        <g class="bus">
+
+          <ellipse cx="180" cy="215" rx="148" ry="5" fill="#000" opacity="0.15"/>
+
+          <rect x="30"  y="110" width="300" height="90"  rx="6"  fill="#F5F5F5"/>
+          <rect x="38"  y="82"  width="268" height="32"  rx="10" fill="#E0E0E0"/>
+          <rect x="30"  y="108" width="300" height="6"   fill="#BDBDBD"/>
+
+          <rect x="30" y="152" width="300" height="18" fill="#1565C0"/>
+
+          <!-- FRENTE -->
+          <rect x="300" y="82"  width="30"  height="118" rx="6"  fill="#E8E8E8"/>
+          <rect x="302" y="88"  width="22"  height="46"  rx="5"  fill="#B3E5FC" opacity="0.85"/>
+          <rect x="305" y="92"  width="8"   height="10"  rx="3"  fill="white"   opacity="0.4"/>
+          <rect x="304" y="138" width="22"  height="12"  rx="4"  fill="#FFF9C4"/>
+          <rect x="304" y="138" width="22"  height="12"  rx="4"  fill="none" stroke="#FFC107" stroke-width="1.5"/>
+          <rect x="306" y="153" width="14"  height="7"   rx="3"  fill="#FF8F00"/>
+          <rect x="298" y="186" width="34"  height="10"  rx="4"  fill="#9E9E9E"/>
+          <rect x="300" y="188" width="30"  height="5"   rx="2"  fill="#BDBDBD"/>
+          <rect x="320" y="95"  width="22"  height="12"  rx="3"  fill="#CFD8DC"/>
+          <rect x="322" y="96"  width="18"  height="10"  rx="2"  fill="#90A4AE"/>
+          <rect x="318" y="98"  width="4"   height="8"   rx="1"  fill="#9E9E9E"/>
+
+          <!-- TRASEIRA -->
+          <rect x="30"  y="82"  width="30"  height="118" rx="6"  fill="#E8E8E8"/>
+          <rect x="32"  y="88"  width="22"  height="36"  rx="4"  fill="#90CAF9" opacity="0.7"/>
+          <rect x="32"  y="128" width="24"  height="12"  rx="3"  fill="#E53935"/>
+          <rect x="32"  y="128" width="10"  height="12"  rx="3"  fill="#FF8F00"/>
+          <rect x="28"  y="186" width="34"  height="10"  rx="4"  fill="#9E9E9E"/>
+          <rect x="30"  y="188" width="30"  height="5"   rx="2"  fill="#BDBDBD"/>
+
+          <!-- JANELAS -->
+          <rect x="70"  y="90" width="42" height="34" rx="5" fill="#90CAF9" opacity="0.8"/>
+          <rect x="70"  y="90" width="42" height="4"  rx="2" fill="#1A237E" opacity="0.2"/>
+          <rect x="73"  y="94" width="12" height="6"  rx="2" fill="white"   opacity="0.45"/>
+          <rect x="122" y="90" width="42" height="34" rx="5" fill="#90CAF9" opacity="0.8"/>
+          <rect x="122" y="90" width="42" height="4"  rx="2" fill="#1A237E" opacity="0.2"/>
+          <rect x="125" y="94" width="12" height="6"  rx="2" fill="white"   opacity="0.45"/>
+          <rect x="174" y="90" width="42" height="34" rx="5" fill="#90CAF9" opacity="0.8"/>
+          <rect x="174" y="90" width="42" height="4"  rx="2" fill="#1A237E" opacity="0.2"/>
+          <rect x="177" y="94" width="12" height="6"  rx="2" fill="white"   opacity="0.45"/>
+          <rect x="226" y="90" width="42" height="34" rx="5" fill="#90CAF9" opacity="0.8"/>
+          <rect x="226" y="90" width="42" height="4"  rx="2" fill="#1A237E" opacity="0.2"/>
+          <rect x="229" y="94" width="12" height="6"  rx="2" fill="white"   opacity="0.45"/>
+
+          <!-- PORTA -->
+          <rect x="248" y="128" width="44" height="72" rx="4" fill="#D6D6D6"/>
+          <rect x="250" y="130" width="19" height="68" rx="3" fill="#EEEEEE"/>
+          <rect x="271" y="130" width="19" height="68" rx="3" fill="#E8E8E8"/>
+          <rect x="252" y="133" width="15" height="22" rx="3" fill="#90CAF9" opacity="0.65"/>
+          <rect x="273" y="133" width="15" height="22" rx="3" fill="#90CAF9" opacity="0.65"/>
+          <line x1="269" y1="130" x2="269" y2="198" stroke="#BDBDBD" stroke-width="1.5"/>
+          <rect x="248" y="196" width="44" height="8"  rx="3" fill="#9E9E9E"/>
+
+          <!-- SAIA -->
+          <rect x="60"  y="196" width="248" height="14" rx="4" fill="#BDBDBD"/>
+          <rect x="64"  y="198" width="240" height="8"  rx="2" fill="#CFD8DC"/>
+
+          <!-- ANTENA -->
+          <rect x="196" y="68" width="5" height="16" rx="2" fill="#9E9E9E"/>
+          <circle cx="198" cy="67" r="3" fill="#78909C"/>
+
+          <!-- AC teto -->
+          <rect x="110" y="80" width="50" height="9" rx="3" fill="#CFD8DC" opacity="0.7"/>
+          <rect x="220" y="80" width="40" height="9" rx="3" fill="#CFD8DC" opacity="0.7"/>
+
+          <!-- RODA TRASEIRA -->
+          <g class="wheel-b">
+            <circle cx="100" cy="210" r="26" fill="#212121"/>
+            <circle cx="100" cy="210" r="19" fill="#424242"/>
+            <circle cx="100" cy="210" r="11" fill="#616161"/>
+            <circle cx="100" cy="210" r="5"  fill="#9E9E9E"/>
+            <line x1="100" y1="185" x2="100" y2="235" stroke="#757575" stroke-width="3" stroke-linecap="round"/>
+            <line x1="75"  y1="210" x2="125" y2="210" stroke="#757575" stroke-width="3" stroke-linecap="round"/>
+            <line x1="82"  y1="188" x2="118" y2="232" stroke="#757575" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="118" y1="188" x2="82"  y2="232" stroke="#757575" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="100" cy="210" r="19" fill="none" stroke="#757575" stroke-width="1.5"/>
+          </g>
+
+          <!-- RODA DIANTEIRA -->
+          <g class="wheel-f">
+            <circle cx="282" cy="210" r="26" fill="#212121"/>
+            <circle cx="282" cy="210" r="19" fill="#424242"/>
+            <circle cx="282" cy="210" r="11" fill="#616161"/>
+            <circle cx="282" cy="210" r="5"  fill="#9E9E9E"/>
+            <line x1="282" y1="185" x2="282" y2="235" stroke="#757575" stroke-width="3" stroke-linecap="round"/>
+            <line x1="257" y1="210" x2="307" y2="210" stroke="#757575" stroke-width="3" stroke-linecap="round"/>
+            <line x1="264" y1="188" x2="300" y2="232" stroke="#757575" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="300" y1="188" x2="264" y2="232" stroke="#757575" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="282" cy="210" r="19" fill="none" stroke="#757575" stroke-width="1.5"/>
+          </g>
+
+        </g>
+
+      </svg>
     </div>
+
   </div>
 </ion-content>
