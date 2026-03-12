@@ -4,7 +4,7 @@ import { ToastController } from '@ionic/angular';
 import { PaymentService } from '../services/payment.service';
 
 interface Ticket {
-  km: number;
+  minutos: number;
   preco: number;
   precoFormatado: string;
 }
@@ -23,14 +23,14 @@ export class ComprarTicketsPage implements OnInit {
   carregando: boolean = false;
 
   tickets: Ticket[] = [
-    { km: 10,  preco: 4.99,  precoFormatado: 'R$4,99'  },
-    { km: 20,  preco: 8.99,  precoFormatado: 'R$8,99'  },
-    { km: 30,  preco: 12.99, precoFormatado: 'R$12,99' },
-    { km: 50,  preco: 19.99, precoFormatado: 'R$19,99' },
-    { km: 75,  preco: 27.99, precoFormatado: 'R$27,99' },
-    { km: 100, preco: 34.99, precoFormatado: 'R$34,99' },
-    { km: 150, preco: 49.99, precoFormatado: 'R$49,99' },
-    { km: 200, preco: 64.99, precoFormatado: 'R$64,99' },
+    { minutos: 15,  preco: 8.99,  precoFormatado: 'R$8,99'  },
+    { minutos: 30,  preco: 16.99, precoFormatado: 'R$16,99' },
+    { minutos: 45,  preco: 24.99, precoFormatado: 'R$24,99' },
+    { minutos: 60,  preco: 33.99, precoFormatado: 'R$33,99' },
+    { minutos: 75,  preco: 41.99, precoFormatado: 'R$41,99' },
+    { minutos: 90,  preco: 50.99, precoFormatado: 'R$50,99' },
+    { minutos: 105, preco: 58.99, precoFormatado: 'R$58,99' },
+    { minutos: 120, preco: 67.99, precoFormatado: 'R$67,99' },
   ];
 
   get saldoFormatado(): string {
