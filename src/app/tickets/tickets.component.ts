@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { NavController } from '@ionic/angular';
 
 interface Ticket {
-  minutos: number;
+  km: number;
   quantidade: number;
 }
 
@@ -21,8 +21,9 @@ export class TicketsComponent implements OnInit {
   ticketSelecionado: Ticket | null = null;
 
   tickets: Ticket[] = [
-    { minutos: 30, quantidade: 2 },
-    { minutos: 45, quantidade: 5 },
+    { km: 30,  quantidade: 2 },
+    { km: 50,  quantidade: 1 },
+    { km: 100, quantidade: 3 },
   ];
 
   constructor(
@@ -53,19 +54,18 @@ export class TicketsComponent implements OnInit {
   usarTicket() {
     if (!this.ticketSelecionado) return;
 
-    // Desconta 1 da quantidade
     this.ticketSelecionado.quantidade--;
 
-    // Se acabou, remove da lista
     if (this.ticketSelecionado.quantidade <= 0) {
       this.tickets = this.tickets.filter(t => t !== this.ticketSelecionado);
     }
 
-    const minutos = this.ticketSelecionado.minutos;
+    const km = this.ticketSelecionado.km;
     this.ticketSelecionado = null;
 
-    this.router.navigate(['/timer'], {
-      queryParams: { minutos }
+    // Navega para a trip page com os km disponíveis
+    this.router.navigate(['/trip'], {
+      queryParams: { km }
     });
   }
 
