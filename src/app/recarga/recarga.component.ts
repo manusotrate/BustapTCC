@@ -62,6 +62,15 @@ export class RecargaComponent {
     }
   }
 
+  /* Botões +1, +10, +100 — somam diretamente sem abrir teclado */
+  adicionar(quantia: number, event: Event) {
+    event.stopPropagation();
+    const atual = parseInt(this.digitos, 10);
+    const novoValor = atual + quantia * 100;
+    if (novoValor.toString().length > 9) return;
+    this.digitos = novoValor.toString();
+  }
+
   async continuar() {
     if (this.valorNumerico < 1) {
       const toast = await this.toastCtrl.create({
@@ -83,17 +92,12 @@ export class RecargaComponent {
     this.paymentService.criarPreferencia(this.valorNumerico).subscribe({
       next: async (response) => {
         await loading.dismiss();
-
-        // Em ambiente de desenvolvimento usa sandbox, em produção usa checkoutUrl
         const url = response.checkoutUrlSandbox || response.checkoutUrl;
-
-        // Abre o checkout do Mercado Pago no navegador
         window.open(url, '_blank');
       },
       error: async (err) => {
         await loading.dismiss();
         console.error('Erro ao criar preferência:', err);
-
         const toast = await this.toastCtrl.create({
           message: err?.error?.erro || 'Erro ao conectar com o Mercado Pago. Tente novamente.',
           duration: 3000,
@@ -103,20 +107,5 @@ export class RecargaComponent {
         await toast.present();
       }
     });
-  /* Botões +1, +10, +100 — somam diretamente sem abrir teclado */
-  adicionar(quantia: number, event: Event) {
-    event.stopPropagation();
-    const atual = parseInt(this.digitos, 10);
-    // quantia em reais → converter para centavos internamente
-    const novoValor = atual + quantia * 100;
-    if (novoValor.toString().length > 9) return;
-    this.digitos = novoValor.toString();
-  }
-
-  continuar() {
-    if (this.valorNumerico === 0) return;
-    this.tecladoAberto = false;
-    console.log('Valor para recarga:', this.valorNumerico);
-    // this.router.navigate(['/pagamento'], { queryParams: { valor: this.valorNumerico } });
   }
 }
