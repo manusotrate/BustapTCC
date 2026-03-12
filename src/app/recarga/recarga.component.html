@@ -6,19 +6,47 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content (click)="fecharTeclado($event)">
   <div class="recarga-container">
 
     <!-- Valor exibido -->
     <div class="valor-section">
       <p class="label">Quanto você deseja recarregar?</p>
-      <div class="valor-display">
+
+      <div
+        class="valor-display"
+        (click)="abrirTeclado($event)">
         <span class="valor-texto" [class.zerado]="valorNumerico === 0">{{ valorFormatado }}</span>
+        <span class="cursor" [class.ativo]="tecladoAberto">|</span>
       </div>
-      <div class="linha"></div>
+
+      <div class="linha" [class.ativa]="tecladoAberto"></div>
+
+      <!-- Botões de atalho -->
+      <div class="atalhos">
+        <button class="atalho-btn" (click)="adicionar(1, $event)">+1</button>
+        <button class="atalho-btn" (click)="adicionar(10, $event)">+10</button>
+        <button class="atalho-btn" (click)="adicionar(100, $event)">+100</button>
+      </div>
     </div>
 
-    <!-- Teclado numérico -->
+    <div class="spacer"></div>
+
+    <!-- Botão continuar -->
+    <div class="footer-section" [class.acima]="tecladoAberto">
+      <button
+        class="btn-continuar"
+        (click)="continuar()"
+        [disabled]="valorNumerico === 0">
+        Continuar com mercado pago
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Teclado numérico customizado -->
+  <div class="teclado-overlay" [class.visivel]="tecladoAberto" (click)="$event.stopPropagation()">
     <div class="teclado">
       <div class="teclado-grid">
         <button class="tecla" (click)="digitarNumero('1')">1</button>
@@ -40,14 +68,6 @@
         </button>
       </div>
     </div>
-
-    <!-- Botão continuar -->
-    <div class="footer-section">
-      <button class="btn-continuar" (click)="continuar()" [disabled]="valorNumerico === 0">
-        Continuar com mercado pago
-        <ion-icon name="arrow-forward-outline"></ion-icon>
-      </button>
-    </div>
-
   </div>
+
 </ion-content>

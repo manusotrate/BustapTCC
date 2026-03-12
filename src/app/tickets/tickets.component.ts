@@ -46,22 +46,29 @@ export class TicketsComponent implements OnInit {
     });
   }
 
-  // Abre o modal de confirmação
   confirmarUso(ticket: Ticket) {
     this.ticketSelecionado = ticket;
   }
 
-  // Confirma e navega para o timer
   usarTicket() {
     if (!this.ticketSelecionado) return;
-    const ticket = this.ticketSelecionado;
+
+    // Desconta 1 da quantidade
+    this.ticketSelecionado.quantidade--;
+
+    // Se acabou, remove da lista
+    if (this.ticketSelecionado.quantidade <= 0) {
+      this.tickets = this.tickets.filter(t => t !== this.ticketSelecionado);
+    }
+
+    const minutos = this.ticketSelecionado.minutos;
     this.ticketSelecionado = null;
+
     this.router.navigate(['/timer'], {
-      queryParams: { minutos: ticket.minutos }
+      queryParams: { minutos }
     });
   }
 
-  // Fecha o modal sem fazer nada
   cancelar() {
     this.ticketSelecionado = null;
   }
