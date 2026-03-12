@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { NavController } from '@ionic/angular';
@@ -24,6 +25,7 @@ export class TicketsComponent implements OnInit {
   carregando: boolean = true;
 
   constructor(
+    private http: HttpClient,
     private router: Router,
     private authService: AuthService,
     private navCtrl: NavController,
