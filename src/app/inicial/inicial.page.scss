@@ -10,7 +10,7 @@ ion-content.initial-content {
 }
 
 ion-content.initial-content::part(background) {
-  background: linear-gradient(180deg, #4DD0E1 0%, #26C6DA 100%);
+  background: #26C6DA;
 }
 
 .container {
@@ -18,13 +18,10 @@ ion-content.initial-content::part(background) {
   flex-direction: column;
   height: 100%;
   padding: 40px 24px;
-  position: relative;
 }
 
-// Header Section
 .header-section {
   flex: 0 0 auto;
-  z-index: 10;
 }
 
 .logo-container {
@@ -40,7 +37,6 @@ ion-content.initial-content::part(background) {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     padding: 8px;
-    backdrop-filter: blur(10px);
   }
 
   .app-name {
@@ -64,7 +60,6 @@ ion-content.initial-content::part(background) {
     color: white;
     line-height: 1.2;
     margin: 0 0 8px 0;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   .subtitle {
@@ -77,11 +72,9 @@ ion-content.initial-content::part(background) {
   }
 }
 
-// Action Section
 .action-section {
   flex: 0 0 auto;
-  z-index: 10;
-  margin-bottom: 40px;
+  margin-bottom: 16px;
 
   .signup-button {
     --background: white;
@@ -90,7 +83,6 @@ ion-content.initial-content::part(background) {
     --padding-top: 16px;
     --padding-bottom: 16px;
     --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 16px;
     font-weight: 600;
@@ -105,9 +97,7 @@ ion-content.initial-content::part(background) {
     font-size: 14px;
     color: white;
 
-    span {
-      opacity: 0.9;
-    }
+    span { opacity: 0.9; }
 
     a {
       color: white;
@@ -119,23 +109,59 @@ ion-content.initial-content::part(background) {
   }
 }
 
-// Illustration Section
 .illustration-section {
   flex: 1;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  position: relative;
   margin: 0 -24px -40px;
-  overflow: visible;
+  overflow: hidden;
   width: calc(100% + 48px);
 
-  .bus-illustration {
-    width: 90%;
+  .bus-svg {
+    width: 100%;
     height: auto;
-    object-fit: contain;
     display: block;
   }
+}
+
+// ── Animações ──────────────────────────────────────────────
+
+.bus {
+  animation: busBounce 2.2s ease-in-out infinite;
+}
+
+@keyframes busBounce {
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-3px); }
+}
+
+.road-lines {
+  animation: roadScroll 0.45s linear infinite;
+}
+
+@keyframes roadScroll {
+  from { transform: translateX(0);     }
+  to   { transform: translateX(-80px); }
+}
+
+.wheel-f,
+.wheel-b {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wheelSpin 0.9s linear infinite;
+}
+
+@keyframes wheelSpin {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bus        { animation: none; }
+  .road-lines { animation: none; }
+  .wheel-f,
+  .wheel-b    { animation: none; }
 }
 
 @media (min-width: 768px) {
