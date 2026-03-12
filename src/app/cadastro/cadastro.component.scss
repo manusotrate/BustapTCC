@@ -1,3 +1,10 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Gabarito:wght@400..900&display=swap');
+
+*{
+  font-family: 'Albert Sans', sans-serif;
+}
+
 ion-content {
   --background: url('../../assets/planodefundologin.png') center/cover no-repeat;
 }
@@ -54,7 +61,10 @@ ion-text {
 .nsei {
   display: flex;
   gap: 15px;
+
 }
+
+
 
 @keyframes fadeInCard {
   from {
