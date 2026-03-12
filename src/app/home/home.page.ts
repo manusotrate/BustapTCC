@@ -23,7 +23,6 @@ export class HomePage implements OnInit {
   }
 
   carregarDadosUsuario() {
-    // Primeiro, tenta carregar do localStorage
     const usuarioLocal = this.authService.getUsuarioLocal();
     
     if (usuarioLocal) {
@@ -31,16 +30,13 @@ export class HomePage implements OnInit {
       this.usuario = usuarioLocal;
     }
 
-    // Depois, busca dados atualizados do backend
     this.authService.obterUsuario().subscribe({
       next: (response) => {
         this.usuario = response.usuario;
         this.userName = response.usuario.nome;
-        // Aqui você pode adicionar lógica para carregar o saldo do usuário
       },
       error: (err) => {
         console.error('Erro ao carregar dados do usuário:', err);
-        // Se der erro de autenticação, faz logout
         if (err.status === 401) {
           this.authService.logout();
         }
@@ -63,8 +59,4 @@ export class HomePage implements OnInit {
   gotickets() {
     this.router.navigate(['/tickets']);
   }
-<<<<<<< HEAD
-=======
-  
->>>>>>> 37dc7820643366113e1715aff630aabec6d92d8b
 }
