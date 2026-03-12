@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
 
 import { HorariosPageRoutingModule } from './horarios-routing.module';
-
 import { HorariosPage } from './horarios.page';
 
 @NgModule({
@@ -13,8 +11,8 @@ import { HorariosPage } from './horarios.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    HorariosPageRoutingModule,
-    HorariosPage
+    HorariosPageRoutingModule
   ],
+  declarations: [HorariosPage]
 })
 export class HorariosPageModule {}

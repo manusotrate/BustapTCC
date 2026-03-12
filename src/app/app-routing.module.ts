@@ -49,6 +49,11 @@ const routes: Routes = [
   {
     path: 'comprar-tickets',
     loadChildren: () => import('./comprar-tickets/comprar-tickets.module').then(m => m.ComprarTicketsPageModule)
+  },
+  {
+    path: 'horarios',
+    loadChildren: () => import('./horarios/horarios.module').then(m => m.HorariosPageModule),
+    canActivate: [AuthGuard]
   }
 ];
 
