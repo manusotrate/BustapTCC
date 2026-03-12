@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoadingController, ToastController } from '@ionic/angular';
+import { PaymentService } from '../services/payment.service';
 
 @Component({
   selector: 'app-recarga',
@@ -11,7 +13,12 @@ export class RecargaComponent {
 
   private digitos: string = '0';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private paymentService: PaymentService,
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController
+  ) {}
 
   get valorFormatado(): string {
     const num = parseInt(this.digitos, 10);
@@ -41,9 +48,46 @@ export class RecargaComponent {
     }
   }
 
-  continuar() {
-    if (this.valorNumerico === 0) return;
-    console.log('Valor para recarga:', this.valorNumerico);
-    // this.router.navigate(['/pagamento'], { queryParams: { valor: this.valorNumerico } });
+  async continuar() {
+    if (this.valorNumerico < 1) {
+      const toast = await this.toastCtrl.create({
+        message: 'Valor mínimo para recarga é R$1,00.',
+        duration: 2500,
+        color: 'warning',
+        position: 'top'
+      });
+      await toast.present();
+      return;
+    }
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Conectando ao Mercado Pago...',
+      spinner: 'crescent'
+    });
+    await loading.present();
+
+    this.paymentService.criarPreferencia(this.valorNumerico).subscribe({
+      next: async (response) => {
+        await loading.dismiss();
+
+        // Em ambiente de desenvolvimento usa sandbox, em produção usa checkoutUrl
+        const url = response.checkoutUrlSandbox || response.checkoutUrl;
+
+        // Abre o checkout do Mercado Pago no navegador
+        window.open(url, '_blank');
+      },
+      error: async (err) => {
+        await loading.dismiss();
+        console.error('Erro ao criar preferência:', err);
+
+        const toast = await this.toastCtrl.create({
+          message: err?.error?.erro || 'Erro ao conectar com o Mercado Pago. Tente novamente.',
+          duration: 3000,
+          color: 'danger',
+          position: 'top'
+        });
+        await toast.present();
+      }
+    });
   }
 }
