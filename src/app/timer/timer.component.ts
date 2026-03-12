@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -13,9 +14,19 @@ export class TimerPage implements OnInit, OnDestroy {
   timeDisplay: string = '00:00:00';
   private interval: any;
 
-  constructor(private navCtrl: NavController) {}
+  constructor(
+    private navCtrl: NavController,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    const minutos = this.route.snapshot.queryParamMap.get('minutos');
+    if (minutos) {
+      const parsed = parseInt(minutos, 10);
+      if (!isNaN(parsed) && parsed > 0) {
+        this.ticketMinutes = parsed;
+      }
+    }
     this.remainingSeconds = this.ticketMinutes * 60;
     this.updateDisplay();
     this.startTimer();
