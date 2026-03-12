@@ -63,5 +63,4 @@ export class HomePage implements OnInit {
   gotickets() {
     this.router.navigate(['/tickets']);
   }
-  
 }

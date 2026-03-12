@@ -47,14 +47,37 @@ ion-content.suporte-content {
 }
 
 .email-container {
-  margin: 30px 0;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 30px 0 8px;
+  cursor: pointer;
+  user-select: none;
+  width: fit-content;
 }
 
 .email {
-  font-size: 24px;
+  font-size: 22px;
+  font-weight: bold;
   color: #000;
   margin: 0;
+}
+
+.copy-icon {
+  font-size: 22px;
+  color: #555;
+  transition: color 0.2s, transform 0.2s;
+
+  &.copiado {
+    color: #2ecc71;
+    transform: scale(1.2);
+  }
+}
+
+.copy-hint {
+  font-size: 13px;
+  color: #2ecc71;
+  margin: 0 0 16px;
 }
 
 .footer-section {

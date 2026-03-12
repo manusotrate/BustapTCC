@@ -8,8 +8,16 @@ import { NavController } from '@ionic/angular';
   standalone: false
 })
 export class SuporteComponent {
+  copiado = false;
 
   constructor(private navCtrl: NavController) {}
+
+  copiarEmail() {
+    navigator.clipboard.writeText('suportebustap@gmail.com').then(() => {
+      this.copiado = true;
+      setTimeout(() => this.copiado = false, 2500);
+    });
+  }
 
   goBack() {
     this.navCtrl.back();

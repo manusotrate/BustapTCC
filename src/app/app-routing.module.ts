@@ -36,7 +36,7 @@ const routes: Routes = [
   },
   {
     path: 'tickets',
-    loadChildren: () => import('./tickets/tickets-module').then(m => m.TicketsModule)
+    loadChildren: () => import('./tickets/tickets.module').then(m => m.TicketsModule)
   },
   {
     path: 'timer',

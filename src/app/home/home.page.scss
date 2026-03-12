@@ -2,28 +2,21 @@ ion-content {
   --background: #ffffff;
 }
 
-.header-container {
-  position: relative;
-  height: 60vh;
-  overflow: hidden;
-}
-
-ion-content {
-  --overflow: hidden !important;
+/* Wrapper que ocupa 100% da altura e empilha header + menu */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .header-gradient {
-  background:linear-gradient(#4FA4A7, #1E4041);
-  transform: translateY(-15%);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100%;
-  padding: 20px;
+  background: linear-gradient(#4FA4A7, #1E4041);
+  padding: 20px 20px 48px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   color: white;
+  /* Altura fixa para o header — não muda com a tela */
+  flex: 0 0 auto;
 }
 
 .top-section {
@@ -41,6 +34,7 @@ ion-content {
   display: flex;
   align-items: center;
   justify-content: center;
+
   ion-icon {
     font-size: 15px;
     color: white;
@@ -50,7 +44,6 @@ ion-content {
 .top-actions {
   display: flex;
   align-items: center;
-  gap: 0px;
 
   ion-button {
     --color: #ffffff !important;
@@ -64,100 +57,79 @@ ion-content {
   }
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  
-  ion-icon {
-    font-size: 28px;
-    color: rgba(255, 255, 255, 0.8);
-  }
-  
-  span {
-    font-size: 20px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.8);
-  }
-}
-
 .welcome-section {
-  margin-bottom: 40px;
-  
+  margin-top: 24px;
+
   h2 {
-    font-size: 24px;
-    padding-top: 5px;
+    font-size: 32px;
     font-weight: 600;
     margin: 0;
     opacity: 0.9;
   }
-  
+
   h3 {
     font-size: 20px;
-    margin: 0;
-    margin-bottom: 20px;
+    margin: 0 0 20px 0;
   }
 }
 
 .balance-section {
   p {
     font-size: 14px;
-    margin: 0;
-    margin-bottom: 8px;
+    margin: 0 0 8px;
     opacity: 0.8;
   }
-  
+
   h1 {
     font-size: 36px;
-    font-weight: 300;
+    font-weight: bold;
     margin: 0;
     letter-spacing: 2px;
-    font-weight: bold;
   }
 }
 
+/* Container branco que sobe sobre o header com border-radius */
 .menu-container {
+  flex: 1;
   width: 100%;
+  background-color: white;
+  border-radius: 20px 20px 0 0;
   padding: 24px 20px;
-  background-color: rgb(231, 231, 231);
+  margin-top: -24px; /* sobe exatamente 24px — valor fixo, não muda */
+  overflow-y: auto;
   position: relative;
-  border-radius: 20px;
   z-index: 1;
-  margin-left: auto;
-  margin-right: auto;
-  transform: translateY(-28%);
 }
 
 .menu-card {
   margin-bottom: 16px;
   border-radius: 16px;
-  box-shadow: 
+  box-shadow:
     0 8px 25px rgba(0, 0, 0, 0.15),
     0 4px 10px rgba(0, 0, 0, 0.1),
     0 2px 4px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.05);
-  
+
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 
+    box-shadow:
       0 12px 35px rgba(0, 0, 0, 0.2),
       0 6px 15px rgba(0, 0, 0, 0.12),
       0 3px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
   &:active {
     transform: scale(0.98) translateY(-1px);
-    box-shadow: 
+    box-shadow:
       0 6px 20px rgba(0, 0, 0, 0.15),
       0 3px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
   ion-card-content {
     display: flex;
     align-items: center;
-    /* Aumentando o padding para botões maiores */
     padding: 30px 24px;
     gap: 20px;
   }
@@ -172,7 +144,7 @@ ion-content {
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  
+
   ion-icon {
     font-size: 32px;
     color: #000000;
@@ -181,59 +153,11 @@ ion-content {
 
 .card-text {
   flex: 1;
-  
+
   h3 {
     font-size: 24px;
     font-weight: 600;
     color: black;
     margin: 0;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  }
-}
-
-@media (max-width: 576px) {
-  .header-container {
-    height: 55vh;
-  }
-  
-  .welcome-section {
-    h2 {
-      font-size: 32px;
-    }
-    
-    h3 {
-      font-size: 20px;
-    }
-  }
-  
-  .balance-section h1 {
-    font-size: 32px;
-  }
-  
-  .menu-card {
-    box-shadow: 
-      0 6px 20px rgba(0, 0, 0, 0.12),
-      0 3px 8px rgba(0, 0, 0, 0.08),
-      0 1px 3px rgba(0, 0, 0, 0.06);
-      
-    &:hover {
-      box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.18),
-        0 5px 12px rgba(0, 0, 0, 0.1),
-        0 2px 6px rgba(0, 0, 0, 0.08);
-    }
-  }
-
-  .top-actions {
-    ion-button {
-      --color: #ffffff !important;
-      --padding-start: 6px;
-      --padding-end: 6px;
-
-      ion-icon {
-        font-size: 22px;
-        color: #ffffff !important;
-      }
-    }
   }
 }

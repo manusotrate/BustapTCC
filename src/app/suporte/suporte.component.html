@@ -10,10 +10,13 @@
       <p class="subtitulo">
         Contate-nos para podermos ajudá-lo(a) o mais rápido possível :)
       </p>
-
-      <div class="email-container">
+      
+      <div class="email-container" (click)="copiarEmail()">
         <p class="email">suportebustap@gmail.com</p>
+        <ion-icon [name]="copiado ? 'checkmark-outline' : 'copy-outline'" class="copy-icon" [class.copiado]="copiado"></ion-icon>
       </div>
+
+      <p class="copy-hint" *ngIf="copiado">Email copiado!</p>
     </div>
 
     <div class="footer-section">
