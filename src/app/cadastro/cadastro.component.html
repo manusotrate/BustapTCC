@@ -6,6 +6,7 @@
     </ion-card-header>
 
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      
       <div class="nsei">
         <ion-item>
           <ion-input 
@@ -62,8 +63,9 @@
 
       <ion-button type="submit">Cadastrar</ion-button>
     </form>
-
+    <div class="aga">
     <ion-text>Já possui cadastro?</ion-text>
+    </div>
     <ion-text class="cadastro" (click)="gologin()">Clique aqui</ion-text>
   </ion-card>
 </ion-content>
