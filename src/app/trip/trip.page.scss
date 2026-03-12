@@ -1,0 +1,250 @@
+ion-content.trip-content {
+  --background: transparent;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+// ─── Mapa ocupa 100% ───
+#trip-map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+// ─── Marcador do usuário (ponto azul pulsante) ───
+::ng-deep .marker-usuario {
+  width: 20px;
+  height: 20px;
+  background: #4285F4;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(66, 133, 244, 0.4);
+  animation: pulso 2s infinite;
+}
+
+@keyframes pulso {
+  0%   { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.4); }
+  70%  { box-shadow: 0 0 0 12px rgba(66, 133, 244, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(66, 133, 244, 0); }
+}
+
+// ─── Loading GPS ───
+.gps-loading {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+
+  .gps-loading-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    p {
+      font-size: 15px;
+      color: #333;
+      margin: 0;
+    }
+  }
+}
+
+// ─── Erro GPS ───
+.gps-erro {
+  position: absolute;
+  top: 80px;
+  left: 16px;
+  right: 16px;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+
+  ion-icon {
+    font-size: 20px;
+    color: #e65100;
+    flex-shrink: 0;
+  }
+
+  p {
+    font-size: 13px;
+    color: #333;
+    margin: 0;
+  }
+}
+
+// ─── Botão voltar ───
+.btn-voltar {
+  position: absolute;
+  top: calc(16px + env(safe-area-inset-top, 0px));
+  left: 16px;
+  z-index: 10;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 20px;
+    color: #1a1a1a;
+  }
+}
+
+// ─── Painel inferior ───
+.painel-inferior {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: white;
+  border-radius: 24px 24px 0 0;
+  padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+}
+
+// ─── Badge do ticket ───
+.ticket-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f0f0f0;
+  border-radius: 20px;
+  padding: 6px 14px;
+  margin-bottom: 10px;
+
+  ion-icon {
+    font-size: 16px;
+    color: #333;
+  }
+
+  span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+}
+
+.painel-subtitulo {
+  font-size: 14px;
+  color: #777;
+  margin: 0 0 16px;
+}
+
+// ─── Botão iniciar ───
+.btn-iniciar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 18px;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  ion-icon { font-size: 18px; }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  &:active:not(:disabled) { opacity: 0.8; }
+}
+
+// ─── Display km (viagem ativa) ───
+.km-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 16px;
+}
+
+.km-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+
+  .km-valor {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+
+  .km-label {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.km-divider {
+  width: 1px;
+  height: 40px;
+  background: #e0e0e0;
+}
+
+// ─── Barra de progresso ───
+.progresso-bar {
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 16px;
+
+  .progresso-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4FA4A7, #1E4041);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+}
+
+// ─── Botão encerrar ───
+.btn-encerrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px;
+  background: #fff;
+  color: #c0392b;
+  border: 2px solid #c0392b;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  ion-icon { font-size: 18px; }
+
+  &:active {
+    background: #fdecea;
+  }
+}

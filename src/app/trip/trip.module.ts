@@ -1,22 +1,18 @@
+// trip.module.ts
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { TimerPage } from './timer.component';
+import { TripPage } from './trip.page';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     IonicModule,
     RouterModule.forChild([
-      {
-        path: '',
-        component: TimerPage
-      }
+      { path: '', component: TripPage }
     ])
   ],
-  declarations: [TimerPage]
+  declarations: [TripPage]
 })
-export class TimerPageModule {}
+export class TripPageModule {}

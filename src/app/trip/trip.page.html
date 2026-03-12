@@ -1,0 +1,77 @@
+<ion-content [fullscreen]="true" class="trip-content">
+
+  <!-- Mapa ocupa tela toda -->
+  <div id="trip-map"></div>
+
+  <!-- Loading GPS -->
+  <div class="gps-loading" *ngIf="carregandoGps">
+    <div class="gps-loading-inner">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Obtendo localização...</p>
+    </div>
+  </div>
+
+  <!-- Erro GPS -->
+  <div class="gps-erro" *ngIf="erroGps">
+    <ion-icon name="warning-outline"></ion-icon>
+    <p>{{ erroGps }}</p>
+  </div>
+
+  <!-- Botão voltar (topo esquerdo) -->
+  <button class="btn-voltar" (click)="goBack()">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+  </button>
+
+  <!-- Painel inferior estilo Uber -->
+  <div class="painel-inferior">
+
+    <!-- Estado: aguardando iniciar -->
+    <ng-container *ngIf="!viagemAtiva">
+      <div class="painel-info">
+        <div class="ticket-badge">
+          <ion-icon name="navigate-outline"></ion-icon>
+          <span>Ticket: {{ kmTicket }} km</span>
+        </div>
+        <p class="painel-subtitulo">
+          {{ carregandoGps ? 'Aguardando GPS...' : 'Pronto para iniciar a viagem' }}
+        </p>
+      </div>
+      <button
+        class="btn-iniciar"
+        (click)="iniciarViagem()"
+        [disabled]="carregandoGps || !!erroGps">
+        Iniciar viagem
+        <ion-icon name="play-outline"></ion-icon>
+      </button>
+    </ng-container>
+
+    <!-- Estado: viagem ativa -->
+    <ng-container *ngIf="viagemAtiva">
+
+      <div class="km-display">
+        <div class="km-item">
+          <span class="km-valor">{{ kmRestanteFormatado }}</span>
+          <span class="km-label">Restantes</span>
+        </div>
+        <div class="km-divider"></div>
+        <div class="km-item">
+          <span class="km-valor">{{ kmPercorridoFormatado }}</span>
+          <span class="km-label">Percorridos</span>
+        </div>
+      </div>
+
+      <!-- Barra de progresso -->
+      <div class="progresso-bar">
+        <div class="progresso-fill" [style.width.%]="percentualUsado"></div>
+      </div>
+
+      <button class="btn-encerrar" (click)="encerrarViagem()">
+        <ion-icon name="stop-outline"></ion-icon>
+        Encerrar viagem
+      </button>
+
+    </ng-container>
+
+  </div>
+
+</ion-content>  

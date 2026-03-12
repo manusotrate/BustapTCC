@@ -1,75 +1,81 @@
 <ion-content [fullscreen]="true">
-  <div class="header-container">
-    <!-- Header com gradiente -->
-    <div class="header-gradient">
-      <!-- Avatar e botões superiores -->
-      <div class="top-section">
-        <div class="avatar">
-          <ion-icon name="person"></ion-icon>
+
+  <!-- Wrapper que controla todo o layout em flex column -->
+  <div class="page-wrapper">
+
+    <!-- Header gradiente -->
+    <div class="header-container">
+      <div class="header-gradient">
+
+        <!-- Avatar e ações superiores -->
+        <div class="top-section">
+          <div class="avatar">
+            <ion-icon name="person"></ion-icon>
+          </div>
+          <div class="top-actions">
+            <ion-button fill="clear" color="light" (click)="gotickets()">
+              <ion-icon slot="icon-only" name="ticket-outline"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" color="light" (click)="gohistorico()">
+              <ion-icon slot="icon-only" name="hourglass-outline"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" color="light" (click)="logout()">
+              <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+            </ion-button>
+          </div>
         </div>
 
-        <!-- Ícones do canto superior direito -->
-        <div class="top-actions">
-          <ion-button fill="clear" color="light" (click)="gotickets()">
-            <ion-icon slot="icon-only" name="ticket-outline"></ion-icon>
-          </ion-button>
-
-          <ion-button fill="clear" color="light" (click)="gohistorico()">
-            <ion-icon slot="icon-only" name="hourglass-outline"></ion-icon>
-          </ion-button>
-
-          <ion-button fill="clear" color="light" (click)="logout()">
-            <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
-          </ion-button>
+        <!-- Saudação e saldo -->
+        <div class="welcome-section">
+          <h2>Bem vindo,</h2>
+          <h3>{{ userName }}!</h3>
+          <div class="balance-section">
+            <p>Seu saldo:</p>
+            <h1>{{ balance }}</h1>
+          </div>
         </div>
-      </div>
-      
-      <!-- Saudação e saldo -->
-      <div class="welcome-section">
-        <h2>Bem vindo,</h2>
-        <h3>{{ userName }}!</h3>
 
-        <div class="balance-section">
-          <p>Seu saldo:</p>
-          <h1>{{ balance }}</h1>
-        </div>
       </div>
     </div>
+
+    <!-- Menu branco sobreposto: ocupa o restante e rola internamente -->
+    <div class="menu-container">
+
+      <ion-card class="menu-card" (click)="gohorarios()">
+        <ion-card-content>
+          <div class="card-icon">
+            <ion-icon name="time-outline"></ion-icon>
+          </div>
+          <div class="card-text">
+            <h3>Horários</h3>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="menu-card" (click)="gorecarga()">
+        <ion-card-content>
+          <div class="card-icon">
+            <ion-icon name="card-outline"></ion-icon>
+          </div>
+          <div class="card-text">
+            <h3>Recarga</h3>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="menu-card" (click)="gosuporte()">
+        <ion-card-content>
+          <div class="card-icon">
+            <ion-icon name="help-circle-outline"></ion-icon>
+          </div>
+          <div class="card-text">
+            <h3>Ajuda</h3>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+    </div>
+
   </div>
 
-  <!-- Menu Cards -->
-  <div class="menu-container">
-    <ion-card class="menu-card" (click)="gohorarios()">
-      <ion-card-content>
-        <div class="card-icon">
-          <ion-icon name="time-outline"></ion-icon>
-        </div>
-        <div class="card-text">
-          <h3>Horários</h3>
-        </div>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="menu-card" (click)="gorecarga()">
-      <ion-card-content>
-        <div class="card-icon">
-          <ion-icon name="card-outline"></ion-icon>
-        </div>
-        <div class="card-text">
-          <h3>Recarga</h3>
-        </div>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="menu-card" (click)="gosuporte()">
-      <ion-card-content>
-        <div class="card-icon">
-          <ion-icon name="help-circle-outline"></ion-icon>
-        </div>
-        <div class="card-text">
-          <h3>Ajuda</h3>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </div>
 </ion-content>
