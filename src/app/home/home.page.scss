@@ -91,11 +91,17 @@ ion-content {
 /* Container branco que sobe sobre o header com border-radius */
 .menu-container {
   flex: 1;
+  width: 100%;
   background-color: white;
   border-radius: 20px 20px 0 0;
   padding: 24px 20px;
   margin-top: -24px; /* sobe exatamente 24px — valor fixo, não muda */
   overflow-y: auto;
+<<<<<<< HEAD
+=======
+  position: relative;
+  z-index: 1;
+>>>>>>> c8a94559802d49a034e2bd2e0dc01bd941c4fc97
 }
 
 .menu-card {

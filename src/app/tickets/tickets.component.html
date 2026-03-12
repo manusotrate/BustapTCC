@@ -8,7 +8,7 @@
         </div>
         <div class="top-actions">
           <ion-button fill="clear" color="light" (click)="home()">
-            <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
           </ion-button>
           <ion-button fill="clear" color="light" (click)="historico()">
             <ion-icon slot="icon-only" name="hourglass-outline"></ion-icon>
@@ -21,51 +21,42 @@
     </div>
   </div>
 
-  <div class="menu-container">
+  <div class="menu-container" [class.blurred]="ticketSelecionado">
 
-    <h2 class="page-title">Esses são seus tickets :D</h2>
+    <div class="chevron-wrapper">
+      <ion-icon name="chevron-down-outline" class="chevron-icon"></ion-icon>
+    </div>
+
+    <h2 class="page-title">Esses são seus<br>tickets :D</h2>
 
     <div class="tickets-list">
-
-      <div class="ticket-card">
-        <div class="ticket-info">
-          <div class="ticket-remaining">2 Restante</div>
-          <div class="ticket-icon">
-            <ion-icon name="ticket-outline"></ion-icon>
+      <div class="ticket-card" *ngFor="let ticket of tickets">
+        <div class="ticket-top">
+          <ion-icon name="ticket-outline" class="ticket-icon"></ion-icon>
+          <div class="ticket-info">
+            <span class="ticket-duration">{{ ticket.minutos }} Min</span>
+            <span class="ticket-remaining">{{ ticket.quantidade }} Restante</span>
           </div>
-          <div class="ticket-duration">30 Min</div>
         </div>
-        <button class="usar-btn">Usar!</button>
+        <button class="usar-btn" (click)="confirmarUso(ticket)">Usar</button>
       </div>
-
-      <div class="ticket-card">
-        <div class="ticket-info">
-          <div class="ticket-remaining">6 Restante</div>
-          <div class="ticket-icon">
-            <ion-icon name="ticket-outline"></ion-icon>
-          </div>
-          <div class="ticket-duration">1 Hora</div>
-        </div>
-        <button class="usar-btn">Usar!</button>
-      </div>
-
-      <div class="ticket-card">
-        <div class="ticket-info">
-          <div class="ticket-remaining">1 Restante</div>
-          <div class="ticket-icon">
-            <ion-icon name="ticket-outline"></ion-icon>
-          </div>
-          <div class="ticket-duration">2 Horas</div>
-        </div>
-        <button class="usar-btn">Usar!</button>
-      </div>
-
     </div>
 
     <div class="buy-button-wrapper">
-    <button class="buy-btn" (click)="comprar()">Compre mais tickets aqui!!!</button>
+      <button class="buy-btn" (click)="comprar()">Compre mais tickets aqui!!!</button>
     </div>
 
+  </div>
+
+  <!-- Overlay + Modal -->
+  <div class="modal-overlay" *ngIf="ticketSelecionado" (click)="cancelar()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+      <p class="modal-texto">Quer ativar esse ticket?</p>
+      <div class="modal-actions">
+        <button class="btn-nao" (click)="cancelar()">Não</button>
+        <button class="btn-sim" (click)="usarTicket()">Sim</button>
+      </div>
+    </div>
   </div>
 
 </ion-content>

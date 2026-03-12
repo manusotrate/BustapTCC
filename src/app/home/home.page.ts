@@ -59,4 +59,11 @@ export class HomePage implements OnInit {
   gotickets() {
     this.router.navigate(['/tickets']);
   }
+<<<<<<< HEAD
 }
+=======
+  gohorarios() {
+    this.router.navigate(['/horarios']);
+  }
+}
+>>>>>>> c8a94559802d49a034e2bd2e0dc01bd941c4fc97
