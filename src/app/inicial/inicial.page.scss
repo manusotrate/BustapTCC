@@ -1,5 +1,9 @@
 ion-content.initial-content {
-  --background: linear-gradient(180deg, #4DD0E1 0%, #26C6DA 100%);
+  --background: transparent;
+}
+
+ion-content.initial-content::part(background) {
+  background: linear-gradient(180deg, #4DD0E1 0%, #26C6DA 100%);
 }
 
 .container {
@@ -22,7 +26,7 @@ ion-content.initial-content {
   justify-content: center;
   gap: 8px;
   margin-bottom: 40px;
-  
+
   .bus-icon {
     font-size: 32px;
     color: white;
@@ -31,7 +35,7 @@ ion-content.initial-content {
     padding: 8px;
     backdrop-filter: blur(10px);
   }
-  
+
   .app-name {
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 28px;
@@ -45,7 +49,7 @@ ion-content.initial-content {
 .title-section {
   text-align: center;
   margin-bottom: 32px;
-  
+
   .main-title {
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 32px;
@@ -55,7 +59,7 @@ ion-content.initial-content {
     margin: 0 0 8px 0;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
   .subtitle {
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 18px;
@@ -71,7 +75,7 @@ ion-content.initial-content {
   flex: 0 0 auto;
   z-index: 10;
   margin-bottom: 40px;
-  
+
   .signup-button {
     --background: white;
     --color: #26C6DA;
@@ -79,39 +83,31 @@ ion-content.initial-content {
     --padding-top: 16px;
     --padding-bottom: 16px;
     --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    
+
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 16px;
     font-weight: 600;
     text-transform: none;
     letter-spacing: 0.3px;
     margin-bottom: 16px;
-    
-    &:hover {
-      --background: #f8f8f8;
-    }
   }
-  
+
   .login-link {
     text-align: center;
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 14px;
     color: white;
-    
+
     span {
       opacity: 0.9;
     }
-    
+
     a {
       color: white;
       font-weight: 600;
       text-decoration: none;
       border-bottom: 1px solid white;
       cursor: pointer;
-      
-      &:hover {
-        opacity: 0.8;
-      }
     }
   }
 }
@@ -126,7 +122,7 @@ ion-content.initial-content {
   margin: 0 -24px -40px;
   overflow: visible;
   width: calc(100% + 48px);
-  
+
   .bus-illustration {
     width: 90%;
     height: auto;
@@ -135,12 +131,6 @@ ion-content.initial-content {
   }
 }
 
-@keyframes illustrationFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-// Responsive adjustments
 @media (min-width: 768px) {
   .container {
     max-width: 480px;

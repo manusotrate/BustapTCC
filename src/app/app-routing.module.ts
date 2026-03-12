@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard'; // ← Importe o AuthGuard
@@ -52,4 +53,64 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
+=======
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
+
+const routes: Routes = [
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'recarga',
+    loadChildren: () => import('./recarga/recarga.module').then(m => m.RecargaModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+  },
+  {
+    path: 'cadastro',
+    loadChildren: () => import('./cadastro/cadastro.module').then(m => m.CadastroModule)
+  },
+  {
+    path: 'suporte',
+    loadChildren: () => import('./suporte/suporte.module').then(m => m.SuporteModule)
+  },
+  {
+    path: '',
+    redirectTo: 'inicial',
+    pathMatch: 'full'
+  },
+  {
+    path: 'historico',
+    loadChildren: () => import('./historico/historico.module').then(m => m.HistoricoModule)
+  },
+  {
+    path: 'tickets',
+    loadChildren: () => import('./tickets/tickets-module').then(m => m.TicketsModule)
+  },
+  {
+    path: 'timer',
+    loadChildren: () => import('./timer/timer.module').then(m => m.TimerPageModule)
+  },
+  {
+    path: 'inicial',
+    loadChildren: () => import('./inicial/inicial.module').then(m => m.InicialPageModule)
+  },
+  {
+    path: 'comprar-tickets',
+    loadChildren: () => import('./comprar-tickets/comprar-tickets.module').then(m => m.ComprarTicketsPageModule)
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+  exports: [RouterModule]
+})
+>>>>>>> 37dc7820643366113e1715aff630aabec6d92d8b
 export class AppRoutingModule {}

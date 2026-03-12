@@ -8,6 +8,7 @@ import { NavController } from '@ionic/angular';
   standalone: false
 })
 export class SuporteComponent {
+<<<<<<< HEAD
   copiado = false;
 
   constructor(private navCtrl: NavController) {}
@@ -17,6 +18,13 @@ export class SuporteComponent {
       this.copiado = true;
       setTimeout(() => this.copiado = false, 2500);
     });
+=======
+
+  constructor(private navCtrl: NavController) {}
+
+  goBack() {
+    this.navCtrl.back();
+>>>>>>> 37dc7820643366113e1715aff630aabec6d92d8b
   }
 
   voltarOuAcao() {
