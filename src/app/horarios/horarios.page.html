@@ -29,17 +29,24 @@
       </div>
     </div>
 
-    <div class="tempo-section" *ngIf="localPartida && localChegada">
-      <span class="tempo-label">Tempo estimado</span>
-      <span class="tempo-valor">{{ tempoEstimado }}</span>
+    <!-- Distância em km -->
+    <div class="distancia-section" *ngIf="localPartida && localChegada">
+      <span class="distancia-label">Distância da rota</span>
+      <div class="distancia-row">
+        <ion-icon name="navigate-outline" class="distancia-icon"></ion-icon>
+        <span class="distancia-valor">{{ distanciaFormatada }}</span>
+      </div>
+      <p class="distancia-hint" *ngIf="distanciaKm > 0">
+        Você precisará de um ticket de pelo menos <strong>{{ distanciaKm }} km</strong>
+      </p>
     </div>
 
     <button
       class="btn-comecar"
       (click)="comecarViagem()"
-      [disabled]="!localPartida || !localChegada"
+      [disabled]="!localPartida || !localChegada || distanciaKm === 0"
     >
-      Começar viagem
+      Escolher ticket
       <ion-icon name="arrow-forward-outline"></ion-icon>
     </button>
   </div>

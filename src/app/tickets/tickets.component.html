@@ -42,7 +42,7 @@
     <div class="tickets-list" *ngIf="!carregando && tickets.length > 0">
       <div class="ticket-card" *ngFor="let ticket of tickets">
         <div class="ticket-top">
-          <ion-icon name="ticket-outline" class="ticket-icon"></ion-icon>
+          <ion-icon name="navigate-outline" class="ticket-icon"></ion-icon>
           <div class="ticket-info">
             <span class="ticket-duration">{{ ticket.minutos }} Min</span>
             <span class="ticket-remaining">Ativo</span>
@@ -60,7 +60,7 @@
 
   <div class="modal-overlay" *ngIf="ticketSelecionado" (click)="cancelar()">
     <div class="modal-box" (click)="$event.stopPropagation()">
-      <p class="modal-texto">Quer ativar esse ticket?</p>
+      <p class="modal-texto">Quer ativar o ticket de {{ ticketSelecionado.km }}km?</p>
       <div class="modal-actions">
         <button class="btn-nao" (click)="cancelar()">Não</button>
         <button class="btn-sim" (click)="usarTicket()">Sim</button>
