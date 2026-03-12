@@ -40,7 +40,11 @@ const routes: Routes = [
   {
     path: 'tickets',
     loadChildren: () => import('./tickets/tickets.module').then( m => m.TicketsModule)
+  },  {
+    path: 'horarios',
+    loadChildren: () => import('./horarios/horarios.module').then( m => m.HorariosPageModule)
   },
+
 
 ];
 
