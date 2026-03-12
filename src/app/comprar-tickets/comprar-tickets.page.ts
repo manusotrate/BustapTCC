@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { PaymentService } from '../services/payment.service';
 
 interface Ticket {
   minutos: number;
@@ -19,6 +20,7 @@ export class ComprarTicketsPage implements OnInit {
 
   saldo: number = 0;
   ticketSelecionado: Ticket | null = null;
+  carregando: boolean = false;
 
   tickets: Ticket[] = [
     { minutos: 15,  preco: 8.99,  precoFormatado: 'R$8,99'  },
@@ -37,10 +39,24 @@ export class ComprarTicketsPage implements OnInit {
 
   constructor(
     private router: Router,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private paymentService: PaymentService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.carregarSaldo();
+  }
+
+  carregarSaldo() {
+    this.paymentService.getSaldo().subscribe({
+      next: (response) => {
+        this.saldo = response.saldo;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar saldo:', err);
+      }
+    });
+  }
 
   goBack() {
     this.router.navigate(['/tickets']);
@@ -55,30 +71,39 @@ export class ComprarTicketsPage implements OnInit {
   }
 
   async confirmar() {
-    if (!this.ticketSelecionado) return;
+    if (!this.ticketSelecionado || this.carregando) return;
 
-    if (this.saldo < this.ticketSelecionado.preco) {
-      this.ticketSelecionado = null;
-      const toast = await this.toastCtrl.create({
-        message: 'Saldo insuficiente.',
-        duration: 2500,
-        color: 'danger',
-        position: 'top'
-      });
-      await toast.present();
-      return;
-    }
+    this.carregando = true;
+    const { minutos, preco } = this.ticketSelecionado;
 
-    this.saldo -= this.ticketSelecionado.preco;
+    this.paymentService.comprarTicket(minutos, preco).subscribe({
+      next: async (response) => {
+        this.saldo = response.saldo;
+        this.carregando = false;
+        this.ticketSelecionado = null;
 
-    const toast = await this.toastCtrl.create({
-      message: `Ticket de ${this.ticketSelecionado.minutos} Min comprado com sucesso!`,
-      duration: 2500,
-      color: 'success',
-      position: 'top'
+        const toast = await this.toastCtrl.create({
+          message: `Ticket de ${minutos} Min comprado com sucesso!`,
+          duration: 2500,
+          color: 'success',
+          position: 'top'
+        });
+        await toast.present();
+
+        this.router.navigate(['/tickets']);
+      },
+      error: async (err) => {
+        this.carregando = false;
+        this.ticketSelecionado = null;
+        const msg = err?.error?.erro || 'Erro ao comprar ticket.';
+        const toast = await this.toastCtrl.create({
+          message: msg,
+          duration: 2500,
+          color: 'danger',
+          position: 'top'
+        });
+        await toast.present();
+      }
     });
-    await toast.present();
-
-    this.ticketSelecionado = null;
   }
 }

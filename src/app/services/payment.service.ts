@@ -13,6 +13,22 @@ interface SaldoResponse {
   saldo: number;
 }
 
+interface TicketItem {
+  id: number;
+  minutos: number;
+  valor: number;
+  status: string;
+}
+
+interface TicketsResponse {
+  tickets: TicketItem[];
+}
+
+interface ComprarTicketResponse {
+  mensagem: string;
+  saldo: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,7 +45,6 @@ export class PaymentService {
     return new HttpHeaders({ Authorization: `Bearer ${token}` });
   }
 
-  // Cria preferência no MP e retorna a URL de checkout
   criarPreferencia(valor: number): Observable<PreferenciaResponse> {
     return this.http.post<PreferenciaResponse>(
       `${this.apiUrl}/pagamentos/preferencia`,
@@ -38,10 +53,24 @@ export class PaymentService {
     );
   }
 
-  // Busca saldo atualizado após pagamento
   getSaldo(): Observable<SaldoResponse> {
     return this.http.get<SaldoResponse>(
       `${this.apiUrl}/usuario/saldo`,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  getTickets(): Observable<TicketsResponse> {
+    return this.http.get<TicketsResponse>(
+      `${this.apiUrl}/tickets`,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  comprarTicket(minutos: number, valor: number): Observable<ComprarTicketResponse> {
+    return this.http.post<ComprarTicketResponse>(
+      `${this.apiUrl}/tickets/comprar`,
+      { minutos, valor },
       { headers: this.getHeaders() }
     );
   }

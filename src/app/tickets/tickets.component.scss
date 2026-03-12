@@ -268,3 +268,16 @@ ion-content.tickets-content {
     font-size: 22px;
   }
 }
+.vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+  gap: 12px;
+  opacity: 0.4;
+
+  ion-icon { font-size: 48px; color: #000; }
+  ion-spinner { width: 40px; height: 40px; color: #4FA4A7; }
+  p { font-size: 15px; color: #000; margin: 0; }
+}
