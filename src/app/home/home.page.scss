@@ -7,13 +7,18 @@
 
 ion-content {
   --background: #ffffff;
+  --overflow: hidden;
 }
 
-/* Wrapper que ocupa 100% da altura e empilha header + menu */
 .page-wrapper {
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
+}
+
+.header-container {
+  flex: 0 0 auto;
 }
 
 .header-gradient {
@@ -22,15 +27,13 @@ ion-content {
   display: flex;
   flex-direction: column;
   color: white;
-  /* Altura fixa para o header — não muda com a tela */
-  flex: 0 0 auto;
 }
 
 .top-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  margin-top: env(safe-area-inset-top, 12px);
 }
 
 .avatar {
@@ -41,9 +44,10 @@ ion-content {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 
   ion-icon {
-    font-size: 15px;
+    font-size: 18px;
     color: white;
   }
 }
@@ -65,51 +69,57 @@ ion-content {
 }
 
 .welcome-section {
-  margin-top: 24px;
+  margin-top: 16px;
 
   h2 {
-    font-size: 32px;
+    font-size: clamp(22px, 6vw, 32px);
     font-weight: 600;
     margin: 0;
     opacity: 0.9;
   }
 
   h3 {
-    font-size: 20px;
-    margin: 0 0 20px 0;
+    font-size: clamp(15px, 4vw, 20px);
+    margin: 0 0 16px 0;
   }
 }
 
 .balance-section {
   p {
-    font-size: 14px;
-    margin: 0 0 8px;
+    font-size: 13px;
+    margin: 0 0 4px;
     opacity: 0.8;
   }
 
   h1 {
-    font-size: 36px;
+    font-size: clamp(26px, 8vw, 36px);
     font-weight: bold;
     margin: 0;
     letter-spacing: 2px;
   }
 }
 
-/* Container branco que sobe sobre o header com border-radius */
+// ─── Menu: ocupa todo espaço restante, sem scroll ───
 .menu-container {
-  flex: 1;
-  width: 100%;
+  flex: 1 1 0;
+  min-height: 0;
   background-color: white;
   border-radius: 20px 20px 0 0;
-  padding: 24px 20px;
-  margin-top: -24px; /* sobe exatamente 24px — valor fixo, não muda */
-  overflow-y: auto;
+  padding: 24px 20px env(safe-area-inset-bottom, 16px);
+  margin-top: -24px;
+  overflow: hidden;
   position: relative;
   z-index: 1;
+
+  // Cards dividem o espaço em coluna
+  display: flex;
+  flex-direction: column;
 }
 
+// ─── Cards crescem proporcionalmente ───
 .menu-card {
-  margin-bottom: 16px;
+  flex: 1;
+  margin: 6px 0;
   border-radius: 16px;
   box-shadow:
     0 8px 25px rgba(0, 0, 0, 0.15),
@@ -119,16 +129,11 @@ ion-content {
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.05);
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      0 12px 35px rgba(0, 0, 0, 0.2),
-      0 6px 15px rgba(0, 0, 0, 0.12),
-      0 3px 8px rgba(0, 0, 0, 0.1);
-  }
+  &:first-child { margin-top: 0; }
+  &:last-child  { margin-bottom: 0; }
 
   &:active {
-    transform: scale(0.98) translateY(-1px);
+    transform: scale(0.98);
     box-shadow:
       0 6px 20px rgba(0, 0, 0, 0.15),
       0 3px 8px rgba(0, 0, 0, 0.1);
@@ -137,23 +142,25 @@ ion-content {
   ion-card-content {
     display: flex;
     align-items: center;
-    padding: 30px 24px;
+    height: 100%;
+    padding: 0 20px;
     gap: 20px;
   }
 }
 
 .card-icon {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 12px;
   background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
 
   ion-icon {
-    font-size: 32px;
+    font-size: 28px;
     color: #000000;
   }
 }
@@ -162,7 +169,7 @@ ion-content {
   flex: 1;
 
   h3 {
-    font-size: 24px;
+    font-size: clamp(18px, 5vw, 24px);
     font-weight: 600;
     color: black;
     margin: 0;
