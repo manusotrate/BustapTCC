@@ -21,7 +21,7 @@ export class TicketsComponent implements OnInit {
   ticketSelecionado: Ticket | null = null;
 
   tickets: Ticket[] = [
-    { minutos: 30, quantidade: 2 },
+    { minutos: 1, quantidade: 2 },
     { minutos: 45, quantidade: 5 },
   ];
 
