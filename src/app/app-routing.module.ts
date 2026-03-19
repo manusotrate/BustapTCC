@@ -60,15 +60,15 @@ const routes: Routes = [
   },
   {
     path: 'metodo-pagamento',
-    loadChildren: () => import('./metodo-pagamento/metodo-pagamento.module').then( m => m.MetodoPagamentoPageModule)
+    loadChildren: () => import('./metodo-pagamento/metodo-pagamento.module').then( m => m.MetodoPagamentoModule)
   },
   {
     path: 'recarga-pix',
-    loadChildren: () => import('./recarga-pix/recarga-pix.module').then( m => m.RecargaPixPageModule)
+    loadChildren: () => import('./recarga-pix/recarga-pix.module').then( m => m.RecargaPixModule)
   },
   {
     path: 'recarga-debito',
-    loadChildren: () => import('./recarga-debito/recarga-debito.module').then( m => m.RecargaDebitoPageModule)
+    loadChildren: () => import('./recarga-debito/recarga-debito.module').then( m => m.RecargaDebitoModule)
   },
   {
     path: 'recarga/metodo',

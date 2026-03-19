@@ -1,7 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, ToastController } from '@ionic/angular';
-import { PaymentService } from '../services/payment.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-recarga',
@@ -16,8 +15,6 @@ export class RecargaComponent {
 
   constructor(
     private router: Router,
-    private paymentService: PaymentService,
-    private loadingCtrl: LoadingController,
     private toastCtrl: ToastController
   ) {}
 
@@ -58,28 +55,8 @@ export class RecargaComponent {
       return;
     }
 
-    const loading = await this.loadingCtrl.create({
-      message: 'Conectando ao Mercado Pago...',
-      spinner: 'crescent'
-    });
-    await loading.present();
-
-    this.paymentService.criarPreferencia(this.valorNumerico).subscribe({
-      next: async (response) => {
-        await loading.dismiss();
-        const url = response.checkoutUrlSandbox || response.checkoutUrl;
-        window.open(url, '_blank');
-      },
-      error: async (err) => {
-        await loading.dismiss();
-        const toast = await this.toastCtrl.create({
-          message: err?.error?.erro || 'Erro ao conectar com o Mercado Pago.',
-          duration: 3000,
-          color: 'danger',
-          position: 'top'
-        });
-        await toast.present();
-      }
+    this.router.navigate(['/recarga/metodo'], {
+      queryParams: { valor: this.valorNumerico }
     });
   }
 }
