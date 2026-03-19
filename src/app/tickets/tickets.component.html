@@ -29,13 +29,26 @@
 
     <h2 class="page-title">Esses são seus<br>tickets :D</h2>
 
-    <div class="tickets-list">
+    <!-- Carregando -->
+    <div class="vazio" *ngIf="carregando">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Carregando tickets...</p>
+    </div>
+
+    <!-- Sem tickets -->
+    <div class="vazio" *ngIf="!carregando && tickets.length === 0">
+      <ion-icon name="ticket-outline"></ion-icon>
+      <p>Você não possui tickets ativos.</p>
+    </div>
+
+    <!-- Lista -->
+    <div class="tickets-list" *ngIf="!carregando && tickets.length > 0">
       <div class="ticket-card" *ngFor="let ticket of tickets">
         <div class="ticket-top">
           <ion-icon name="ticket-outline" class="ticket-icon"></ion-icon>
           <div class="ticket-info">
             <span class="ticket-duration">{{ ticket.minutos }} Min</span>
-            <span class="ticket-remaining">{{ ticket.quantidade }} Restante</span>
+            <span class="ticket-remaining">Ativo</span>
           </div>
         </div>
         <button class="usar-btn" (click)="confirmarUso(ticket)">Usar</button>

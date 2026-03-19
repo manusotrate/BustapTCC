@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Gabarito:wght@400..900&display=swap');
+
+*{
+  font-family: 'Albert Sans', sans-serif;
+}
+
+
+
 .horarios-content {
   --background: #ffffff;
 
@@ -80,23 +88,49 @@
     }
   }
 
-  .tempo-section {
+  // ─── Seção de distância ───
+  .distancia-section {
     margin-top: 28px;
     margin-bottom: 36px;
+    padding: 20px;
+    background: #f7f7f7;
+    border-radius: 16px;
     animation: fadeIn 0.3s ease;
 
-    .tempo-label {
+    .distancia-label {
       display: block;
       font-size: 13px;
       color: #555;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
 
-    .tempo-valor {
-      font-size: 42px;
-      font-weight: 700;
-      color: #1a1a1a;
-      letter-spacing: -1px;
+    .distancia-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+
+      .distancia-icon {
+        font-size: 28px;
+        color: #1a1a1a;
+      }
+
+      .distancia-valor {
+        font-size: 42px;
+        font-weight: 700;
+        color: #1a1a1a;
+        letter-spacing: -1px;
+      }
+    }
+
+    .distancia-hint {
+      font-size: 13px;
+      color: #777;
+      margin: 0;
+
+      strong {
+        color: #1a1a1a;
+      }
     }
   }
 

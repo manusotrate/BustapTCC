@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { ComprarTicketsPageRoutingModule } from './comprar-tickets-routing.module';
 import { ComprarTicketsPage } from './comprar-tickets.page';
+import { PaymentService } from '../services/payment.service';
 
 @NgModule({
   imports: [
@@ -10,6 +11,7 @@ import { ComprarTicketsPage } from './comprar-tickets.page';
     IonicModule,
     ComprarTicketsPageRoutingModule
   ],
-  declarations: [ComprarTicketsPage]
+  declarations: [ComprarTicketsPage],
+  providers: [PaymentService]
 })
 export class ComprarTicketsPageModule {}

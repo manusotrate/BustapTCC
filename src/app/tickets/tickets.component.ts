@@ -3,10 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { NavController } from '@ionic/angular';
+import { PaymentService } from '../services/payment.service';
 
 interface Ticket {
+  id: number;
   minutos: number;
-  quantidade: number;
+  valor: number;
+  status: string;
 }
 
 @Component({
@@ -17,32 +20,33 @@ interface Ticket {
 })
 export class TicketsComponent implements OnInit {
 
-  usuario: any;
   ticketSelecionado: Ticket | null = null;
-
-  tickets: Ticket[] = [
-    { minutos: 30, quantidade: 2 },
-    { minutos: 45, quantidade: 5 },
-  ];
+  tickets: Ticket[] = [];
+  carregando: boolean = true;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private authService: AuthService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private paymentService: PaymentService
   ) {}
 
   ngOnInit() {
-    this.carregarUsuario();
+    this.carregarTickets();
   }
 
-  carregarUsuario() {
-    const token = this.authService.getToken();
-    this.http.get('http://localhost:4000/usuarios', {
-      headers: { Authorization: `Bearer ${token}` }
-    }).subscribe({
-      next: (res: any) => { this.usuario = res.usuario; },
-      error: (err) => { console.error('Erro ao carregar usuário:', err); }
+  carregarTickets() {
+    this.carregando = true;
+    this.paymentService.getTickets().subscribe({
+      next: (response) => {
+        this.tickets = response.tickets;
+        this.carregando = false;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar tickets:', err);
+        this.carregando = false;
+      }
     });
   }
 
@@ -52,21 +56,9 @@ export class TicketsComponent implements OnInit {
 
   usarTicket() {
     if (!this.ticketSelecionado) return;
-
-    // Desconta 1 da quantidade
-    this.ticketSelecionado.quantidade--;
-
-    // Se acabou, remove da lista
-    if (this.ticketSelecionado.quantidade <= 0) {
-      this.tickets = this.tickets.filter(t => t !== this.ticketSelecionado);
-    }
-
     const minutos = this.ticketSelecionado.minutos;
     this.ticketSelecionado = null;
-
-    this.router.navigate(['/timer'], {
-      queryParams: { minutos }
-    });
+    this.router.navigate(['/timer'], { queryParams: { minutos } });
   }
 
   cancelar() {

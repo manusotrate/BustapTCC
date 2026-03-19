@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Gabarito:wght@400..900&display=swap');
+
+*{
+  font-family: 'Albert Sans', sans-serif;
+}
+
+ion-card-header{
+  margin-bottom: 45px;
+}
+
+
 ion-app{
   background-image: url('/assets/planodefundologin.png');
   background-size: cover;
@@ -10,6 +21,7 @@ ion-card-title{
   color: white;
   font-size: 24px;
   font-weight: bold;
+  margin-top: 70px;
 }
 
 ion-card-subtitle{
@@ -18,7 +30,8 @@ ion-card-subtitle{
 }
 
 ion-card{
-  --background: #3A8CB4;
+  margin-top: 20px;
+  --background: #00000020;
   color: black;
   border-radius: 20px;
   text-align: start;
@@ -32,14 +45,14 @@ ion-card{
 }
 
 ion-item{
-  --background: #3A8CB4;
+  --background: transparent;
   --border-color: white;
   margin: 13px 0;
   padding-right: 5px;
   font-size: 12px;
   
   ion-input {
-    --background: #3A8CB4;
+    --background: transparent;
     --color: white;
     --placeholder-color: rgba(255, 255, 255, 0.7);
     --padding-start: 0;
@@ -48,19 +61,20 @@ ion-item{
 }
 
 ion-input {
-  --background: #3A8CB4 !important;
+  --background: transparent !important;
   --color: white !important;
   --placeholder-color: rgba(255, 255, 255, 0.7) !important;
 }
 
 ion-button {
+  margin-top: 20px;
   text-align: center;
   justify-content: center;
   display: grid;
   --background: white;
   padding: 10px;
   padding-bottom: 20px;
-  --border-radius: 20px;
+  --border-radius: 10px;
   color: black;
 }
 
@@ -69,8 +83,11 @@ ion-text{
   opacity: 0.5;
   padding: 0px 20px;
   text-decoration: underline;
-  margin-bottom: 10px;  
   display: flex;
+}
+
+.uva{
+  margin-bottom: 90px;
 }
 
 @keyframes fadeInCard {

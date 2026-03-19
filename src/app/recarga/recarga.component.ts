@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-recarga',
@@ -10,10 +11,12 @@ import { Router } from '@angular/router';
 export class RecargaComponent {
 
   @ViewChild('valorInput') valorInput!: ElementRef<HTMLInputElement>;
-
   private digitos: string = '0';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private toastCtrl: ToastController
+  ) {}
 
   get valorFormatado(): string {
     const num = parseInt(this.digitos, 10);
@@ -24,23 +27,6 @@ export class RecargaComponent {
 
   get valorNumerico(): number {
     return parseInt(this.digitos, 10) / 100;
-  }
-
-  digitarNumero(num: string) {
-    if (this.digitos === '0') {
-      this.digitos = num;
-    } else {
-      if (this.digitos.length >= 9) return;
-      this.digitos += num;
-    }
-  }
-
-  apagar() {
-    if (this.digitos.length <= 1) {
-      this.digitos = '0';
-    } else {
-      this.digitos = this.digitos.slice(0, -1);
-    }
   }
 
   adicionarValor(reais: number) {
@@ -57,9 +43,20 @@ export class RecargaComponent {
     input.value = this.valorFormatado;
   }
 
-  continuar() {
-    if (this.valorNumerico === 0) return;
-    console.log('Valor para recarga:', this.valorNumerico);
-    // this.router.navigate(['/pagamento'], { queryParams: { valor: this.valorNumerico } });
+  async continuar() {
+    if (this.valorNumerico < 1) {
+      const toast = await this.toastCtrl.create({
+        message: 'Valor mínimo para recarga é R$1,00.',
+        duration: 2500,
+        color: 'warning',
+        position: 'top'
+      });
+      await toast.present();
+      return;
+    }
+
+    this.router.navigate(['/recarga/metodo'], {
+      queryParams: { valor: this.valorNumerico }
+    });
   }
 }

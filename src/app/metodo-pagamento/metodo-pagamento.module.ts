@@ -1,22 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { TimerPage } from './timer.component';
+import { MetodoPagamentoPage } from './metodo-pagamento.page';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     IonicModule,
     RouterModule.forChild([
-      {
-        path: '',
-        component: TimerPage
-      }
+      { path: '', component: MetodoPagamentoPage }
     ])
   ],
-  declarations: [TimerPage]
+  declarations: [MetodoPagamentoPage]
 })
-export class TimerPageModule {}
+export class MetodoPagamentoModule {}

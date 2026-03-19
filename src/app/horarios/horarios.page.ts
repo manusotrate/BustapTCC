@@ -4,7 +4,7 @@ import { AlertController } from '@ionic/angular';
 
 interface Cidade {
   nome: string;
-  distanciaDeMarilia: number;
+  distanciaDeMarilia: number; // em km
 }
 
 @Component({
@@ -17,7 +17,7 @@ export class HorariosPage implements OnInit {
 
   localPartida: Cidade | null = null;
   localChegada: Cidade | null = null;
-  tempoEstimado: string = '';
+  distanciaKm: number = 0;
 
   cidades: Cidade[] = [
     { nome: 'Marília',               distanciaDeMarilia: 0   },
@@ -80,7 +80,7 @@ export class HorariosPage implements OnInit {
             } else {
               this.localChegada = cidadeSelecionada;
             }
-            this.calcularTempo();
+            this.calcularDistancia();
           },
         },
       ],
@@ -97,33 +97,30 @@ export class HorariosPage implements OnInit {
     return c1 && c2 ? c1.nome === c2.nome : c1 === c2;
   }
 
-  calcularTempo() {
+  calcularDistancia() {
     if (!this.localPartida || !this.localChegada) {
-      this.tempoEstimado = '';
+      this.distanciaKm = 0;
       return;
     }
 
     if (this.localPartida.nome === this.localChegada.nome) {
-      this.tempoEstimado = '0min';
+      this.distanciaKm = 0;
       return;
     }
 
-    const distancia = Math.abs(
+    // Distância real entre as duas cidades passando pela rota
+    this.distanciaKm = Math.abs(
       this.localPartida.distanciaDeMarilia - this.localChegada.distanciaDeMarilia
     ) + Math.min(
       this.localPartida.distanciaDeMarilia,
       this.localChegada.distanciaDeMarilia
     );
+  }
 
-    const minutos = Math.round((distancia / 80) * 60);
-
-    if (minutos < 60) {
-      this.tempoEstimado = `${minutos}min`;
-    } else {
-      const h = Math.floor(minutos / 60);
-      const m = minutos % 60;
-      this.tempoEstimado = m > 0 ? `${h}h ${m}min` : `${h}h`;
-    }
+  get distanciaFormatada(): string {
+    if (!this.localPartida || !this.localChegada) return '';
+    if (this.distanciaKm === 0) return '0 km';
+    return `${this.distanciaKm} km`;
   }
 
   comecarViagem() {
@@ -133,7 +130,7 @@ export class HorariosPage implements OnInit {
       queryParams: {
         partida: this.localPartida.nome,
         chegada: this.localChegada.nome,
-        tempo: this.tempoEstimado,
+        km: this.distanciaKm,
       },
     });
   }

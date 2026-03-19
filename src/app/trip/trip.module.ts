@@ -1,20 +1,18 @@
+// trip.module.ts
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { RecargaComponent } from './recarga.component';
+import { TripPage } from './trip.page';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
     RouterModule.forChild([
-      {
-        path: '',
-        component: RecargaComponent
-      }
+      { path: '', component: TripPage }
     ])
   ],
-  declarations: [RecargaComponent]
+  declarations: [TripPage]
 })
-export class RecargaModule {}
+export class TripPageModule {}

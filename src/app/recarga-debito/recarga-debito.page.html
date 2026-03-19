@@ -1,0 +1,100 @@
+<ion-content class="debito-content">
+  <div class="container">
+
+    <div class="back-btn" (click)="goBack()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </div>
+
+    <h1 class="titulo">Cartão de <strong>Débito</strong></h1>
+    <p class="subtitulo">Valor: <strong>{{ valorFormatado }}</strong></p>
+
+    <!-- Preview do cartão -->
+    <div class="card-preview">
+      <div class="card-inner">
+        <div class="card-chip"></div>
+        <div class="card-number">
+          {{ numeroCartao || '•••• •••• •••• ••••' }}
+        </div>
+        <div class="card-bottom">
+          <div>
+            <span class="card-label">Nome</span>
+            <span class="card-value">{{ nomeCartao || 'NOME DO TITULAR' }}</span>
+          </div>
+          <div>
+            <span class="card-label">Validade</span>
+            <span class="card-value">{{ validade || 'MM/AA' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulário -->
+    <div class="form">
+
+      <div class="campo">
+        <label>Número do cartão</label>
+        <input
+          type="tel"
+          placeholder="0000 0000 0000 0000"
+          maxlength="19"
+          [(ngModel)]="numeroCartao"
+          (input)="formatarNumero($event)"
+        />
+      </div>
+
+      <div class="campo">
+        <label>Nome do titular</label>
+        <input
+          type="text"
+          placeholder="Como está no cartão"
+          [(ngModel)]="nomeCartao"
+          (input)="nomeCartao = $event.target?.value?.toUpperCase() || nomeCartao"
+        />
+      </div>
+
+      <div class="campos-row">
+        <div class="campo">
+          <label>Validade</label>
+          <input
+            type="tel"
+            placeholder="MM/AA"
+            maxlength="5"
+            [(ngModel)]="validade"
+            (input)="formatarValidade($event)"
+          />
+        </div>
+        <div class="campo">
+          <label>CVV</label>
+          <input
+            type="tel"
+            placeholder="•••"
+            maxlength="4"
+            [(ngModel)]="cvv"
+          />
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>CPF do titular</label>
+        <input
+          type="tel"
+          placeholder="000.000.000-00"
+          maxlength="14"
+          [(ngModel)]="cpfCartao"
+        />
+      </div>
+
+    </div>
+
+    <button class="btn-pagar" (click)="pagar()" [disabled]="carregando">
+      <ion-icon name="lock-closed-outline"></ion-icon>
+      Pagar {{ valorFormatado }}
+    </button>
+
+    <p class="seguranca">
+      <ion-icon name="shield-checkmark-outline"></ion-icon>
+      Seus dados são criptografados pelo Mercado Pago
+    </p>
+
+  </div>
+</ion-content>
