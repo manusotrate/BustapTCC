@@ -163,7 +163,7 @@ export class RecargaDebitoPage implements OnInit, AfterViewInit {
 
   private getPublicKey(): string {
     // Coloque sua Public Key do MP aqui (começa com APP_USR- também, mas é a PUBLIC KEY)
-    return 'APP_USR-9d34a699-0048-40be-a3f0-4e7c97dfd0eb';
+    return 'TEST-3d5c31ff-924d-4da7-b035-0dcdabdb3a0d';
   }
 
   private detectarBandeira(numero: string): string {
