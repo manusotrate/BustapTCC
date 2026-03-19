@@ -57,7 +57,38 @@ const routes: Routes = [
     path: '',
     redirectTo: 'inicial',
     pathMatch: 'full'
+  },
+  {
+    path: 'metodo-pagamento',
+    loadChildren: () => import('./metodo-pagamento/metodo-pagamento.module').then( m => m.MetodoPagamentoPageModule)
+  },
+  {
+    path: 'recarga-pix',
+    loadChildren: () => import('./recarga-pix/recarga-pix.module').then( m => m.RecargaPixPageModule)
+  },
+  {
+    path: 'recarga-debito',
+    loadChildren: () => import('./recarga-debito/recarga-debito.module').then( m => m.RecargaDebitoPageModule)
+  },
+  {
+    path: 'recarga/metodo',
+    loadChildren: () => import('./metodo-pagamento/metodo-pagamento.module')
+      .then(m => m.MetodoPagamentoModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'recarga/pix',
+   loadChildren: () => import('./recarga-pix/recarga-pix.module')
+      .then(m => m.RecargaPixModule),
+   canActivate: [AuthGuard]
+  },
+  {
+    path: 'recarga/debito',
+    loadChildren: () => import('./recarga-debito/recarga-debito.module')
+      .then(m => m.RecargaDebitoModule),
+    canActivate: [AuthGuard]
   }
+
 ];
 
 @NgModule({
