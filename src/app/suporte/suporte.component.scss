@@ -3,26 +3,36 @@ ion-content.suporte-content {
   --overflow: hidden;
 }
 
+ion-header {
+  ion-toolbar {
+    --background: #f5f5f5;
+    --border-width: 0;
+    --box-shadow: none;
+  }
+}
+
 .suporte-container {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
+/* ── Seta de voltar no canto superior esquerdo ── */
 .back-btn {
   --color: #000;
   --padding-start: 0;
+  --padding-end: 0;
   --background: transparent;
   --background-hover: transparent;
   --background-activated: transparent;
   --box-shadow: none;
-  display: block;       
-  text-align: left;      
-  margin-bottom: 8px;
-  margin-top: 8px;
+  display: block;
+  width: fit-content;
+  margin: 8px 0 8px 0;
 
   ion-icon {
     font-size: 22px;
+    color: #000;
   }
 }
 

@@ -129,7 +129,7 @@ export class HorariosPage implements OnInit {
   comecarViagem() {
     if (!this.localPartida || !this.localChegada) return;
 
-    this.router.navigate(['/viagem'], {
+    this.router.navigate(['/tickets'], {
       queryParams: {
         partida: this.localPartida.nome,
         chegada: this.localChegada.nome,

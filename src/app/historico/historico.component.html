@@ -11,24 +11,33 @@
   <h2>Histórico de tickets</h2>
 
   <ion-searchbar
-    placeholder=""
+    placeholder="Pesquisar..."
     class="search-custom"
-    showCancelButton="never">
+    showCancelButton="never"
+    [(ngModel)]="termoBusca"
+    (ionInput)="filtrar()">
   </ion-searchbar>
 
-  <ion-list>
+  <ion-list *ngIf="historicoFiltrado.length > 0; else vazio">
 
-    <ion-item lines="none">
+    <ion-item lines="none" *ngFor="let item of historicoFiltrado">
       <ion-label>
-        <h3>Marília → Quintana</h3>
-        <p>Ticket: 30 Min</p>
+        <h3>{{ item.rota }}</h3>
+        <p>Ticket: {{ item.ticket }}</p>
       </ion-label>
       <div slot="end" class="data">
-        <strong>07</strong>
-        <p>JUN</p>
+        <strong>{{ item.dia }}</strong>
+        <p>{{ item.mes }}</p>
       </div>
     </ion-item>
 
   </ion-list>
+
+  <ng-template #vazio>
+    <div class="vazio">
+      <ion-icon name="search-outline"></ion-icon>
+      <p>Nenhum resultado encontrado.</p>
+    </div>
+  </ng-template>
 
 </ion-content>
