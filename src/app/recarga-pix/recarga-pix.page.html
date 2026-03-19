@@ -1,0 +1,55 @@
+<ion-content class="pix-content">
+  <div class="container">
+
+    <div class="back-btn" (click)="goBack()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </div>
+
+    <!-- Carregando -->
+    <div class="loading-state" *ngIf="carregando">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Gerando QR Code...</p>
+    </div>
+
+    <!-- Pix gerado -->
+    <ng-container *ngIf="!carregando && qrCodeBase64">
+
+      <div class="header">
+        <div class="pix-badge">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.9999 2L7.49988 6.5H4.49988C3.39531 6.5 2.49988 7.39543 2.49988 8.5V15.5C2.49988 16.6046 3.39531 17.5 4.49988 17.5H7.49988L11.9999 22L16.4999 17.5H19.4999C20.6044 17.5 21.4999 16.6046 21.4999 15.5V8.5C21.4999 7.39543 20.6044 6.5 19.4999 6.5H16.4999L11.9999 2Z" fill="#32BCAD"/>
+          </svg>
+          <span>Pix</span>
+        </div>
+        <h1 class="valor">{{ valorFormatado }}</h1>
+        <p class="instrucao">Escaneie o QR Code ou copie o código abaixo</p>
+      </div>
+
+      <!-- QR Code -->
+      <div class="qrcode-wrapper">
+        <img
+          [src]="'data:image/png;base64,' + qrCodeBase64"
+          alt="QR Code Pix"
+          class="qrcode-img"
+        />
+      </div>
+
+      <!-- Status aguardando -->
+      <div class="status-badge" [class.aprovado]="status === 'approved'">
+        <ion-spinner name="dots" *ngIf="status === 'pending'"></ion-spinner>
+        <ion-icon name="checkmark-circle-outline" *ngIf="status === 'approved'"></ion-icon>
+        <span>{{ status === 'approved' ? 'Pagamento confirmado!' : 'Aguardando pagamento...' }}</span>
+      </div>
+
+      <!-- Botão copiar -->
+      <button class="btn-copiar" (click)="copiarCodigo()">
+        <ion-icon [name]="copiado ? 'checkmark-outline' : 'copy-outline'"></ion-icon>
+        {{ copiado ? 'Copiado!' : 'Copiar código Pix' }}
+      </button>
+
+      <p class="aviso">O QR Code expira em <strong>30 minutos</strong></p>
+
+    </ng-container>
+
+  </div>
+</ion-content>

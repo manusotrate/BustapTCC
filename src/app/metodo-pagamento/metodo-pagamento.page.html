@@ -1,0 +1,42 @@
+<ion-content class="metodo-content">
+  <div class="container">
+
+    <div class="back-btn" (click)="goBack()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </div>
+
+    <h1 class="titulo">Como você quer<br><strong>pagar?</strong></h1>
+    <p class="subtitulo">Valor da recarga: <strong>{{ valorFormatado }}</strong></p>
+
+    <div class="metodos">
+
+      <!-- Pix -->
+      <div class="metodo-card" (click)="escolherPix()">
+        <div class="metodo-icone pix">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.9999 2L7.49988 6.5H4.49988C3.39531 6.5 2.49988 7.39543 2.49988 8.5V15.5C2.49988 16.6046 3.39531 17.5 4.49988 17.5H7.49988L11.9999 22L16.4999 17.5H19.4999C20.6044 17.5 21.4999 16.6046 21.4999 15.5V8.5C21.4999 7.39543 20.6044 6.5 19.4999 6.5H16.4999L11.9999 2Z" fill="#32BCAD"/>
+          </svg>
+        </div>
+        <div class="metodo-info">
+          <h3>Pix</h3>
+          <p>QR Code ou copia e cola<br>Aprovação instantânea</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="seta"></ion-icon>
+      </div>
+
+      <!-- Débito -->
+      <div class="metodo-card" (click)="escolherDebito()">
+        <div class="metodo-icone debito">
+          <ion-icon name="card-outline"></ion-icon>
+        </div>
+        <div class="metodo-info">
+          <h3>Cartão de Débito</h3>
+          <p>Visa, Mastercard, Elo<br>Aprovação imediata</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="seta"></ion-icon>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>

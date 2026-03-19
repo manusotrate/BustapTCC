@@ -3,28 +3,33 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
-interface PreferenciaResponse {
-  preferenceId: string;
-  checkoutUrl: string;
-  checkoutUrlSandbox: string;
+export interface PixResponse {
+  paymentId: number;
+  status: string;
+  qrCode: string;
+  qrCodeBase64: string;
 }
 
-interface SaldoResponse {
+export interface DebitoResponse {
+  paymentId: number;
+  status: string;
+  statusDetail: string;
+}
+
+export interface StatusResponse {
+  status: string;
+  statusDetail: string;
+}
+
+export interface SaldoResponse {
   saldo: number;
 }
 
-interface TicketItem {
-  id: number;
-  minutos: number;
-  valor: number;
-  status: string;
+export interface TicketsResponse {
+  tickets: any[];
 }
 
-interface TicketsResponse {
-  tickets: TicketItem[];
-}
-
-interface ComprarTicketResponse {
+export interface ComprarTicketResponse {
   mensagem: string;
   saldo: number;
 }
@@ -45,14 +50,39 @@ export class PaymentService {
     return new HttpHeaders({ Authorization: `Bearer ${token}` });
   }
 
-  criarPreferencia(valor: number): Observable<PreferenciaResponse> {
-    return this.http.post<PreferenciaResponse>(
-      `${this.apiUrl}/pagamentos/preferencia`,
+  // ── Pix ──
+  criarPagamentoPix(valor: number): Observable<PixResponse> {
+    return this.http.post<PixResponse>(
+      `${this.apiUrl}/pagamentos/pix`,
       { valor },
       { headers: this.getHeaders() }
     );
   }
 
+  // ── Débito ──
+  criarPagamentoDebito(dados: {
+    valor: number;
+    token: string;
+    issuerId: string;
+    installments: number;
+    paymentMethodId: string;
+  }): Observable<DebitoResponse> {
+    return this.http.post<DebitoResponse>(
+      `${this.apiUrl}/pagamentos/debito`,
+      dados,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // ── Polling status Pix ──
+  consultarStatus(paymentId: number): Observable<StatusResponse> {
+    return this.http.get<StatusResponse>(
+      `${this.apiUrl}/pagamentos/status/${paymentId}`,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // ── Saldo ──
   getSaldo(): Observable<SaldoResponse> {
     return this.http.get<SaldoResponse>(
       `${this.apiUrl}/usuario/saldo`,
@@ -60,6 +90,7 @@ export class PaymentService {
     );
   }
 
+  // ── Tickets ──
   getTickets(): Observable<TicketsResponse> {
     return this.http.get<TicketsResponse>(
       `${this.apiUrl}/tickets`,
