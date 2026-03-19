@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { RecargaComponent } from './recarga.component';
-import { PaymentService } from '../services/payment.service';
 
 @NgModule({
   imports: [
@@ -16,7 +15,6 @@ import { PaymentService } from '../services/payment.service';
       }
     ])
   ],
-  declarations: [RecargaComponent],
-  providers: [PaymentService]
+  declarations: [RecargaComponent]
 })
 export class RecargaModule {}
