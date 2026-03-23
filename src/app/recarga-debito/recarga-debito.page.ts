@@ -92,27 +92,52 @@ export class RecargaDebitoPage implements OnInit, AfterViewInit {
 
       const [mesStr, anoStr] = this.validade.split('/');
       const numeroLimpo = this.numeroCartao.replace(/\s/g, '');
+      const anoCompleto = '20' + anoStr; // Converter para 4 dígitos
+
+      console.log('🔐 Iniciando tokenização...', {
+        cardNumber: numeroLimpo.substring(0, 4) + '****' + numeroLimpo.substring(12),
+        cardholderName: this.nomeCartao,
+        expiry: `${mesStr}/${anoCompleto}`
+      });
 
       // Tokeniza o cartão no lado do cliente (nunca envia dados brutos ao backend)
       const tokenResult = await mp.createCardToken({
         cardNumber: numeroLimpo,
         cardholderName: this.nomeCartao,
         cardExpirationMonth: mesStr,
-        cardExpirationYear: `20${anoStr}`,
+        cardExpirationYear: anoCompleto, // 4 dígitos (YYYY)
         securityCode: this.cvv,
         identificationType: 'CPF',
         identificationNumber: this.cpfCartao.replace(/\D/g, ''),
       });
 
-      // Detecta bandeira pelo número
+      console.log('✅ Token criado:', {
+        id: tokenResult.id ? `${tokenResult.id.substring(0, 20)}...` : 'nulo',
+        issuer_id: tokenResult.issuer_id,
+        payment_type_id: tokenResult.payment_type_id,
+        hasError: !!tokenResult.error
+      });
+
+      if (tokenResult.error) {
+        throw new Error(tokenResult.error);
+      }
+
+      // Detecta bandeira pelo número (visa, master, elo)
       const paymentMethodId = this.detectarBandeira(numeroLimpo);
+
+      console.log('📤 Enviando pagamento:', { 
+        valor: this.valor, 
+        paymentMethodId,
+        payment_type_id: tokenResult.payment_type_id,
+        installments: 1 
+      });
 
       this.paymentService.criarPagamentoDebito({
         valor: this.valor,
         token: tokenResult.id,
         issuerId: tokenResult.issuer_id || '',
         installments: 1,
-        paymentMethodId,
+        paymentMethodId, // Enviar a bandeira: visa, master, elo
       }).subscribe({
         next: async (response) => {
           await loading.dismiss();
@@ -150,9 +175,16 @@ export class RecargaDebitoPage implements OnInit, AfterViewInit {
 
     } catch (err: any) {
       await loading.dismiss();
-      console.error('Erro ao tokenizar cartão:', err);
+      console.error('❌ Erro ao tokenizar cartão:', err);
+      console.error('Stack:', err.stack);
+      
+      // Tenta extrair mensagem de erro
+      let mensagem = 'Dados do cartão inválidos. Verifique e tente novamente.';
+      if (err.message) mensagem = err.message;
+      if (err.error?.message) mensagem = err.error.message;
+      
       const toast = await this.toastCtrl.create({
-        message: 'Dados do cartão inválidos. Verifique e tente novamente.',
+        message: mensagem,
         duration: 3000,
         color: 'danger',
         position: 'top'
