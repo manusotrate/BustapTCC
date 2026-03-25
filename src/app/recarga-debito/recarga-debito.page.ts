@@ -123,7 +123,7 @@ export class RecargaDebitoPage implements OnInit, AfterViewInit {
       }
 
       // Detecta bandeira pelo número (visa, master, elo)
-      const paymentMethodId = this.detectarBandeira(numeroLimpo);
+      const paymentMethodId = tokenResult.payment_method_id || this.detectarBandeira(numeroLimpo);
 
       console.log('📤 Enviando pagamento:', { 
         valor: this.valor, 
@@ -132,12 +132,14 @@ export class RecargaDebitoPage implements OnInit, AfterViewInit {
         installments: 1 
       });
 
+      console.log('🔍 Bandeira detectada pelo MP:', tokenResult.payment_method_id);
+
       this.paymentService.criarPagamentoDebito({
         valor: this.valor,
         token: tokenResult.id,
         issuerId: tokenResult.issuer_id || '',
         installments: 1,
-        paymentMethodId, // Enviar a bandeira: visa, master, elo
+        paymentMethodId, 
       }).subscribe({
         next: async (response) => {
           await loading.dismiss();
