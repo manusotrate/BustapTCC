@@ -54,10 +54,15 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.carregarLeaflet().then(() => {
-      this.inicializarMapa();
-      this.iniciarGps();
-    });
+    this.carregarLeaflet()
+      .then(() => {
+        this.inicializarMapa();
+        this.iniciarGps();
+      })
+      .catch(() => {
+        this.erroGps = 'Erro ao carregar mapa.';
+        this.carregandoGps = false;
+      });
   }
 
   ngOnDestroy() {
@@ -68,19 +73,41 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  // ✅ CORRIGIDO
   private carregarLeaflet(): Promise<void> {
-    return new Promise((resolve) => {
-      if ((window as any).L) { resolve(); return; }
+    return new Promise((resolve, reject) => {
 
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-      document.head.appendChild(link);
+      if ((window as any).L) {
+        resolve();
+        return;
+      }
+
+      // evita duplicar CSS
+      if (!document.querySelector('link[href*="leaflet.css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        document.head.appendChild(link);
+      }
+
+      // se script já existe, só espera carregar
+      if (document.querySelector('script[src*="leaflet.js"]')) {
+        const check = setInterval(() => {
+          if ((window as any).L) {
+            clearInterval(check);
+            resolve();
+          }
+        }, 50);
+        return;
+      }
 
       const script = document.createElement('script');
       script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+
       script.onload = () => resolve();
-      document.head.appendChild(script);
+      script.onerror = () => reject();
+
+      document.body.appendChild(script);
     });
   }
 
@@ -104,6 +131,7 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     this.marcadorUsuario = L.marker([0, 0], { icon: iconeUsuario });
   }
 
+  // ✅ CORRIGIDO
   private iniciarGps() {
     if (!navigator.geolocation) {
       this.ngZone.run(() => {
@@ -113,11 +141,31 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
+    // evita múltiplos watchers
+    if (this.watchId !== null) return;
+
+    this.carregandoGps = true;
+
     this.watchId = navigator.geolocation.watchPosition(
-      (pos) => this.ngZone.run(() => this.onPosicaoAtualizada(pos)),
-      (err) => this.ngZone.run(() => this.onErroPosicao(err)),
-      // ✅ CORREÇÃO 2: timeout aumentado de 10000 para 30000 (30 segundos)
-      { enableHighAccuracy: true, maximumAge: 1000, timeout: 30000 }
+      (pos) => {
+        this.ngZone.run(() => this.onPosicaoAtualizada(pos));
+      },
+      (err) => {
+        this.ngZone.run(() => {
+          this.onErroPosicao(err);
+
+          // tenta recuperar se timeout
+          if (err.code === 3) {
+            this.pararGps();
+            setTimeout(() => this.iniciarGps(), 2000);
+          }
+        });
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 30000
+      }
     );
   }
 
@@ -136,6 +184,7 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     this.posicaoAtual = { lat, lng };
 
     this.marcadorUsuario.setLatLng([lat, lng]);
+
     if (!this.map.hasLayer(this.marcadorUsuario)) {
       this.marcadorUsuario.addTo(this.map);
     }
@@ -144,9 +193,12 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.viagemAtiva && this.posicaoAnterior) {
       const distancia = this.calcularDistanciaM(
-        this.posicaoAnterior.latitude, this.posicaoAnterior.longitude,
-        lat, lng
+        this.posicaoAnterior.latitude,
+        this.posicaoAnterior.longitude,
+        lat,
+        lng
       );
+
       const distanciaKm = distancia / 1000;
 
       if (distanciaKm > 0.005) {
@@ -170,10 +222,17 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
 
   private onErroPosicao(err: GeolocationPositionError) {
     this.carregandoGps = false;
+
     switch (err.code) {
-      case 1: this.erroGps = 'Permissão de GPS negada.'; break;
-      case 2: this.erroGps = 'Posição indisponível.'; break;
-      case 3: this.erroGps = 'Tempo de GPS esgotado.'; break;
+      case 1:
+        this.erroGps = 'Permissão de GPS negada.';
+        break;
+      case 2:
+        this.erroGps = 'Posição indisponível.';
+        break;
+      case 3:
+        this.erroGps = 'Tempo de GPS esgotado.';
+        break;
     }
   }
 
@@ -182,12 +241,16 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     lat2: number, lon2: number
   ): number {
     const R = 6371000;
+
     const dLat = this.toRad(lat2 - lat1);
     const dLon = this.toRad(lon2 - lon1);
+
     const a =
       Math.sin(dLat / 2) ** 2 +
-      Math.cos(this.toRad(lat1)) * Math.cos(this.toRad(lat2)) *
+      Math.cos(this.toRad(lat1)) *
+      Math.cos(this.toRad(lat2)) *
       Math.sin(dLon / 2) ** 2;
+
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
 
@@ -197,6 +260,7 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
 
   iniciarViagem() {
     if (!this.posicaoAtual) return;
+
     this.viagemAtiva = true;
     this.kmPercorrido = 0;
     this.kmRestante = this.kmTicket;
@@ -210,9 +274,9 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
   async encerrarViagem() {
     const alert = await this.alertCtrl.create({
       header: 'Encerrar viagem?',
-      message: `Você percorreu ${this.kmPercorridoFormatado}. Os km restantes do ticket serão perdidos.`,
+      message: `Você percorreu ${this.kmPercorridoFormatado}. Os km restantes serão perdidos.`,
       buttons: [
-        { text: 'Continuar viagem', role: 'cancel' },
+        { text: 'Continuar', role: 'cancel' },
         {
           text: 'Encerrar',
           handler: () => {
@@ -223,6 +287,7 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
         }
       ]
     });
+
     await alert.present();
   }
 
@@ -232,23 +297,23 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
 
     const alert = await this.alertCtrl.create({
       header: 'Ticket esgotado!',
-      message: `Você utilizou todos os ${this.kmTicket} km do seu ticket.`,
+      message: `Você utilizou ${this.kmTicket} km.`,
       buttons: [{
         text: 'OK',
         handler: () => this.router.navigate(['/home'])
       }]
     });
+
     await alert.present();
   }
 
-  // ✅ CORREÇÃO 1: troquei toFixed(2) por Math.round() — exibe "30 km" em vez de "30.00 km"
- get kmPercorridoFormatado(): string {
-  return `${this.kmPercorrido.toFixed(2)} km`;
-}
+  get kmPercorridoFormatado(): string {
+    return `${this.kmPercorrido.toFixed(2)} km`;
+  }
 
-get kmRestanteFormatado(): string {
-  return `${this.kmRestante.toFixed(2)} km`;
-}
+  get kmRestanteFormatado(): string {
+    return `${this.kmRestante.toFixed(2)} km`;
+  }
 
   get percentualUsado(): number {
     if (this.kmTicket === 0) return 0;
