@@ -38,15 +38,12 @@ ion-content.initial-content::part(background) {
     border-radius: 12px;
     padding: 8px;
   }
-
-  .app-name {
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: white;
-    margin: 0;
-    letter-spacing: -0.5px;
+.logo {
+    width: 120px;
+    height: auto;
+    display: block;
   }
+
 }
 
 .title-section {
@@ -54,7 +51,6 @@ ion-content.initial-content::part(background) {
   margin-bottom: 32px;
 
   .main-title {
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 32px;
     font-weight: 700;
     color: white;
@@ -63,7 +59,6 @@ ion-content.initial-content::part(background) {
   }
 
   .subtitle {
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 18px;
     font-weight: 400;
     color: white;
@@ -82,8 +77,6 @@ ion-content.initial-content::part(background) {
     --border-radius: 28px;
     --padding-top: 16px;
     --padding-bottom: 16px;
-    --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 16px;
     font-weight: 600;
     text-transform: none;
@@ -93,7 +86,6 @@ ion-content.initial-content::part(background) {
 
   .login-link {
     text-align: center;
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 14px;
     color: white;
 
