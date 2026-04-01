@@ -4,7 +4,7 @@ import { ToastController } from '@ionic/angular';
 import { PaymentService } from '../services/payment.service';
 
 interface Ticket {
-  minutos: number;
+  km: number;
   preco: number;
   precoFormatado: string;
 }
@@ -23,14 +23,14 @@ export class ComprarTicketsPage implements OnInit {
   carregando: boolean = false;
 
   tickets: Ticket[] = [
-    { minutos: 15,  preco: 8.99,  precoFormatado: 'R$8,99'  },
-    { minutos: 30,  preco: 16.99, precoFormatado: 'R$16,99' },
-    { minutos: 45,  preco: 24.99, precoFormatado: 'R$24,99' },
-    { minutos: 60,  preco: 33.99, precoFormatado: 'R$33,99' },
-    { minutos: 75,  preco: 41.99, precoFormatado: 'R$41,99' },
-    { minutos: 90,  preco: 50.99, precoFormatado: 'R$50,99' },
-    { minutos: 105, preco: 58.99, precoFormatado: 'R$58,99' },
-    { minutos: 120, preco: 67.99, precoFormatado: 'R$67,99' },
+    { km: 10,  preco: 5.99,  precoFormatado: 'R$5,99'  },
+    { km: 20,  preco: 10.99, precoFormatado: 'R$10,99' },
+    { km: 35,  preco: 17.99, precoFormatado: 'R$17,99' },
+    { km: 50,  preco: 24.99, precoFormatado: 'R$24,99' },
+    { km: 70,  preco: 33.99, precoFormatado: 'R$33,99' },
+    { km: 90,  preco: 42.99, precoFormatado: 'R$42,99' },
+    { km: 110, preco: 51.99, precoFormatado: 'R$51,99' },
+    { km: 130, preco: 60.99, precoFormatado: 'R$60,99' },
   ];
 
   get saldoFormatado(): string {
@@ -74,23 +74,25 @@ export class ComprarTicketsPage implements OnInit {
     if (!this.ticketSelecionado || this.carregando) return;
 
     this.carregando = true;
-    const { minutos, preco } = this.ticketSelecionado;
+    const { km, preco } = this.ticketSelecionado;
 
-    this.paymentService.comprarTicket(minutos, preco).subscribe({
+    // Passa km no lugar de minutos para o backend
+    this.paymentService.comprarTicket(km, preco).subscribe({
       next: async (response) => {
         this.saldo = response.saldo;
         this.carregando = false;
         this.ticketSelecionado = null;
 
         const toast = await this.toastCtrl.create({
-          message: `Ticket de ${minutos} Min comprado com sucesso!`,
+          message: `Ticket de ${km} km comprado com sucesso!`,
           duration: 2500,
           color: 'success',
           position: 'top'
         });
         await toast.present();
 
-        this.router.navigate(['/tickets']);
+        // Navega de volta e força recarga da lista de tickets
+        this.router.navigate(['/tickets'], { replaceUrl: true });
       },
       error: async (err) => {
         this.carregando = false;

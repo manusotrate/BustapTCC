@@ -19,7 +19,7 @@
       *ngFor="let ticket of tickets"
       (click)="selecionarTicket(ticket)">
       <ion-icon name="ticket-outline"></ion-icon>
-      <span class="ticket-min">{{ ticket.minutos }} Min</span>
+      <span class="ticket-km">{{ ticket.km }} km</span>
       <span class="ticket-preco">{{ ticket.precoFormatado }}</span>
     </div>
   </div>
@@ -28,7 +28,7 @@
   <div class="modal-overlay" *ngIf="ticketSelecionado" (click)="cancelar()">
     <div class="modal-box" (click)="$event.stopPropagation()">
       <p class="modal-texto">
-        Tem certeza que quer<br>comprar um ticket de {{ ticketSelecionado.minutos }} Min?
+        Tem certeza que quer<br>comprar um ticket de {{ ticketSelecionado.km }} km?
       </p>
       <div class="modal-actions">
         <button class="btn-nao" (click)="cancelar()">Não</button>

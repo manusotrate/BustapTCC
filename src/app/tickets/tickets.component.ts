@@ -7,7 +7,8 @@ import { PaymentService } from '../services/payment.service';
 
 interface Ticket {
   id: number;
-  minutos: number;
+  minutos: number; // campo original do backend — mantemos compatibilidade
+  km: number;      // campo novo (pode ser o mesmo campo renomeado no backend)
   valor: number;
   status: string;
 }
@@ -36,11 +37,23 @@ export class TicketsComponent implements OnInit {
     this.carregarTickets();
   }
 
+  // Chamado pelo Ionic toda vez que a página fica visível (inclusive ao voltar).
+  // Isso garante que a lista atualiza automaticamente após uma compra.
+  ionViewWillEnter() {
+    this.carregarTickets();
+  }
+
   carregarTickets() {
     this.carregando = true;
     this.paymentService.getTickets().subscribe({
       next: (response) => {
-        this.tickets = response.tickets;
+        // Suporte a backends que ainda usam "minutos" como campo:
+        // se o ticket vier com "minutos", usamos esse valor como km
+        // até que o backend seja atualizado para "km".
+        this.tickets = response.tickets.map((t: any) => ({
+          ...t,
+          km: t.km ?? t.minutos // fallback para "minutos" se "km" não existir
+        }));
         this.carregando = false;
       },
       error: (err) => {
@@ -56,9 +69,9 @@ export class TicketsComponent implements OnInit {
 
   usarTicket() {
     if (!this.ticketSelecionado) return;
-    const minutos = this.ticketSelecionado.minutos;
+    const km = this.ticketSelecionado.km;
     this.ticketSelecionado = null;
-    this.router.navigate(['/timer'], { queryParams: { minutos } });
+    this.router.navigate(['/trip'], { queryParams: { km } });
   }
 
   cancelar() {

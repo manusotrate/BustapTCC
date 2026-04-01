@@ -15,9 +15,9 @@ declare const L: any; // Leaflet via CDN
 export class TripPage implements OnInit, OnDestroy, AfterViewInit {
 
   // ─── Dados do ticket ───
-  kmTicket: number = 0;         // km total do ticket
-  kmPercorrido: number = 0;     // km já percorrido
-  kmRestante: number = 0;       // km restante no ticket
+  kmTicket: number = 0;
+  kmPercorrido: number = 0;
+  kmRestante: number = 0;
   viagemAtiva: boolean = false;
 
   // ─── Mapa ───
@@ -68,7 +68,6 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  // ─── Carrega Leaflet dinamicamente via CDN ───
   private carregarLeaflet(): Promise<void> {
     return new Promise((resolve) => {
       if ((window as any).L) { resolve(); return; }
@@ -85,18 +84,16 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  // ─── Inicializa o mapa ───
   private inicializarMapa() {
     this.map = L.map('trip-map', {
       zoomControl: false,
       attributionControl: false
-    }).setView([-22.2159, -49.9496], 14); // Marília como centro inicial
+    }).setView([-22.2159, -49.9496], 14);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
     }).addTo(this.map);
 
-    // Ícone customizado para o usuário
     const iconeUsuario = L.divIcon({
       className: '',
       html: `<div class="marker-usuario"></div>`,
@@ -107,7 +104,6 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     this.marcadorUsuario = L.marker([0, 0], { icon: iconeUsuario });
   }
 
-  // ─── GPS ───
   private iniciarGps() {
     if (!navigator.geolocation) {
       this.ngZone.run(() => {
@@ -120,7 +116,8 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     this.watchId = navigator.geolocation.watchPosition(
       (pos) => this.ngZone.run(() => this.onPosicaoAtualizada(pos)),
       (err) => this.ngZone.run(() => this.onErroPosicao(err)),
-      { enableHighAccuracy: true, maximumAge: 1000, timeout: 10000 }
+      // ✅ CORREÇÃO 2: timeout aumentado de 10000 para 30000 (30 segundos)
+      { enableHighAccuracy: true, maximumAge: 1000, timeout: 30000 }
     );
   }
 
@@ -138,16 +135,13 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     const { latitude: lat, longitude: lng } = pos.coords;
     this.posicaoAtual = { lat, lng };
 
-    // Atualiza marcador no mapa
     this.marcadorUsuario.setLatLng([lat, lng]);
     if (!this.map.hasLayer(this.marcadorUsuario)) {
       this.marcadorUsuario.addTo(this.map);
     }
 
-    // Centraliza o mapa no usuário
     this.map.setView([lat, lng], 15);
 
-    // Calcula distância percorrida se viagem ativa
     if (this.viagemAtiva && this.posicaoAnterior) {
       const distancia = this.calcularDistanciaM(
         this.posicaoAnterior.latitude, this.posicaoAnterior.longitude,
@@ -155,18 +149,16 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
       );
       const distanciaKm = distancia / 1000;
 
-      if (distanciaKm > 0.005) { // ignora movimentos < 5m (ruído GPS)
+      if (distanciaKm > 0.005) {
         this.kmPercorrido += distanciaKm;
         this.kmRestante = Math.max(0, this.kmTicket - this.kmPercorrido);
 
-        // Adiciona ponto na rota
         if (this.rotaPolyline) {
           const coords = this.rotaPolyline.getLatLngs();
           coords.push([lat, lng]);
           this.rotaPolyline.setLatLngs(coords);
         }
 
-        // Ticket esgotado
         if (this.kmRestante <= 0) {
           this.ticketEsgotado();
         }
@@ -185,7 +177,6 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  // ─── Haversine: distância em metros entre dois pontos ───
   private calcularDistanciaM(
     lat1: number, lon1: number,
     lat2: number, lon2: number
@@ -204,21 +195,18 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     return deg * (Math.PI / 180);
   }
 
-  // ─── Iniciar viagem ───
   iniciarViagem() {
     if (!this.posicaoAtual) return;
     this.viagemAtiva = true;
     this.kmPercorrido = 0;
     this.kmRestante = this.kmTicket;
 
-    // Inicia polyline da rota
     this.rotaPolyline = L.polyline(
       [[this.posicaoAtual.lat, this.posicaoAtual.lng]],
       { color: '#1a1a1a', weight: 5, opacity: 0.8 }
     ).addTo(this.map);
   }
 
-  // ─── Encerrar viagem manualmente ───
   async encerrarViagem() {
     const alert = await this.alertCtrl.create({
       header: 'Encerrar viagem?',
@@ -238,7 +226,6 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     await alert.present();
   }
 
-  // ─── Ticket esgotado ───
   private async ticketEsgotado() {
     this.viagemAtiva = false;
     this.pararGps();
@@ -254,14 +241,14 @@ export class TripPage implements OnInit, OnDestroy, AfterViewInit {
     await alert.present();
   }
 
-  // ─── Getters formatados ───
-  get kmPercorridoFormatado(): string {
-    return `${this.kmPercorrido.toFixed(2)} km`;
-  }
+  // ✅ CORREÇÃO 1: troquei toFixed(2) por Math.round() — exibe "30 km" em vez de "30.00 km"
+ get kmPercorridoFormatado(): string {
+  return `${this.kmPercorrido.toFixed(2)} km`;
+}
 
-  get kmRestanteFormatado(): string {
-    return `${this.kmRestante.toFixed(2)} km`;
-  }
+get kmRestanteFormatado(): string {
+  return `${this.kmRestante.toFixed(2)} km`;
+}
 
   get percentualUsado(): number {
     if (this.kmTicket === 0) return 0;
