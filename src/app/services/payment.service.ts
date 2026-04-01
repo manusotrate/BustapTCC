@@ -112,10 +112,11 @@ export class PaymentService {
     );
   }
 
-  comprarTicket(minutos: number, valor: number): Observable<ComprarTicketResponse> {
+  // ── Comprar Ticket ──
+  comprarTicket(distancia_km: number, valor: number): Observable<ComprarTicketResponse> {
     return this.http.post<ComprarTicketResponse>(
       `${this.apiUrl}/tickets/comprar`,
-      { minutos, valor },
+      { distancia_km, valor },
       { headers: this.getHeaders() }
     );
   }

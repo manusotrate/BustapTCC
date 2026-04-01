@@ -47,8 +47,8 @@
         <div class="ticket-top">
           <ion-icon name="ticket-outline" class="ticket-icon"></ion-icon>
           <div class="ticket-info">
-            <span class="ticket-duration">{{ (+ticket.km).toFixed(2) }} km</span>
-            <span class="ticket-remaining">{{ (+ticket.km).toFixed(2) }} km</span>
+            <span class="ticket-duration">{{ (+ticket.distancia_km).toFixed(2) }} km</span>
+            <span class="ticket-remaining">{{ (+ticket.distancia_km).toFixed(2) }} km</span>
           </div>
         </div>
         <button class="usar-btn" (click)="confirmarUso(ticket)">Usar</button>
