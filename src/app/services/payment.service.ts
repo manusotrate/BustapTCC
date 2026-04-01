@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 export interface PixResponse {
@@ -14,6 +15,7 @@ export interface DebitoResponse {
   paymentId: number;
   status: string;
   statusDetail: string;
+  novoSaldo?: number;
 }
 
 export interface StatusResponse {
@@ -39,6 +41,8 @@ export interface ComprarTicketResponse {
 })
 export class PaymentService {
   private apiUrl = 'http://localhost:4000';
+  private saldoSubject = new BehaviorSubject<number | null>(null);
+  public saldo$ = this.saldoSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -87,7 +91,17 @@ export class PaymentService {
     return this.http.get<SaldoResponse>(
       `${this.apiUrl}/usuario/saldo`,
       { headers: this.getHeaders() }
+    ).pipe(
+      tap((resp) => {
+        if (resp && typeof resp.saldo === 'number') {
+          this.setSaldo(resp.saldo);
+        }
+      })
     );
+  }
+
+  setSaldo(novoSaldo: number | null) {
+    this.saldoSubject.next(novoSaldo);
   }
 
   // ── Tickets ──

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { PaymentService } from '../services/payment.service';
@@ -13,6 +14,7 @@ export class HomePage implements OnInit {
   userName = '';
   balance = 'R$ 0,00';
   usuario: any = null;
+  private saldoSub: Subscription | null = null;
 
   constructor(
     private authService: AuthService,
@@ -23,6 +25,17 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.carregarDadosUsuario();
     this.carregarSaldo();
+
+    // Inscreve-se para atualizações reativas de saldo
+    this.saldoSub = this.paymentService.saldo$.subscribe((s) => {
+      if (s != null) {
+        this.balance = `R$ ${s.toFixed(2).replace('.', ',')}`;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.saldoSub) this.saldoSub.unsubscribe();
   }
 
   carregarDadosUsuario() {
