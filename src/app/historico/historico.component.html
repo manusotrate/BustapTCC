@@ -8,7 +8,7 @@
 
 <ion-content class="ion-padding">
 
-  <h2>Histórico de tickets</h2>
+  <h2>Histórico de viagens</h2>
 
   <ion-searchbar
     placeholder="Pesquisar..."
@@ -18,25 +18,30 @@
     (ionInput)="filtrar()">
   </ion-searchbar>
 
-  <ion-list *ngIf="historicoFiltrado.length > 0; else vazio">
+  <!-- Carregando -->
+  <div class="vazio" *ngIf="carregando">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando histórico...</p>
+  </div>
 
+  <!-- Lista -->
+  <ion-list *ngIf="!carregando && historicoFiltrado.length > 0; else vazio">
     <ion-item lines="none" *ngFor="let item of historicoFiltrado">
       <ion-label>
-        <h3>{{ item.rota }}</h3>
-        <p>Ticket: {{ item.ticket }}</p>
+        <h3>{{ item.origem }} → {{ item.destino }}</h3>
+        <p>{{ item.distancia_km }} km</p>
       </ion-label>
       <div slot="end" class="data">
-        <strong>{{ item.dia }}</strong>
-        <p>{{ item.mes }}</p>
+        <strong>{{ getDia(item.usado_em) }}</strong>
+        <p>{{ getMes(item.usado_em) }}</p>
       </div>
     </ion-item>
-
   </ion-list>
 
   <ng-template #vazio>
-    <div class="vazio">
+    <div class="vazio" *ngIf="!carregando">
       <ion-icon name="search-outline"></ion-icon>
-      <p>Nenhum resultado encontrado.</p>
+      <p>Nenhuma viagem encontrada.</p>
     </div>
   </ng-template>
 

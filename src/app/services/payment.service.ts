@@ -36,6 +36,23 @@ export interface ComprarTicketResponse {
   saldo: number;
 }
 
+export interface UsarTicketResponse {
+  mensagem: string;
+  distancia_km: number;
+}
+
+export interface HistoricoItem {
+  id: number;
+  origem: string;
+  destino: string;
+  distancia_km: number;
+  usado_em: string;
+}
+
+export interface HistoricoResponse {
+  historico: HistoricoItem[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -117,6 +134,23 @@ export class PaymentService {
     return this.http.post<ComprarTicketResponse>(
       `${this.apiUrl}/tickets/comprar`,
       { distancia_km, valor },
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // ── Usar Ticket (marca como usado e salva no histórico) ──
+  usarTicket(ticket_id: number, origem: string, destino: string): Observable<UsarTicketResponse> {
+    return this.http.post<UsarTicketResponse>(
+      `${this.apiUrl}/tickets/usar`,
+      { ticket_id, origem, destino },
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // ── Histórico ──
+  getHistorico(): Observable<HistoricoResponse> {
+    return this.http.get<HistoricoResponse>(
+      `${this.apiUrl}/historico`,
       { headers: this.getHeaders() }
     );
   }
