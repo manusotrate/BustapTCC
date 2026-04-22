@@ -4,7 +4,7 @@ import { AlertController } from '@ionic/angular';
 
 interface Cidade {
   nome: string;
-  distanciaDeMarilia: number; // em km
+  distanciaDeMarilia: number;
 }
 
 @Component({
@@ -18,6 +18,9 @@ export class HorariosPage implements OnInit {
   localPartida: Cidade | null = null;
   localChegada: Cidade | null = null;
   distanciaKm: number = 0;
+
+  // Necessário para os testes existentes
+  tempoEstimado: string = '';
 
   cidades: Cidade[] = [
     { nome: 'Marília',               distanciaDeMarilia: 0   },
@@ -81,6 +84,8 @@ export class HorariosPage implements OnInit {
               this.localChegada = cidadeSelecionada;
             }
             this.calcularDistancia();
+            // Recalcula tempo estimado (compatibilidade com testes)
+            this.calcularTempo();
           },
         },
       ],
@@ -102,19 +107,37 @@ export class HorariosPage implements OnInit {
       this.distanciaKm = 0;
       return;
     }
-
     if (this.localPartida.nome === this.localChegada.nome) {
       this.distanciaKm = 0;
       return;
     }
-
-    // Distância real entre as duas cidades passando pela rota
     this.distanciaKm = Math.abs(
       this.localPartida.distanciaDeMarilia - this.localChegada.distanciaDeMarilia
     ) + Math.min(
       this.localPartida.distanciaDeMarilia,
       this.localChegada.distanciaDeMarilia
     );
+  }
+
+  // Mantido para compatibilidade com testes existentes
+  calcularTempo() {
+    if (!this.localPartida || !this.localChegada) {
+      this.tempoEstimado = '';
+      return;
+    }
+    if (this.localPartida.nome === this.localChegada.nome) {
+      this.tempoEstimado = '0min';
+      return;
+    }
+    const velocidadeMedia = 60; // km/h
+    const minutos = Math.round((this.distanciaKm / velocidadeMedia) * 60);
+    if (minutos >= 60) {
+      const horas = Math.floor(minutos / 60);
+      const min = minutos % 60;
+      this.tempoEstimado = min > 0 ? `${horas}h${min}min` : `${horas}h`;
+    } else {
+      this.tempoEstimado = `${minutos}min`;
+    }
   }
 
   get distanciaFormatada(): string {
@@ -126,6 +149,7 @@ export class HorariosPage implements OnInit {
   comecarViagem() {
     if (!this.localPartida || !this.localChegada) return;
 
+    // Passa partida, chegada E km para a tela de tickets
     this.router.navigate(['/tickets'], {
       queryParams: {
         partida: this.localPartida.nome,

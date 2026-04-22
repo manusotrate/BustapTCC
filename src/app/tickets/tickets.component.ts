@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { PaymentService } from '../services/payment.service';
 
 interface Ticket {
@@ -24,15 +24,29 @@ export class TicketsComponent implements OnInit {
   tickets: Ticket[] = [];
   carregando: boolean = true;
 
+  // Cidades vindas de horarios.page
+  cidadePartida: string = '';
+  cidadeChegada: string = '';
+  kmNecessario: number = 0;
+
   constructor(
     private http: HttpClient,
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
     private navCtrl: NavController,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private toastCtrl: ToastController
   ) {}
 
   ngOnInit() {
+    // Lê os queryParams vindos de horarios (se existirem)
+    this.route.queryParams.subscribe(params => {
+      if (params['partida']) this.cidadePartida = params['partida'];
+      if (params['chegada']) this.cidadeChegada = params['chegada'];
+      if (params['km'])      this.kmNecessario  = +params['km'];
+    });
+
     this.carregarTickets();
   }
 
@@ -60,9 +74,37 @@ export class TicketsComponent implements OnInit {
 
   usarTicket() {
     if (!this.ticketSelecionado) return;
-    const km = this.ticketSelecionado.distancia_km;
+
+    const ticket = this.ticketSelecionado;
     this.ticketSelecionado = null;
-    this.router.navigate(['/trip'], { queryParams: { km } });
+
+    // Chama o backend para marcar como usado e salvar no histórico
+    this.paymentService.usarTicket(
+      ticket.id,
+      this.cidadePartida || 'Origem não informada',
+      this.cidadeChegada || 'Destino não informado'
+    ).subscribe({
+      next: async () => {
+        // Navega para trip passando km
+        this.router.navigate(['/trip'], {
+          queryParams: {
+            km: ticket.distancia_km,
+            partida: this.cidadePartida,
+            chegada: this.cidadeChegada
+          }
+        });
+      },
+      error: async (err) => {
+        const msg = err?.error?.erro || 'Erro ao usar ticket.';
+        const toast = await this.toastCtrl.create({
+          message: msg,
+          duration: 2500,
+          color: 'danger',
+          position: 'top'
+        });
+        await toast.present();
+      }
+    });
   }
 
   cancelar() {
