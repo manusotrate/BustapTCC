@@ -24,18 +24,17 @@ export class TicketsComponent implements OnInit {
   tickets: Ticket[] = [];
   carregando: boolean = true;
 
-<<<<<<< HEAD
+  // Propriedades do gesto de arrastar
   private startY = 0;
   private currentY = 0;
   private isDragging = false;
 
   @ViewChild('menuContainer') menuContainer!: ElementRef;
-=======
+
   // Cidades vindas de horarios.page
   cidadePartida: string = '';
   cidadeChegada: string = '';
   kmNecessario: number = 0;
->>>>>>> e34cf460bcad6877181a79e42c5bd61c83beb446
 
   constructor(
     private http: HttpClient,
@@ -48,7 +47,6 @@ export class TicketsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Lê os queryParams vindos de horarios (se existirem)
     this.route.queryParams.subscribe(params => {
       if (params['partida']) this.cidadePartida = params['partida'];
       if (params['chegada']) this.cidadeChegada = params['chegada'];
@@ -86,14 +84,12 @@ export class TicketsComponent implements OnInit {
     const ticket = this.ticketSelecionado;
     this.ticketSelecionado = null;
 
-    // Chama o backend para marcar como usado e salvar no histórico
     this.paymentService.usarTicket(
       ticket.id,
       this.cidadePartida || 'Origem não informada',
       this.cidadeChegada || 'Destino não informado'
     ).subscribe({
       next: async () => {
-        // Navega para trip passando km
         this.router.navigate(['/trip'], {
           queryParams: {
             km: ticket.distancia_km,
@@ -135,7 +131,6 @@ export class TicketsComponent implements OnInit {
     this.router.navigate(['/comprar-tickets']);
   }
 
-  // ── Gesto de arrastar para fechar ──
   onChevronTouchStart(event: TouchEvent) {
     this.startY = event.touches[0].clientY;
     this.currentY = this.startY;
@@ -151,7 +146,6 @@ export class TicketsComponent implements OnInit {
       const el = this.menuContainer.nativeElement;
       el.style.transition = 'none';
       el.style.transform = `translateY(${delta}px)`;
-      // Vai ficando transparente conforme arrasta
       el.style.opacity = `${Math.max(0.4, 1 - delta / 400)}`;
     }
   }
