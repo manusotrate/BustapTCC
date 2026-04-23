@@ -1,54 +1,50 @@
 <ion-content [fullscreen]="true" class="tickets-content">
 
-  <div class="header-container">
-    <div class="header-gradient">
-      <div class="top-section">
-        <div class="avatar">
-          <ion-icon name="person"></ion-icon>
-        </div>
-        <div class="top-actions">
-          <ion-button fill="clear" color="light" (click)="home()">
-            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-          </ion-button>
-          <ion-button fill="clear" color="light" (click)="historico()">
-            <ion-icon slot="icon-only" name="hourglass-outline"></ion-icon>
-          </ion-button>
-          <ion-button fill="clear" color="light" (click)="logout()">
-            <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
-          </ion-button>
-        </div>
-      </div>
+  <!-- Botões flutuando sobre o gradiente de fundo -->
+  <div class="top-section">
+    <div class="avatar">
+      <ion-icon name="person"></ion-icon>
+    </div>
+    <div class="top-actions">
+      <ion-button fill="clear" color="light" (click)="historico()">
+        <ion-icon slot="icon-only" name="hourglass-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" color="light" (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
     </div>
   </div>
 
-  <div class="menu-container" [class.blurred]="ticketSelecionado">
+  <div class="menu-container" #menuContainer [class.blurred]="ticketSelecionado">
 
-    <div class="chevron-wrapper">
-      <ion-icon name="chevron-down-outline" class="chevron-icon"></ion-icon>
+    <div
+      class="chevron-wrapper"
+      (touchstart)="onChevronTouchStart($event)"
+      (touchmove)="onChevronTouchMove($event)"
+      (touchend)="onChevronTouchEnd()">
+      <div class="chevron-handle">
+      </div>
     </div>
 
     <h2 class="page-title">Esses são seus<br>tickets :D</h2>
 
-    <!-- Carregando -->
     <div class="vazio" *ngIf="carregando">
       <ion-spinner name="crescent"></ion-spinner>
       <p>Carregando tickets...</p>
     </div>
 
-    <!-- Sem tickets -->
     <div class="vazio" *ngIf="!carregando && tickets.length === 0">
       <ion-icon name="ticket-outline"></ion-icon>
-      <p>Você não possui tickets ativos.</p>
+      <p>Você não possui tickets ativos</p>
     </div>
 
-    <!-- Lista -->
     <div class="tickets-list" *ngIf="!carregando && tickets.length > 0">
       <div class="ticket-card" *ngFor="let ticket of tickets">
         <div class="ticket-top">
           <ion-icon name="ticket-outline" class="ticket-icon"></ion-icon>
           <div class="ticket-info">
-            <span class="ticket-duration">{{ (+ticket.km).toFixed(2) }} km</span>
-            <span class="ticket-remaining">{{ (+ticket.km).toFixed(2) }} km</span>
+            <span class="ticket-duration">{{ (+ticket.distancia_km).toFixed(2) }} km</span>
+            <span class="ticket-remaining">{{ (+ticket.distancia_km).toFixed(2) }} km</span>
           </div>
         </div>
         <button class="usar-btn" (click)="confirmarUso(ticket)">Usar</button>
@@ -56,12 +52,11 @@
     </div>
 
     <div class="buy-button-wrapper">
-      <button class="buy-btn" (click)="comprar()">Compre mais tickets aqui!!!</button>
+      <button class="buy-btn" (click)="comprar()">Compre mais tickets aqui!</button>
     </div>
 
   </div>
 
-  <!-- Overlay + Modal -->
   <div class="modal-overlay" *ngIf="ticketSelecionado" (click)="cancelar()">
     <div class="modal-box" (click)="$event.stopPropagation()">
       <p class="modal-texto">Quer ativar esse ticket?</p>

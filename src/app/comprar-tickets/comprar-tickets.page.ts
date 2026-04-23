@@ -76,7 +76,8 @@ export class ComprarTicketsPage implements OnInit {
     this.carregando = true;
     const { km, preco } = this.ticketSelecionado;
 
-    // Passa km no lugar de minutos para o backend
+    console.log('Enviando para backend:', { distancia_km: km, valor: preco });
+
     this.paymentService.comprarTicket(km, preco).subscribe({
       next: async (response) => {
         this.saldo = response.saldo;
@@ -91,10 +92,10 @@ export class ComprarTicketsPage implements OnInit {
         });
         await toast.present();
 
-        // Navega de volta e força recarga da lista de tickets
         this.router.navigate(['/tickets'], { replaceUrl: true });
       },
       error: async (err) => {
+        console.log('Erro completo:', err.error); // ← log para diagnóstico
         this.carregando = false;
         this.ticketSelecionado = null;
         const msg = err?.error?.erro || 'Erro ao comprar ticket.';
