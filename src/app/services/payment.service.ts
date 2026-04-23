@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
@@ -57,7 +58,7 @@ export interface HistoricoResponse {
   providedIn: 'root'
 })
 export class PaymentService {
-  private apiUrl = 'http://localhost:4000';
+  private apiUrl = environment.apiUrl;
   private saldoSubject = new BehaviorSubject<number | null>(null);
   public saldo$ = this.saldoSubject.asObservable();
 
