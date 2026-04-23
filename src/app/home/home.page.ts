@@ -10,11 +10,12 @@ import { PaymentService } from '../services/payment.service';
   styleUrls: ['home.page.scss'],
   standalone: false
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   userName = '';
   balance = 'R$ 0,00';
   usuario: any = null;
   private saldoSub: Subscription | null = null;
+  private saldoInterval: any = null;
 
   constructor(
     private authService: AuthService,
@@ -32,10 +33,52 @@ export class HomePage implements OnInit {
         this.balance = `R$ ${s.toFixed(2).replace('.', ',')}`;
       }
     });
-  }
 
+    // Polling: atualiza saldo a cada 30 segundos
+    this.saldoInterval = setInterval(() => {
+      try {
+        if (!this.authService.isAuthenticated()) {
+          console.log('Polling: usuário não autenticado — pulando chamada de saldo');
+          return;
+        }
+        console.log('Polling: solicitando /usuario/saldo');
+        this.paymentService.getSaldo().subscribe({
+          next: (resp) => {
+            if (resp && typeof resp.saldo === 'number') {
+              this.balance = `R$ ${resp.saldo.toFixed(2).replace('.', ',')}`;
+            }
+          },
+          error: (err) => {
+            console.error('Erro no polling de saldo:', err);
+          }
+        });
+      } catch (err) {
+        console.error('Erro no bloco polling:', err);
+      }
+    }, 30000);
+  }
   ngOnDestroy() {
     if (this.saldoSub) this.saldoSub.unsubscribe();
+    if (this.saldoInterval) clearInterval(this.saldoInterval);
+  }
+
+  // Pull-to-refresh handler
+  doRefresh(event: any) {
+    // Recarrega saldo e dados do usuário
+    this.paymentService.getSaldo().subscribe({
+      next: (resp) => {
+        // `getSaldo()` já atualiza o subject, mas atualiza também a UI caso necessário
+        this.balance = `R$ ${resp.saldo.toFixed(2).replace('.', ',')}`;
+        // Recarrega informações do usuário
+        this.carregarDadosUsuario();
+        event.target.complete();
+      },
+      error: (err) => {
+        console.error('Erro ao atualizar saldo via pull-to-refresh:', err);
+        this.carregarDadosUsuario();
+        event.target.complete();
+      }
+    });
   }
 
   carregarDadosUsuario() {

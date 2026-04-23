@@ -111,7 +111,18 @@ export class RecargaDebitoPage implements OnInit, AfterViewInit {
         identificationNumber: this.cpfCartao.replace(/\D/g, ''),
       });
 
-      console.log('✅ Token COMPLETO criado:', JSON.stringify(tokenResult, null, 2));
+      // Não logar o objeto completo que pode conter PII
+      try {
+        const safeTokenLog = {
+          id: tokenResult.id,
+          first_six_digits: tokenResult.first_six_digits,
+          last_four_digits: tokenResult.last_four_digits,
+          cardholder: { name: tokenResult.cardholder?.name }
+        };
+        console.log('✅ Token criado (mask):', JSON.stringify(safeTokenLog, null, 2));
+      } catch (e) {
+        console.log('✅ Token criado (mask)');
+      }
 
       if (tokenResult.error) {
         throw new Error(tokenResult.error);
@@ -127,7 +138,7 @@ export class RecargaDebitoPage implements OnInit, AfterViewInit {
         installments: 1 
       });
 
-      console.log('🔍 Bandeira detectada pelo MP:', tokenResult.payment_method_id);
+      console.log('🔍 Bandeira detectada pelo MP (mask):', tokenResult.payment_method_id);
 
       this.paymentService.criarPagamentoDebito({
         valor: this.valor,
