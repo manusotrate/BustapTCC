@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, from } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { tap } from 'rxjs/operators';
+import { Capacitor } from '@capacitor/core';
+import { NativeHttpService } from './native-http.service';
 
 interface LoginResponse {
   mensagem: string;
@@ -26,7 +29,7 @@ interface Usuario {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:4000';
+  private apiUrl = (environment as any).backendUrl || 'http://localhost:4000';
   private tokenKey = 'auth_token';
   private usuarioKey = 'usuario_data';
   
@@ -36,8 +39,17 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private nativeHttp: NativeHttpService
   ) {}
+
+  private isNativePlatform(): boolean {
+    try {
+      return Capacitor.getPlatform && Capacitor.getPlatform() !== 'web';
+    } catch {
+      return false;
+    }
+  }
 
   // Verificar se existe token
   private hasToken(): boolean {
@@ -46,6 +58,15 @@ export class AuthService {
 
   // Fazer login
   login(cpf: string, senha: string): Observable<LoginResponse> {
+    if (this.isNativePlatform()) {
+      return from(this.nativeHttp.post<LoginResponse>('/login', { cpf, senha }).then(resp => {
+        this.salvarToken(resp.token);
+        this.salvarUsuario(resp.usuario);
+        this.autenticadoSubject.next(true);
+        return resp;
+      }));
+    }
+
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { cpf, senha })
       .pipe(
         tap(response => {
@@ -93,6 +114,9 @@ export class AuthService {
 
   // Validar token no backend
   validarToken(): Observable<any> {
+    if (this.isNativePlatform()) {
+      return from(this.nativeHttp.get<any>('/validar-token', this.getAuthHeaders() as any));
+    }
     return this.http.get(`${this.apiUrl}/validar-token`, {
       headers: this.getAuthHeaders()
     });
@@ -100,6 +124,9 @@ export class AuthService {
 
   // Obter dados do usuário do backend
   obterUsuario(): Observable<any> {
+    if (this.isNativePlatform()) {
+      return from(this.nativeHttp.get<any>('/usuario', this.getAuthHeaders() as any));
+    }
     return this.http.get(`${this.apiUrl}/usuario`, {
       headers: this.getAuthHeaders()
     });

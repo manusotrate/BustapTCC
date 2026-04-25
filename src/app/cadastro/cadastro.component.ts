@@ -4,6 +4,7 @@ import { AlertController, IonicModule, LoadingController } from '@ionic/angular'
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-cadastro',
@@ -137,7 +138,8 @@ export class CadastroComponent implements OnInit {
     };
 
     try {
-      const response = await this.http.post<any>('http://localhost:4000/cadastro', dadosEnvio).toPromise();
+      const base = (environment as any).backendUrl || 'http://localhost:4000';
+      const response = await this.http.post<any>(`${base}/cadastro`, dadosEnvio).toPromise();
       
       await loading.dismiss();
       this.isLoading = false;
