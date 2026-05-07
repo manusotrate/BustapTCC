@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { AlertController } from '@ionic/angular';
+import { environment } from '../../environments/environment';
+
 
 @Component({
   selector: 'app-login',
@@ -18,8 +22,12 @@ export class LoginComponent {
     private router: Router,
     private authService: AuthService,
     private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private alertController: AlertController,
+    private http: HttpClient
   ) {}
+
+  private apiUrl = (environment as any).backendUrl || 'http://localhost:4000';
 
   private validarCPF(cpf: string): boolean {
     const num = (cpf || '').replace(/\D/g, '');
@@ -83,6 +91,136 @@ export class LoginComponent {
     });
     await toast.present();
   }
+
+
+async esqueceuSenha() {
+  // Passo 1: pedir email
+  const alertEmail = await this.alertController.create({
+    header: 'Recuperar senha',
+    message: 'Digite seu email cadastrado:',
+    inputs: [{ name: 'email', type: 'email', placeholder: 'seu@email.com' }],
+    buttons: [
+      { text: 'Cancelar', role: 'cancel' },
+      {
+        text: 'Enviar código',
+        handler: async (data) => {
+          if (!data.email) {
+            this.showToast('Digite um email válido.', 'warning');
+            return false;
+          }
+          await this.enviarCodigo(data.email);
+          return true;
+        }
+      }
+    ]
+  });
+  await alertEmail.present();
+}
+
+private async enviarCodigo(email: string) {
+  const loader = await this.loadingCtrl.create({ message: 'Enviando código...' });
+  await loader.present();
+
+  this.http.post<any>(`${this.apiUrl}/recuperar-senha`, { email }).subscribe({
+    next: async () => {
+      await loader.dismiss();
+      await this.pedirCodigo(email);
+    },
+    error: async (err) => {
+      await loader.dismiss();
+      this.showToast(err?.error?.erro || 'Erro ao enviar código.', 'danger');
+    }
+  });
+}
+
+private async pedirCodigo(email: string) {
+  // Passo 2: pedir código
+  const alertCodigo = await this.alertController.create({
+    header: 'Digite o código',
+    message: 'Insira o código de 6 dígitos enviado ao seu email:',
+    inputs: [{ name: 'codigo', type: 'number', placeholder: '000000' }],
+    buttons: [
+      { text: 'Cancelar', role: 'cancel' },
+      {
+        text: 'Confirmar',
+        handler: async (data) => {
+          if (!data.codigo || data.codigo.length < 6) {
+            this.showToast('Digite o código completo.', 'warning');
+            return false;
+          }
+          await this.pedirNovaSenha(data.codigo);
+          return true;
+        }
+      }
+    ]
+  });
+  await alertCodigo.present();
+}
+
+private async pedirNovaSenha(codigo: string) {
+  // Passo 3: pedir nova senha
+  const alertSenha = await this.alertController.create({
+    header: 'Nova senha',
+    message: 'Digite sua nova senha:',
+    inputs: [
+      { name: 'senha', type: 'password', placeholder: 'Nova senha (mín. 6 caracteres)' },
+      { name: 'confirmar', type: 'password', placeholder: 'Confirme a senha' }
+    ],
+    buttons: [
+      { text: 'Cancelar', role: 'cancel' },
+      {
+        text: 'Salvar',
+        handler: async (data) => {
+          if (!data.senha || data.senha.length < 6) {
+            this.showToast('Senha deve ter pelo menos 6 caracteres.', 'warning');
+            return false;
+          }
+          if (data.senha !== data.confirmar) {
+            this.showToast('As senhas não coincidem.', 'warning');
+            return false;
+          }
+          await this.redefinirSenha(codigo, data.senha);
+          return true;
+        }
+      }
+    ]
+  });
+  await alertSenha.present();
+}
+
+private async redefinirSenha(token: string, novaSenha: string) {
+  const loader = await this.loadingCtrl.create({ message: 'Salvando senha...' });
+  await loader.present();
+
+  this.http.post<any>(`${this.apiUrl}/redefinir-senha`, { token, novaSenha }).subscribe({
+    next: async () => {
+      await loader.dismiss();
+      this.showToast('Senha redefinida com sucesso!', 'success');
+    },
+    error: async (err) => {
+      await loader.dismiss();
+      this.showToast(err?.error?.erro || 'Código inválido ou expirado.', 'danger');
+    }
+  });
+}
+
+private async enviarRecuperacao(email: string) {
+  const loader = await this.loadingCtrl.create({ message: 'Enviando...' });
+  await loader.present();
+
+  this.http.post<any>(`${this.apiUrl}/recuperar-senha`, { email }).subscribe({
+    next: async () => {
+      await loader.dismiss();
+      this.showToast('Email de recuperação enviado!', 'success');
+    },
+    error: async (err) => {
+      await loader.dismiss();
+      const msg = err?.error?.erro || 'Erro ao enviar email.';
+      this.showToast(msg, 'danger');
+    }
+  });
+}
+  
   gocadastro() {
     this.router.navigate(['/cadastro']);
   }
