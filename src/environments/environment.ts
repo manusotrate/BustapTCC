@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendUrl: 'https://tccback-gubca7f4f0aqb7h6.spaincentral-01.azurewebsites.net'
+backendUrl: 'http://localhost:4000'
 };
 
 /*
