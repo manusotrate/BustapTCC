@@ -1,6 +1,6 @@
 $btn-gradient: linear-gradient(135deg, #98FFDB, #3DD5DA);
 $grad-top:    #ffffff;
-$grad-bottom: #2C5D5F;
+$grad-bottom: #dbdbdb;
 
 app-comprar-tickets ion-content {
   --background: transparent;
@@ -139,7 +139,7 @@ app-comprar-tickets .modal-box {
 
     .btn-sim {
       background: linear-gradient(135deg, #3DD5DA, #1E9FA4);
-      color: #fff;
+      color: #1E4041;
     }
   }
 }

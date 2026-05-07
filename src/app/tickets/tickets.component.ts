@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -24,6 +24,13 @@ export class TicketsComponent implements OnInit {
   tickets: Ticket[] = [];
   carregando: boolean = true;
 
+  // Propriedades do gesto de arrastar
+  private startY = 0;
+  private currentY = 0;
+  private isDragging = false;
+
+  @ViewChild('menuContainer') menuContainer!: ElementRef;
+
   // Cidades vindas de horarios.page
   cidadePartida: string = '';
   cidadeChegada: string = '';
@@ -40,7 +47,6 @@ export class TicketsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Lê os queryParams vindos de horarios (se existirem)
     this.route.queryParams.subscribe(params => {
       if (params['partida']) this.cidadePartida = params['partida'];
       if (params['chegada']) this.cidadeChegada = params['chegada'];
@@ -78,14 +84,12 @@ export class TicketsComponent implements OnInit {
     const ticket = this.ticketSelecionado;
     this.ticketSelecionado = null;
 
-    // Chama o backend para marcar como usado e salvar no histórico
     this.paymentService.usarTicket(
       ticket.id,
       this.cidadePartida || 'Origem não informada',
       this.cidadeChegada || 'Destino não informado'
     ).subscribe({
       next: async () => {
-        // Navega para trip passando km
         this.router.navigate(['/trip'], {
           queryParams: {
             km: ticket.distancia_km,
@@ -125,5 +129,42 @@ export class TicketsComponent implements OnInit {
 
   comprar() {
     this.router.navigate(['/comprar-tickets']);
+  }
+
+  onChevronTouchStart(event: TouchEvent) {
+    this.startY = event.touches[0].clientY;
+    this.currentY = this.startY;
+    this.isDragging = true;
+  }
+
+  onChevronTouchMove(event: TouchEvent) {
+    if (!this.isDragging) return;
+    this.currentY = event.touches[0].clientY;
+    const delta = this.currentY - this.startY;
+
+    if (delta > 0) {
+      const el = this.menuContainer.nativeElement;
+      el.style.transition = 'none';
+      el.style.transform = `translateY(${delta}px)`;
+      el.style.opacity = `${Math.max(0.4, 1 - delta / 400)}`;
+    }
+  }
+
+  onChevronTouchEnd() {
+    const delta = this.currentY - this.startY;
+    const el = this.menuContainer.nativeElement;
+
+    if (delta > 120) {
+      el.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+      el.style.transform = 'translateY(100%)';
+      el.style.opacity = '0';
+      setTimeout(() => this.home(), 300);
+    } else {
+      el.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+      el.style.transform = 'translateY(0)';
+      el.style.opacity = '1';
+    }
+
+    this.isDragging = false;
   }
 }
