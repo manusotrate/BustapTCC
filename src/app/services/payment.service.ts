@@ -4,6 +4,9 @@ import { environment } from '../../environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
+import { Capacitor } from '@capacitor/core';
+import { NativeHttpService } from './native-http.service';
 
 export interface PixResponse {
   paymentId: number;
@@ -64,8 +67,25 @@ export class PaymentService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private nativeHttp: NativeHttpService
   ) {}
+
+  private isNativePlatform(): boolean {
+    try {
+      return Capacitor.getPlatform && Capacitor.getPlatform() !== 'web';
+    } catch {
+      return false;
+    }
+  }
+
+  private getPlainHeaders(): Record<string, string> {
+    const token = this.authService.getToken();
+    const h: Record<string, string> = {};
+    if (token) h['Authorization'] = `Bearer ${token}`;
+    h['Content-Type'] = 'application/json';
+    return h;
+  }
 
   private getHeaders(): HttpHeaders {
     const token = this.authService.getToken();
@@ -74,6 +94,9 @@ export class PaymentService {
 
   // ── Pix ──
   criarPagamentoPix(valor: number): Observable<PixResponse> {
+    if (this.isNativePlatform()) {
+      return from(this.nativeHttp.post<PixResponse>('/pagamentos/pix', { valor }, this.getPlainHeaders()));
+    }
     return this.http.post<PixResponse>(
       `${this.apiUrl}/pagamentos/pix`,
       { valor },
@@ -89,6 +112,9 @@ export class PaymentService {
     installments: number;
     paymentMethodId: string;
   }): Observable<DebitoResponse> {
+    if (this.isNativePlatform()) {
+      return from(this.nativeHttp.post<DebitoResponse>('/pagamentos/debito', dados, this.getPlainHeaders()));
+    }
     return this.http.post<DebitoResponse>(
       `${this.apiUrl}/pagamentos/debito`,
       dados,
@@ -98,6 +124,9 @@ export class PaymentService {
 
   // ── Polling status Pix ──
   consultarStatus(paymentId: number): Observable<StatusResponse> {
+    if (this.isNativePlatform()) {
+      return from(this.nativeHttp.get<StatusResponse>(`/pagamentos/status/${paymentId}`, this.getPlainHeaders()));
+    }
     return this.http.get<StatusResponse>(
       `${this.apiUrl}/pagamentos/status/${paymentId}`,
       { headers: this.getHeaders() }
@@ -106,6 +135,12 @@ export class PaymentService {
 
   // ── Saldo ──
   getSaldo(): Observable<SaldoResponse> {
+    if (this.isNativePlatform()) {
+      return from(this.nativeHttp.get<SaldoResponse>('/usuario/saldo', this.getPlainHeaders()).then(resp => {
+        if (resp && typeof resp.saldo === 'number') this.setSaldo(resp.saldo);
+        return resp;
+      }));
+    }
     return this.http.get<SaldoResponse>(
       `${this.apiUrl}/usuario/saldo`,
       { headers: this.getHeaders() }
@@ -124,6 +159,9 @@ export class PaymentService {
 
   // ── Tickets ──
   getTickets(): Observable<TicketsResponse> {
+    if (this.isNativePlatform()) {
+      return from(this.nativeHttp.get<TicketsResponse>('/tickets', this.getPlainHeaders()));
+    }
     return this.http.get<TicketsResponse>(
       `${this.apiUrl}/tickets`,
       { headers: this.getHeaders() }
@@ -132,6 +170,9 @@ export class PaymentService {
 
   // ── Comprar Ticket ──
   comprarTicket(distancia_km: number, valor: number): Observable<ComprarTicketResponse> {
+    if (this.isNativePlatform()) {
+      return from(this.nativeHttp.post<ComprarTicketResponse>('/tickets/comprar', { distancia_km, valor }, this.getPlainHeaders()));
+    }
     return this.http.post<ComprarTicketResponse>(
       `${this.apiUrl}/tickets/comprar`,
       { distancia_km, valor },
@@ -141,6 +182,9 @@ export class PaymentService {
 
   // ── Usar Ticket (marca como usado e salva no histórico) ──
   usarTicket(ticket_id: number, origem: string, destino: string): Observable<UsarTicketResponse> {
+    if (this.isNativePlatform()) {
+      return from(this.nativeHttp.post<UsarTicketResponse>('/tickets/usar', { ticket_id, origem, destino }, this.getPlainHeaders()));
+    }
     return this.http.post<UsarTicketResponse>(
       `${this.apiUrl}/tickets/usar`,
       { ticket_id, origem, destino },
@@ -150,6 +194,9 @@ export class PaymentService {
 
   // ── Histórico ──
   getHistorico(): Observable<HistoricoResponse> {
+    if (this.isNativePlatform()) {
+      return from(this.nativeHttp.get<HistoricoResponse>('/historico', this.getPlainHeaders()));
+    }
     return this.http.get<HistoricoResponse>(
       `${this.apiUrl}/historico`,
       { headers: this.getHeaders() }
