@@ -1,42 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Gabarito:wght@400..900&display=swap');
 
-*{
+* {
   font-family: 'Albert Sans', sans-serif;
 }
 
-
-
 $btn-gradient: linear-gradient(135deg, #98FFDB, #3DD5DA);
-$gradient-start: #4FA4A7;
 $text-dark: #222222;
 $text-light: #999999;
 
+// ← Gradiente idêntico ao da home como fundo da página inteira
 ion-content.tickets-content {
-  --background: #f2f2f2;
+  --background: linear-gradient(180deg, #5BB5B8 0%, #3A8A8D 60%, #2C6E70 100%);
   --overflow: auto;
 }
 
-// ── Header ──
-.header-container {
-  position: relative;
-  height: 110px;
-  overflow: hidden;
-}
-
-.header-gradient {
-  background: linear-gradient(180deg, #4FA4A7 0%, #1E4041 100%);
-  height: 100%;
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: white;
-}
-
+// ── Botões flutuando sobre o gradiente ──
 .top-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 16px 20px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  position: relative;
+  z-index: 2;
 }
 
 .avatar {
@@ -79,8 +65,9 @@ ion-content.tickets-content {
   border-radius: 20px 20px 0 0;
   position: relative;
   z-index: 1;
-  margin-top: -20px;
+  margin-top: 16px;
   box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+  will-change: transform, opacity;
   transition: filter 0.2s ease;
 
   &.blurred {
@@ -95,6 +82,29 @@ ion-content.tickets-content {
   display: flex;
   justify-content: center;
   margin-bottom: 12px;
+  padding: 8px 0 4px;
+  touch-action: none;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.chevron-handle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &::before {
+    content: '';
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: #dddddd;
+    display: block;
+    margin-bottom: 4px;
+  }
 
   .chevron-icon {
     font-size: 22px;
@@ -176,9 +186,7 @@ ion-content.tickets-content {
     transition: opacity 0.18s;
     letter-spacing: 0.3px;
 
-    &:active {
-      opacity: 0.75;
-    }
+    &:active { opacity: 0.75; }
   }
 }
 
@@ -193,15 +201,14 @@ ion-content.tickets-content {
     border: none;
     border-radius: 30px;
     padding: 18px;
+    margin-top: 140px;
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
     box-shadow: 0 4px 16px rgba(61, 213, 218, 0.40);
     transition: opacity 0.18s;
 
-    &:active {
-      opacity: 0.80;
-    }
+    &:active { opacity: 0.80; }
   }
 }
 
@@ -251,12 +258,7 @@ ion-content.tickets-content {
       &:active { opacity: 0.8; }
     }
 
-    .btn-nao {
-      background: $btn-gradient;
-      color: #1E4041;
-    }
-
-    .btn-sim {
+    .btn-nao, .btn-sim {
       background: $btn-gradient;
       color: #1E4041;
     }
@@ -268,12 +270,13 @@ ion-content.tickets-content {
     font-size: 22px;
   }
 }
+
 .vazio {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 60px;
+  margin-top: 80px; 
   gap: 12px;
   opacity: 0.4;
 

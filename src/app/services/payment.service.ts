@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 export interface PixResponse {
@@ -14,6 +16,7 @@ export interface DebitoResponse {
   paymentId: number;
   status: string;
   statusDetail: string;
+  novoSaldo?: number;
 }
 
 export interface StatusResponse {
@@ -34,11 +37,30 @@ export interface ComprarTicketResponse {
   saldo: number;
 }
 
+export interface UsarTicketResponse {
+  mensagem: string;
+  distancia_km: number;
+}
+
+export interface HistoricoItem {
+  id: number;
+  origem: string;
+  destino: string;
+  distancia_km: number;
+  usado_em: string;
+}
+
+export interface HistoricoResponse {
+  historico: HistoricoItem[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentService {
-  private apiUrl = 'http://localhost:4000';
+  private apiUrl = environment.apiUrl;
+  private saldoSubject = new BehaviorSubject<number | null>(null);
+  public saldo$ = this.saldoSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -87,7 +109,17 @@ export class PaymentService {
     return this.http.get<SaldoResponse>(
       `${this.apiUrl}/usuario/saldo`,
       { headers: this.getHeaders() }
+    ).pipe(
+      tap((resp) => {
+        if (resp && typeof resp.saldo === 'number') {
+          this.setSaldo(resp.saldo);
+        }
+      })
     );
+  }
+
+  setSaldo(novoSaldo: number | null) {
+    this.saldoSubject.next(novoSaldo);
   }
 
   // ── Tickets ──
@@ -98,10 +130,28 @@ export class PaymentService {
     );
   }
 
-  comprarTicket(minutos: number, valor: number): Observable<ComprarTicketResponse> {
+  // ── Comprar Ticket ──
+  comprarTicket(distancia_km: number, valor: number): Observable<ComprarTicketResponse> {
     return this.http.post<ComprarTicketResponse>(
       `${this.apiUrl}/tickets/comprar`,
-      { minutos, valor },
+      { distancia_km, valor },
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // ── Usar Ticket (marca como usado e salva no histórico) ──
+  usarTicket(ticket_id: number, origem: string, destino: string): Observable<UsarTicketResponse> {
+    return this.http.post<UsarTicketResponse>(
+      `${this.apiUrl}/tickets/usar`,
+      { ticket_id, origem, destino },
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // ── Histórico ──
+  getHistorico(): Observable<HistoricoResponse> {
+    return this.http.get<HistoricoResponse>(
+      `${this.apiUrl}/historico`,
       { headers: this.getHeaders() }
     );
   }

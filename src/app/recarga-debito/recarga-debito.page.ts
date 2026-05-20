@@ -111,12 +111,18 @@ export class RecargaDebitoPage implements OnInit, AfterViewInit {
         identificationNumber: this.cpfCartao.replace(/\D/g, ''),
       });
 
-      console.log('✅ Token criado:', {
-        id: tokenResult.id ? `${tokenResult.id.substring(0, 20)}...` : 'nulo',
-        issuer_id: tokenResult.issuer_id,
-        payment_type_id: tokenResult.payment_type_id,
-        hasError: !!tokenResult.error
-      });
+      // Não logar o objeto completo que pode conter PII
+      try {
+        const safeTokenLog = {
+          id: tokenResult.id,
+          first_six_digits: tokenResult.first_six_digits,
+          last_four_digits: tokenResult.last_four_digits,
+          cardholder: { name: tokenResult.cardholder?.name }
+        };
+        console.log('✅ Token criado (mask):', JSON.stringify(safeTokenLog, null, 2));
+      } catch (e) {
+        console.log('✅ Token criado (mask)');
+      }
 
       if (tokenResult.error) {
         throw new Error(tokenResult.error);
@@ -132,27 +138,47 @@ export class RecargaDebitoPage implements OnInit, AfterViewInit {
         installments: 1 
       });
 
-      console.log('🔍 Bandeira detectada pelo MP:', tokenResult.payment_method_id);
+      console.log('🔍 Bandeira detectada pelo MP (mask):', tokenResult.payment_method_id);
 
       this.paymentService.criarPagamentoDebito({
         valor: this.valor,
         token: tokenResult.id,
-        issuerId: tokenResult.issuer_id ?? '',
+        issuerId: tokenResult.issuer_id || '',
         installments: 1,
-        paymentMethodId, 
+        paymentMethodId,
       }).subscribe({
         next: async (response) => {
           await loading.dismiss();
-
           if (response.status === 'approved') {
-            const toast = await this.toastCtrl.create({
-              message: `✅ Pagamento aprovado! ${this.valorFormatado} adicionado ao saldo.`,
-              duration: 4000,
-              color: 'success',
-              position: 'top'
-            });
-            await toast.present();
-            this.router.navigate(['/home']);
+            // Se o backend retornou o novo saldo, usa-o; senão busca novamente
+            const finish = async (novoSaldo?: number) => {
+              const toast = await this.toastCtrl.create({
+                message: `✅ Pagamento aprovado! ${this.valorFormatado} adicionado ao saldo.`,
+                duration: 4000,
+                color: 'success',
+                position: 'top'
+              });
+              await toast.present();
+              // navega para home após atualizar/confirmar saldo
+              this.router.navigate(['/home']);
+            };
+
+            if (response.novoSaldo != null) {
+              // atualiza subject reativo e navega
+              this.paymentService.setSaldo(response.novoSaldo);
+              await finish(response.novoSaldo);
+            } else {
+              // busca saldo atual no backend antes de navegar e propaga
+              this.paymentService.getSaldo().subscribe({
+                next: async (s) => {
+                  this.paymentService.setSaldo(s.saldo);
+                  await finish(s.saldo);
+                },
+                error: async () => {
+                  await finish();
+                }
+              });
+            }
           } else {
             const toast = await this.toastCtrl.create({
               message: `Pagamento ${response.status}. Tente outro cartão.`,
@@ -201,9 +227,12 @@ export class RecargaDebitoPage implements OnInit, AfterViewInit {
   }
 
   private detectarBandeira(numero: string): string {
-    if (/^4/.test(numero)) return 'visa';
-    if (/^5[1-5]/.test(numero)) return 'master';
-    if (/^6(?:011|5)/.test(numero)) return 'elo';
+    const bin = numero.substring(0,6);
+    if (bin.startsWith('5031')) return 'master';
+    if (bin.startsWith('4235') || bin.startsWith('4000')) return 'visa';
+    if (bin.startsWith('5067')) return 'elo';
+    if (bin.startsWith('3753')) return 'amex';
+    if (/^5[1-5]/.test(bin)) return 'master';
     return 'visa';
   }
 

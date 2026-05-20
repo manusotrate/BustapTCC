@@ -2,13 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-interface HistoricoItem {
-  rota: string;
-  ticket: string;
-  dia: string;
-  mes: string;
-}
+import { PaymentService, HistoricoItem } from '../services/payment.service';
 
 @Component({
   selector: 'app-historico',
@@ -20,37 +14,53 @@ interface HistoricoItem {
 export class HistoricoComponent implements OnInit {
 
   termoBusca: string = '';
+  carregando: boolean = true;
 
-  // Dados de exemplo — futuramente substituir por chamada ao backend
-  historico: HistoricoItem[] = [
-    { rota: 'Marília → Quintana',      ticket: '30 Min', dia: '07', mes: 'JUN' },
-    { rota: 'Marília → Garça',         ticket: '45 Min', dia: '12', mes: 'JUN' },
-    { rota: 'Garça → Marília',         ticket: '45 Min', dia: '14', mes: 'JUN' },
-    { rota: 'Marília → Vera Cruz',     ticket: '15 Min', dia: '20', mes: 'JUN' },
-    { rota: 'Marília → Tupã',          ticket: '60 Min', dia: '03', mes: 'JUL' },
-    { rota: 'Tupã → Marília',          ticket: '60 Min', dia: '05', mes: 'JUL' },
-    { rota: 'Marília → Pompéia',       ticket: '30 Min', dia: '18', mes: 'JUL' },
-    { rota: 'Marília → Oriente',       ticket: '15 Min', dia: '22', mes: 'JUL' },
-  ];
-
+  historico: HistoricoItem[] = [];
   historicoFiltrado: HistoricoItem[] = [];
 
+  constructor(private paymentService: PaymentService) {}
+
   ngOnInit() {
-    this.historicoFiltrado = [...this.historico];
+    this.carregarHistorico();
+  }
+
+  carregarHistorico() {
+    this.carregando = true;
+    this.paymentService.getHistorico().subscribe({
+      next: (response) => {
+        this.historico = response.historico;
+        this.historicoFiltrado = [...this.historico];
+        this.carregando = false;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar histórico:', err);
+        this.carregando = false;
+      }
+    });
   }
 
   filtrar() {
     const termo = this.termoBusca.toLowerCase().trim();
-
     if (!termo) {
       this.historicoFiltrado = [...this.historico];
       return;
     }
-
     this.historicoFiltrado = this.historico.filter(item =>
-      item.rota.toLowerCase().includes(termo)   ||
-      item.ticket.toLowerCase().includes(termo) ||
-      item.mes.toLowerCase().includes(termo)
+      item.origem.toLowerCase().includes(termo) ||
+      item.destino.toLowerCase().includes(termo)
     );
+  }
+
+  // Formata "2025-06-07T..." → dia: "07", mes: "JUN"
+  getDia(usado_em: string): string {
+    return new Date(usado_em).getDate().toString().padStart(2, '0');
+  }
+
+  getMes(usado_em: string): string {
+    return new Date(usado_em)
+      .toLocaleString('pt-BR', { month: 'short' })
+      .toUpperCase()
+      .replace('.', '');
   }
 }
