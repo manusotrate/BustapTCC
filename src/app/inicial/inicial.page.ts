@@ -17,12 +17,12 @@ export class InicialPage implements OnInit {
 
   navigateToSignup() {
     // Navegar para a página de cadastro
-    this.router.navigate(['/cadastro']);
+    this.router.navigate(['/login']);
   }
 
   navigateToLogin() {
     // Navegar para a página de login
-    this.router.navigate(['/login']);
+    this.router.navigate(['/cadastro']);
   }
 
 }
