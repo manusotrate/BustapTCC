@@ -55,9 +55,11 @@ export class RecargaPixPage implements OnInit, OnDestroy {
       },
       error: async (err) => {
         this.carregando = false;
+        console.error('[PIX] Erro ao gerar Pix:', err);
+        const msg = err?.error?.erro || err?.error?.detalhes || err?.message || 'Erro ao gerar Pix. Tente novamente.';
         const toast = await this.toastCtrl.create({
-          message: err?.error?.erro || 'Erro ao gerar Pix. Tente novamente.',
-          duration: 3000,
+          message: msg,
+          duration: 4000,
           color: 'danger',
           position: 'top'
         });

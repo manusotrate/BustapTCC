@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { AlertController, IonicModule, LoadingController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-cadastro',
@@ -138,9 +138,7 @@ export class CadastroComponent implements OnInit {
     };
 
     try {
-      const base = (environment as any).backendUrl || 'http://localhost:4000';
-      const response = await this.http.post<any>(`${base}/cadastro`, dadosEnvio).toPromise();
-      
+      const response = await this.http.post<any>(`${environment.backendUrl}/cadastro`, dadosEnvio).toPromise();
       await loading.dismiss();
       this.isLoading = false;
 
@@ -161,7 +159,7 @@ export class CadastroComponent implements OnInit {
       this.isLoading = false;
 
       console.error('Erro no cadastro:', error);
-      
+
       const errorMessage = error?.error?.erro || 
                           error?.error?.message || 
                           error?.message || 

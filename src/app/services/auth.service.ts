@@ -29,7 +29,7 @@ interface Usuario {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = (environment as any).backendUrl || 'http://localhost:4000';
+  private apiUrl = environment.apiUrl;
   private tokenKey = 'auth_token';
   private usuarioKey = 'usuario_data';
   
