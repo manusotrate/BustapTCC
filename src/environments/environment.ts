@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
-  ,
-  apiUrl: 'http://localhost:4000'
+  production: false,
+  apiUrl: 'https://tccback-gubca7f4f0aqb7h6.spaincentral-01.azurewebsites.net',
+  backendUrl: 'https://tccback-gubca7f4f0aqb7h6.spaincentral-01.azurewebsites.net'
 };
 
 /*

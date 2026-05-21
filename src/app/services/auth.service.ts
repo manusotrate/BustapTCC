@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 interface LoginResponse {
   mensagem: string;
@@ -26,7 +27,7 @@ interface Usuario {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:4000';
+  private apiUrl = environment.apiUrl;
   private tokenKey = 'auth_token';
   private usuarioKey = 'usuario_data';
   

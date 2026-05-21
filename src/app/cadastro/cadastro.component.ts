@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { AlertController, IonicModule, LoadingController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
@@ -137,8 +138,7 @@ export class CadastroComponent implements OnInit {
     };
 
     try {
-      const response = await this.http.post<any>('http://localhost:4000/cadastro', dadosEnvio).toPromise();
-      
+      const response = await this.http.post<any>(`${environment.backendUrl}/cadastro`, dadosEnvio).toPromise();
       await loading.dismiss();
       this.isLoading = false;
 
@@ -159,7 +159,7 @@ export class CadastroComponent implements OnInit {
       this.isLoading = false;
 
       console.error('Erro no cadastro:', error);
-      
+
       const errorMessage = error?.error?.erro || 
                           error?.error?.message || 
                           error?.message || 
