@@ -28,12 +28,11 @@ export class HorariosPage implements OnInit {
   private ORS_KEY = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImQ5M2NkMThhMTEyYzQ0NThiODVlNjU1YmFhYjAxMGFhIiwiaCI6Im11cm11cjY0In0=';
 
   cidades: Cidade[] = [
-    { nome: 'Marília',               lat: -22.2171, lng: -49.9501 },
     { nome: 'Álvaro de Carvalho',    lat: -22.0840, lng: -49.7192 },
     { nome: 'Alvinlândia',           lat: -22.4435, lng: -49.7628 },
     { nome: 'Borá',                  lat: -22.2697, lng: -50.5409 },
-    { nome: 'Cabrália Paulista',     lat: -22.4572, lng: -49.3394 },
-    { nome: 'Campos Novos Paulista', lat: -22.6021, lng: -50.0167 },
+    { nome: 'Cabrália Paulista',     lat: -22.457238, lng: -49.339412 },
+    { nome: 'Campos Novos Paulista', lat: -22.601972, lng: -50.016541 },
     { nome: 'Duartina',              lat: -22.4141, lng: -49.4037 },
     { nome: 'Echaporã',              lat: -22.4326, lng: -50.2037 },
     { nome: 'Fernão',                lat: -22.3607, lng: -49.5220 },
@@ -46,6 +45,7 @@ export class HorariosPage implements OnInit {
     { nome: 'Júlio Mesquita',        lat: -22.0049, lng: -49.7878 },
     { nome: 'Lupércio',              lat: -22.4146, lng: -49.8188 },
     { nome: 'Lutécia',               lat: -22.3384, lng: -50.3947 },
+    { nome: 'Marília',               lat: -22.2171, lng: -49.9501 },
     { nome: 'Ocauçu',                lat: -22.4385, lng: -49.9227 },
     { nome: 'Oriente',               lat: -22.1458, lng: -50.0918 },
     { nome: 'Oscar Bressane',        lat: -22.3148, lng: -50.2811 },
