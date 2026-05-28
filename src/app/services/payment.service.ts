@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, from } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
-import { from } from 'rxjs';
 import { Capacitor } from '@capacitor/core';
 import { NativeHttpService } from './native-http.service';
 
