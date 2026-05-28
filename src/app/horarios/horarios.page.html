@@ -44,7 +44,7 @@
     <button
       class="btn-comecar"
       (click)="comecarViagem()"
-      [disabled]="!localPartida || !localChegada || distanciaKm === 0"
+      [disabled]="!localPartida || !localChegada || distanciaKm === 0 || carregandoDistancia"
     >
       Escolher ticket
       <ion-icon name="arrow-forward-outline"></ion-icon>
