@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
-import { environment } from '../../environments/environment';
+import { from } from 'rxjs';
 import { Capacitor } from '@capacitor/core';
 import { NativeHttpService } from './native-http.service';
 
