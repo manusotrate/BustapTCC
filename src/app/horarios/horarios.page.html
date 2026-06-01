@@ -31,7 +31,7 @@
 
     <!-- Distância em km -->
     <div class="distancia-section" *ngIf="localPartida && localChegada">
-      <span class="distancia-label">Distância da rota</span>
+      <span class="distancia-label">Distância da rota aproximada </span>
       <div class="distancia-row">
         <ion-icon name="navigate-outline" class="distancia-icon"></ion-icon>
         <span class="distancia-valor">{{ distanciaFormatada }}</span>
@@ -44,7 +44,7 @@
     <button
       class="btn-comecar"
       (click)="comecarViagem()"
-      [disabled]="!localPartida || !localChegada || distanciaKm === 0"
+      [disabled]="!localPartida || !localChegada || distanciaKm === 0 || carregandoDistancia"
     >
       Escolher ticket
       <ion-icon name="arrow-forward-outline"></ion-icon>

@@ -111,6 +111,9 @@ export class TicketsComponent implements OnInit {
     });
   }
 
+  retornar() {
+    this.router.navigate(['/home']);
+  }
   cancelar() {
     this.ticketSelecionado = null;
   }
