@@ -20,6 +20,8 @@ log.txt
 # Ionic
 /.ionic
 /www
+# Capacitor native Android project must stay versioned
+# do not ignore /android
 /platforms
 /plugins
 
