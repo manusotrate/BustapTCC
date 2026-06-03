@@ -15,7 +15,8 @@ export class NativeHttpService {
   private async getPlugin(): Promise<any> {
     try {
       const mod = await import('@capacitor-community/http');
-      return mod.Http || mod;
+      // Handle several possible module shapes (named export, default export, etc.)
+      return mod.Http || (mod.default && (mod.default.Http || mod.default)) || mod;
     } catch (e) {
       // Plugin not available (web). Return null so callers can fall back.
       return null;
@@ -27,8 +28,17 @@ export class NativeHttpService {
     const url = this.makeUrl(path);
     if (!plugin) throw new Error('Native HTTP plugin not available');
     const options = { url, data: body, headers } as any;
-    const r = await plugin.post(options);
-    return r.data as T;
+    try {
+      if (typeof plugin.post !== 'function') {
+        throw new Error('Native HTTP plugin does not implement post()');
+      }
+      // Some plugin builds may return non-Promise objects; wrap with Promise.resolve
+      const res: any = await Promise.resolve(plugin.post(options));
+      return (res && res.data) ? res.data as T : res as T;
+    } catch (err) {
+      console.error('NativeHttpService.post error', err, { plugin, options });
+      throw err;
+    }
   }
 
   async get<T>(path: string, headers: Record<string, string> = {}): Promise<T> {
@@ -36,7 +46,15 @@ export class NativeHttpService {
     const url = this.makeUrl(path);
     if (!plugin) throw new Error('Native HTTP plugin not available');
     const options = { url, headers } as any;
-    const r = await plugin.get(options);
-    return r.data as T;
+    try {
+      if (typeof plugin.get !== 'function') {
+        throw new Error('Native HTTP plugin does not implement get()');
+      }
+      const res: any = await Promise.resolve(plugin.get(options));
+      return (res && res.data) ? res.data as T : res as T;
+    } catch (err) {
+      console.error('NativeHttpService.get error', err, { plugin, options });
+      throw err;
+    }
   }
 }
