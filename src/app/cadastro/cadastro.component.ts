@@ -15,6 +15,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 export class CadastroComponent implements OnInit {
   registrationForm: FormGroup;
   isLoading: boolean = false;
+  showPassword = false;
+showConfirmPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -28,7 +30,8 @@ export class CadastroComponent implements OnInit {
       sobrenome: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       cpf: ['', [Validators.required, this.validateCPF.bind(this)]],
-      senha: ['', [Validators.required, Validators.minLength(6)]]
+      senha: ['', [Validators.required, Validators.minLength(6)]],
+confirmarSenha: ['', [Validators.required]]
     });
   }
 

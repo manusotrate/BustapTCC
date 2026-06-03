@@ -52,13 +52,51 @@
       </ion-item>
 
       <ion-item>
-        <ion-input 
-          class="animated-input" 
+        <ion-input
+          class="animated-input"
           placeholder="Senha"
           formControlName="senha"
-          type="password"
+          [type]="showPassword ? 'text' : 'password'"
           (input)="onInput($event)">
         </ion-input>
+        
+      
+        <ion-button
+          fill="clear"
+          slot="end"
+          (click)="showPassword = !showPassword">
+      
+          <ion-icon
+  slot="end"
+  class="eye-icon"
+  [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+  (click)="showPassword = !showPassword">
+</ion-icon>
+      
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          class="eye-button "
+          placeholder="Confirmar Senha"
+          formControlName="confirmarSenha"
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          (input)="onInput($event)">
+        </ion-input>
+      
+        <ion-button
+          fill="clear"
+          slot="end"
+          (click)="showConfirmPassword = !showConfirmPassword">
+      
+          <ion-icon
+  slot="end"
+  class="eye-icon"
+  [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+  (click)="showPassword = !showPassword">
+</ion-icon>
+      
+        </ion-button>
       </ion-item>
 
       <ion-button type="submit">Cadastrar</ion-button>
