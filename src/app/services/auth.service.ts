@@ -44,11 +44,7 @@ export class AuthService {
   ) {}
 
   private isNativePlatform(): boolean {
-    try {
-      return Capacitor.getPlatform && Capacitor.getPlatform() !== 'web';
-    } catch {
       return false;
-    }
   }
 
   // Verificar se existe token
