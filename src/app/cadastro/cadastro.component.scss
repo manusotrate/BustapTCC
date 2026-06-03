@@ -46,7 +46,6 @@ ion-card-header{
   margin-top: 25px;
 }
 
-
 ion-text {
   font-size: 12px;
   opacity: 0.5;
@@ -72,12 +71,10 @@ ion-text {
 
   ion-item {
     margin-right: 10px;
+
     
 
   }
-}
-.aga{
-  margin-top: 80px;
 }
 
 
@@ -91,15 +88,21 @@ ion-text {
     transform: translateY(-55%) scale(1);
   }
 }
-.eye-button  {
+.eye-button {
   --background: transparent;
   --background-hover: transparent;
   --background-activated: transparent;
   --background-focused: transparent;
+  --background-active: transparent;
   --box-shadow: none;
   --border-width: 0;
   --padding-start: 0;
   --padding-end: 0;
+  --ripple-color: transparent;
+}
+
+.eye-button::part(native) {
+  background: transparent !important;
 }
 
 .eye-icon {

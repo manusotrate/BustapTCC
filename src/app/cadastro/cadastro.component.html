@@ -54,48 +54,41 @@
       <ion-item>
         <ion-input
           class="animated-input"
-          placeholder="Senha"
+          placeholder="Senha(Mínimo 6 digitos)"
           formControlName="senha"
           [type]="showPassword ? 'text' : 'password'"
           (input)="onInput($event)">
         </ion-input>
-        
-      
         <ion-button
+          class="eye-button"
           fill="clear"
           slot="end"
           (click)="showPassword = !showPassword">
-      
           <ion-icon
-  slot="end"
-  class="eye-icon"
-  [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
-  (click)="showPassword = !showPassword">
-</ion-icon>
-      
+            slot="icon-only"
+            class="eye-icon"
+            [name]="showPassword ? 'eye-off-outline' : 'eye-outline'">
+          </ion-icon>
         </ion-button>
       </ion-item>
       <ion-item>
         <ion-input
-          class="eye-button "
+          class="animated-input"
           placeholder="Confirmar Senha"
           formControlName="confirmarSenha"
           [type]="showConfirmPassword ? 'text' : 'password'"
           (input)="onInput($event)">
         </ion-input>
-      
         <ion-button
+          class="eye-button"
           fill="clear"
           slot="end"
           (click)="showConfirmPassword = !showConfirmPassword">
-      
           <ion-icon
-  slot="end"
-  class="eye-icon"
-  [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
-  (click)="showPassword = !showPassword">
-</ion-icon>
-      
+            slot="icon-only"
+            class="eye-icon"
+            [name]="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'">
+          </ion-icon>
         </ion-button>
       </ion-item>
 

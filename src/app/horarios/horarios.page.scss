@@ -15,6 +15,22 @@
     margin: 0 auto;
   }
 
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: min(100%, 360px);
+    margin: 0 auto;
+    gap: 20px;
+  }
+
+  .content-wrapper .form-group,
+  .content-wrapper .distancia-section,
+  .content-wrapper .btn-comecar {
+    width: 100%;
+    max-width: 360px;
+  }
+
   .back-btn {
     display: flex;
     align-items: center;
