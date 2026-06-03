@@ -16,6 +16,7 @@ import { environment } from '../../environments/environment';
 export class LoginComponent {
   cpf: string = '';
   senha: string = '';
+  showPassword: boolean = false;
   loading: boolean = false;
 
   constructor(

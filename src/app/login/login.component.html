@@ -20,9 +20,20 @@
       <ion-input
         placeholder="Senha"
         [(ngModel)]="senha"
-        type="password"
+        [type]="showPassword ? 'text' : 'password'"
         required
       ></ion-input>
+      <ion-button
+        class="eye-button"
+        fill="clear"
+        slot="end"
+        (click)="showPassword = !showPassword">
+        <ion-icon
+          slot="icon-only"
+          class="eye-icon"
+          [name]="showPassword ? 'eye-off-outline' : 'eye-outline'">
+        </ion-icon>
+      </ion-button>
     </ion-item>
     
    <ion-text (click)="esqueceuSenha()" style="cursor:pointer">Esqueceu a senha?</ion-text>
