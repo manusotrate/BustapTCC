@@ -75,7 +75,21 @@ export class LoginComponent {
       error: async (err) => {
         await loader.dismiss();
         this.loading = false;
-        const msg = err?.error?.erro || err?.error?.message || 'Erro ao efetuar login.';
+        const errPayload = err?.error;
+        let msg = 'Erro ao efetuar login.';
+
+        if (typeof errPayload === 'string') {
+          msg = errPayload;
+        } else if (errPayload?.erro) {
+          msg = errPayload.erro;
+        } else if (errPayload?.message) {
+          msg = errPayload.message;
+        } else if (err?.message) {
+          msg = err.message;
+        } else if (errPayload && typeof errPayload === 'object') {
+          msg = JSON.stringify(errPayload);
+        }
+
         this.showToast(msg, 'danger');
         console.error('Erro de login:', err);
       }
