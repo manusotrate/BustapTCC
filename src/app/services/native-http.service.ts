@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { Capacitor } from '@capacitor/core';
 
 // Native HTTP plugin is imported dynamically at runtime so the web build
 // (ionic serve) doesn't fail when the package isn't installed.
@@ -14,6 +15,14 @@ export class NativeHttpService {
 
   private async getPlugin(): Promise<any> {
     try {
+      // Temporary: force fallback to Angular HttpClient on Android emulator/dev builds
+      // if the native plugin is misbehaving. This avoids the "Http.then() is not
+      // implemented on android" runtime error while debugging. Remove this
+      // condition when the native plugin is confirmed working on your device.
+      if (Capacitor.getPlatform && Capacitor.getPlatform() === 'android') {
+        return null;
+      }
+
       const mod = await import('@capacitor-community/http');
       // Handle several possible module shapes (named export, default export, etc.)
       return mod.Http || (mod.default && (mod.default.Http || mod.default)) || mod;

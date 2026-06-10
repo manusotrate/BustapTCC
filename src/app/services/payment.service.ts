@@ -72,7 +72,12 @@ export class PaymentService {
 
   private isNativePlatform(): boolean {
     try {
-      return Capacitor.getPlatform && Capacitor.getPlatform() !== 'web';
+      // Force fallback to Angular HttpClient on Android while debugging native plugin issues.
+      const p = Capacitor.getPlatform && Capacitor.getPlatform();
+      if (!p) return false;
+      // treat 'android' as web fallback for now
+      if (p === 'android') return false;
+      return p !== 'web';
     } catch {
       return false;
     }
